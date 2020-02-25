@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>{{ title }}</title>
+		<title>Ritsema Bank - {{ title }}</title>
 	</head>
 	<body>
 		<nav>
 			{% for item in navigation %}	
-			<li><a href="{{item.href}}">{{item.name}}</a></li>
+				<li><a href="{{item.getHref()}}">{{item.getName()}}</a></li>
 			{% endfor %}
 		</nav>
 		{{ content }}

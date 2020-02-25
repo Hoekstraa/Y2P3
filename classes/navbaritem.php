@@ -1,10 +1,24 @@
 <?php
 class NavbarItem {
-	public string $name;
-	public string $href;
-	public function __constuct($name, $href) {
-		$this->name = $name;
-		$this->href = $href;
+	private $name;
+	private $href;
+
+	public function __constuct($nm, $hr) {
+		$this->name = $nm;
+		$this->href = $hr;
+	}
+
+	public function NavbarItem($nm, $hr) {
+		$this->name = $nm;
+		$this->href = $hr;
+	}
+
+	public function getName() {
+		return $this->name;
+	}
+
+	public function getHref() {
+		return $this->name;
 	}
 }
 ?>
