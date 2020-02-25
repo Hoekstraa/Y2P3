@@ -17,6 +17,11 @@ $navigation = [
 ];
 
 // Render page
+echo $twig->render('navbar.html',
+	[
+		'navigation' => $navigation
+	]);
+
 echo $twig->render('body.html', [
 	'title' => $pretext_title . $page_title . $posttext_title,
 	'content' => 'Dit is kwaliteitcontent.',
