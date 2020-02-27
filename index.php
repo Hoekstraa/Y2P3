@@ -1,15 +1,7 @@
 <?php
-require_once './vendor/autoload.php';
-require './classes/navbaritem.php';
+require 'twig.php';
 
-$loader = new \Twig\Loader\FilesystemLoader('./templates/');
-$twig = new \Twig\Environment($loader, [
-	'cache' => './.cache/',
-]);
-
-$pretext_title = "Ritsema Bank | ";
 $page_title = "Test!";
-$posttext_title = "";
 
 $navigation = [
 	new NavbarItem("Home", "index.php"),
@@ -17,14 +9,10 @@ $navigation = [
 ];
 
 // Render page
-echo $twig->render('navbar.html',
-	[
-		'navigation' => $navigation
-	]);
-
 echo $twig->render('body.html', [
-	'title' => $pretext_title . $page_title . $posttext_title,
-	'content' => 'Dit is kwaliteitcontent.',
-   	'navigation' => $navigation
+	'title' => $page_title,
+	'style' => $STYLE,
+   	'navigation' => $navigation,
+	'content' => 'Dit is kwaliteitcontent.'
 ]);
 ?>

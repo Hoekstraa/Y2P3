@@ -1,0 +1,46 @@
+/* ------------ */
+/* Font loading */
+/* ------------ */
+@font-face {
+	font-family: "Open Sans";
+	src: url("fonts/open_sans/OpenSans-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Open Sans";
+	src: url("fonts/open_sans/OpenSans-Bold.ttf");
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: "Open Sans";
+	src: url("fonts/open_sans/OpenSans-Italic.ttf");
+	font-weight: italic;
+}
+
+/* ---------- */
+/* Animations */
+/* ---------- */
+@keyframes fade_in {
+	0% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+
+/* ---------- */
+/* Every page */
+/* ---------- */
+
+* {
+	box-sizing: border-box;
+}
+
+/* ------- */
+/* Modules */
+/* ------- */
+
+/* Navigation Bar */
+
+nav {
+	width: 100%;
+	height: 20vh;
+}
