@@ -18,7 +18,7 @@ class NavbarItem {
 	}
 
 	public function getHref() {
-		return $this->name;
+		return $this->href;
 	}
 }
 ?>
