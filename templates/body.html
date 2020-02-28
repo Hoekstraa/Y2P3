@@ -2,8 +2,9 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles/style.css">
-		<title>{{ page_title }}</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" type="text/css" href="styles/style.css">
+		{% endblock %}
 	</head>
 	<body>
 		<nav>
@@ -11,6 +12,19 @@
 				<li><a href="{{item.getHref()}}">{{item.getName()}}</a></li>
 			{% endfor %}
 		</nav>
-		{{ content }}
+		<div class="container">
+			{% for contentblock in contentblocks %}
+				<article>
+					<h1>{{contentblock.getName()}}</h1>
+					<p>{{contentblock.getContent()}}</p>
+				</article>
+				</section>
+			{% endfor %}
+		</div>
 	</body>
+	{% for script in scripts %}
+		<script>
+			{{script}}
+		</script>
+	{% endfor %}
 </html>
