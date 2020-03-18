@@ -1,0 +1,135 @@
+:root {
+    --ch: #4040B0;
+    --c1: #03031E;
+    --c2: #464655;
+    --c3: #898993;
+    --c4: #CECEE0;
+    --c5: #DEDEEF;
+    --c6: #EDEDF7;
+}
+
+@font-face {
+    font-family: 'Merriweather'; /*a name to be used later*/
+    src: url('../fonts/Merriweather-Regular.woff') format('woff'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'Montserrat'; /*a name to be used later*/
+    src: url('../fonts/Montserrat-Regular.woff') format('woff'); /*URL to font*/
+}
+
+html, body {
+    height: 100%;
+    background: var(--c6);
+    color: var(--c1);
+    font-family: 'Merriweather';
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Montserrat';
+}
+
+p {
+    font-family: 'Merriweather';
+    color: var(--c2);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.pure-menu {
+    background: var(--c2);
+    color: var(--c5);
+    font-family: 'Montserrat';
+}
+a, a:hover, a:active, a:focus {
+    color: var(--ch);
+    outline: none;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.pure-menu-link,
+.pure-menu-link:visited,
+.pure-menu-link:hover,
+.pure-menu-link:active,
+.pure-menu-link:focus {
+    background: var(--c2);
+    text-decoration: none;
+    outline: none;
+    color: var(--c5);
+}
+.pure-menu-link:hover {
+    color: var(--c3);
+}
+
+.pure-g {
+    font-family: Montserrat,sans-serif;
+}
+
+.textpadding {
+    padding:16px;
+}
+.textpadding-thick {
+    padding:46px;
+}
+
+header {
+    background: var(--c2);
+    color: var(--c5);
+    height: 200px;
+}
+header > div {
+    text-align:center;
+    margin-top: 20px;
+    margin-bottom:40px;
+}
+
+article {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+h3 {
+    font-weight: normal;
+}
+
+.pure-u-1-3 > img {
+    width: 100%;
+}
+
+footer {
+    background: var(--c1);
+}
+footer > p {
+    color: var(--c3);
+}
+
+@media only screen 
+and (min-width : 1100px) { 
+    main {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+    }
+    header h1 {
+	margin-top: 0;
+	font-size: 300%;
+    }
+}
+@media only screen 
+and (max-width : 600px) { 
+    .pure-u-1-2 {
+	width: 200%;
+    }
+}
+
