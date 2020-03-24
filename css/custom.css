@@ -50,12 +50,19 @@ main {
     color: var(--c5);
     font-family: 'Montserrat';
 }
+
 a, a:hover, a:active, a:focus {
     color: var(--ch);
     outline: none;
 }
+
 a:hover {
     text-decoration: none;
+}
+
+a.active {
+	background-color: var(--c5) !important;
+	color: var(--c2) !important;
 }
 
 .pure-menu-link,
@@ -68,17 +75,22 @@ a:hover {
     outline: none;
     color: var(--c5);
 }
+
 .pure-menu-link:hover {
     color: var(--c3);
 }
 
+.title {
+}
+
 .pure-g {
-    font-family: Montserrat,sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
 .textpadding {
     padding:16px;
 }
+
 .textpadding-thick {
     padding:46px;
 }
@@ -88,10 +100,11 @@ header {
     color: var(--c5);
     height: 200px;
 }
+
 header > div {
-    text-align:center;
+    text-align: center;
     margin-top: 20px;
-    margin-bottom:40px;
+    margin-bottom: 40px;
 }
 
 article {
@@ -108,7 +121,8 @@ h3 {
 }
 
 footer {
-    background: var(--c1);
+	text-align: center;
+    background: var(--ch);
 }
 footer > p {
     color: var(--c3);
@@ -117,19 +131,19 @@ footer > p {
 @media only screen 
 and (min-width : 1100px) { 
     main {
-	margin-left: auto;
-	margin-right: auto;
-	width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+		width: 80%;
     }
     header h1 {
-	margin-top: 0;
-	font-size: 300%;
-    }
-}
-@media only screen 
-and (max-width : 600px) { 
-    .pure-u-1-2 {
-	width: 200%;
+		margin-top: 0;
+		font-size: 300%;
     }
 }
 
+@media only screen 
+and (max-width : 600px) { 
+    .pure-u-1-2 {
+		width: 200%;
+    }
+}
