@@ -3,7 +3,7 @@ require "classes/NavbarItem.php";
 
 $title = "Home";
 $navigation = [
-	new NavbarItem("Hello", "index.php", false),
+	new NavbarItem("Ritsema Banken", "index.php", false),
 	new NavbarItem("Bye", "bye.php", false),
 	new NavbarItem("Login", "login.php", true),
 	new NavbarItem("Register", "register.php", false),

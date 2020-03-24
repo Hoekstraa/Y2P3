@@ -166,10 +166,11 @@ div.login-box {
 }
 
 div.login-box input:invalid {
-	color: var(--invalid);
+	border: 0.1rem solid var(--invalid) !important;
+	color: var(--invalid) !important;
 }
 
-div.login-box input {
+div.login-box input.email {
+	border: 0.1rem solid var(--valid);
 	color: var(--valid);
 }
-

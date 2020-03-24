@@ -3,7 +3,7 @@ require "classes/NavbarItem.php";
 
 $title = "Home";
 $navigation = [
-	new NavbarItem("Hello", "index.php", false),
+	new NavbarItem("Ritsema Banken", "index.php", false),
 	new NavbarItem("Bye", "bye.php", false),
 	new NavbarItem("Login", "login.php", false),
 	new NavbarItem("Register", "register.php", true),
@@ -23,7 +23,7 @@ echo '<html lang="nl">';
 				<div class=\"login-box\">
 					<form method=\"post\">
 						<label for=\"username\">E-mailadres</label><br>
-						<input type=\"email\" name=\"email\"></input>
+						<input type=\"email\" class=\"email\" name=\"email\"></input>
 						<br><br>
 						<label for=\"username\">Gebruikersnaam</label><br>
 						<input type=\"text\" name=\"email\"></input>
