@@ -6,6 +6,8 @@
     --c4: #CECEE0;
     --c5: #DEDEEF;
     --c6: #EDEDF7;
+	--invalid: #8A031E;
+	--valid: #038A1E;
 }
 
 @font-face {
@@ -148,7 +150,7 @@ and (max-width : 600px) {
     }
 }
 
-/* Login */
+/* Login and Register box */
 div.login-box {
 	text-align: center;
 	background: var(--c5);
@@ -162,3 +164,12 @@ div.login-box {
 		max-width: 500px;
 	}
 }
+
+div.login-box input:invalid {
+	color: var(--invalid);
+}
+
+div.login-box input {
+	color: var(--valid);
+}
+
