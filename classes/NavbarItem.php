@@ -2,7 +2,6 @@
 class NavbarItem {
 	public $name;
 	public $href;
-	public bool $active;
 
 	public function __constuct($nm, $hr, $active = false) {
 		$this->name = $nm;
@@ -10,7 +9,7 @@ class NavbarItem {
 		$this->active = $active;
 	}
 
-	public function NavbarItem($nm, $hr, $active) {
+	public function NavbarItem($nm, $hr, $active = false) {
 		$this->name = $nm;
 		$this->href = $hr;
 		$this->active = $active;
