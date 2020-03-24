@@ -3,18 +3,18 @@ require "classes/NavbarItem.php";
 
 $title = "Home";
 $navigation = [
-	new NavbarItem("Ritsema Banken", "index.php", false),
-	new NavbarItem("Bye", "bye.php", false),
-	new NavbarItem("Login", "login.php", false),
+	new NavbarItem("Ritsema Banken", "index.php"),
+	new NavbarItem("Bye", "bye.php"),
+	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php", true),
-	//"test"
 ];
 
 echo '<html lang="nl">';
 	include("modular/head.php");
-	echo "<body>";
+	echo "<body onload=\"emailValidation()\">";
 		include("modular/navbar.php");
 		include("modular/header.php");
+		echo "<script src=\"scripts/EmailValidation.js\"></script>";
 		echo "
 			<main>
 			<div class=\"register\">
@@ -23,7 +23,7 @@ echo '<html lang="nl">';
 				<div class=\"login-box\">
 					<form method=\"post\">
 						<label for=\"username\">E-mailadres</label><br>
-						<input type=\"email\" class=\"email\" name=\"email\"></input>
+						<input type=\"email\" id=\"email\" name=\"email\"></input>
 						<br><br>
 						<label for=\"username\">Gebruikersnaam</label><br>
 						<input type=\"text\" name=\"email\"></input>

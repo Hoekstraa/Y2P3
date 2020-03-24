@@ -3,11 +3,10 @@ require "classes/NavbarItem.php";
 
 $title = "Home";
 $navigation = [
-	new NavbarItem("Ritsema Banken", "index.php", false),
-	new NavbarItem("Bye", "bye.php", false),
+	new NavbarItem("Ritsema Banken", "index.php"),
+	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem("Login", "login.php", true),
-	new NavbarItem("Register", "register.php", false),
-	//"test"
+	new NavbarItem("Register", "register.php"),
 ];
 
 echo '<html lang="nl">';

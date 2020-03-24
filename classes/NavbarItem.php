@@ -10,7 +10,7 @@ class NavbarItem {
 		$this->active = $active;
 	}
 
-	public function NavbarItem($nm, $hr, $active) {
+	public function NavbarItem($nm, $hr, $active = false) {
 		$this->name = $nm;
 		$this->href = $hr;
 		$this->active = $active;
