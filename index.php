@@ -4,9 +4,9 @@ require "classes/NavbarItem.php";
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", true),
-	new NavbarItem("Bye", "bye.php", false),
-	new NavbarItem("Login", "login.php", false),
-	new NavbarItem("Register", "register.php", false)
+	new NavbarItem("Bye", "bye.php"),
+	new NavbarItem("Login", "login.php"),
+	new NavbarItem("Register", "register.php"),
 	//"test"
 ];
 
