@@ -15,6 +15,7 @@
 			}
 		}
 	?>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 	<!-- <link rel="stylesheet" href="css/pure-min.css"> -->
 	<!-- <link rel="stylesheet" href="css/custom.css"> -->
 	<!-- <script src="js/scripts.js"></script> -->
