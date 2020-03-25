@@ -8,21 +8,19 @@ error_reporting(E_ERROR | E_PARSE);
 
 //Variables
 
-
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
-//CheckIfBanned($IP,$MAC);
+CheckIfBanned($IP,$MAC);
 
-	if ( isset( $_POST['submit'] ) ) 
-	{ 
+
+if ( isset( $_POST['submit'] ) ) 
+{ 
 		$test = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
 		$Username = $_POST['username'];
 		$Passwd = $_POST['password'];
 		LogInValidation($IP,$MAC,$Username,$Passwd,$test);
-	}
-
-
+}
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
@@ -49,7 +47,7 @@ echo '<html lang="nl">';
 						<label for=\"password\">Wachtwoord</label><br>
 						<input type=\"password\" name=\"password\"></input>
 						<br><br>
-						<input class=\"submit\" type=\"submit\" value=\"Login\"></input>
+						<input class=\"submit\" name=\"submit\" type=\"submit\" value=\"Login\"></input>
 					</form>
 				</div>
 			</div>
@@ -65,14 +63,23 @@ function DatabaseConnect()
 {
 	$host        = "host = localhost";
 	$port        = "port = 5432";
-	$credentials = "user = postgres password=pass123";
+	$credentials = "user = postgres password=Xyppyp99";
 
-	$db = pg_connect( "$host $port $dbname $credentials"  );
-   if(!$db) {
-      echo "Error : Unable to open database\n";
-   } else {
-      echo "Opened database successfully\n";
-   }
+
+	$conn_string = "host=localhost port=5432 dbname=test user=postgres password=Xyppyp99";
+	$conn = pg_connect($conn_string);
+
+	// query for database creation
+
+	// $result = pg_query($conn, "CREATE TABLE Bank (
+	// 	UserId serial PRIMARY KEY,
+	// 	Username VARCHAR (50) NOT NULL,
+	// 	EMail VARCHAR (50) NOT NULL,
+	// 	Password VARCHAR (50) NOT NULL)");
+	// echo var_dump($result);	
+	
+	return $conn;
+	
 }
 
 // This function closes a connection to the datababase
@@ -97,9 +104,7 @@ function GetIP()
     $IP = $_SERVER["REMOTE_ADDR"];
 	} 
 	return $IP;
-
 }
-
 // This function bannes the user when called.
 function Ban($IP,$MAC)
 {
@@ -118,7 +123,7 @@ function GetMAC()
 }
 
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
-function CheckIf_Banned($IP,$MAC)
+function CheckIfBanned($IP,$MAC)
 {
 	$filename = 'Banned.txt';
 	$contents = file($filename);
@@ -139,11 +144,11 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$test)
 		
 		if (strpos($Username, "'") !== false) 
 		{
-			//Ban($IP,$MAC);
+			Ban($IP,$MAC);
 		}
 		elseif(strpos($Passwd,"'") !== false)
 		{
-			//Ban($IP,$MAC);
+			Ban($IP,$MAC);
 		}
 		elseif(strpos($Username,"<script>") !== false)
 		{
@@ -154,19 +159,28 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$test)
 			Ban($IP,$MAC);
 		}
 		else
-		{
-				//UserLogIn($Username,$Passwd);
+		{	
+				UserLogIn($Username,$Passwd);
 		}
-	
 }
 
-// deze functie log een user in.
+// This functions logs user in.
 function UserLogIn($Username,$Passwd)
-{
-	DatabaseConnect();
+{	
+	// This function connects to the database
+	$conn = DatabaseConnect();
+	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1 AND password = $2");
+	$result = pg_execute($conn, "my_query", array($Username,$Passwd));
+	$login_check = pg_num_rows($result);
+	if($login_check > 0)
+	{
+		$_SESSION["Username"] = $Username;
+		header("Location: Dashboard.php");
+	}
+	else 
+	{
+		
+	}
 
-	$statement = $conn->prepare("SELECT FROM Users (Username, Password) VALUES (?, ?)");
-	$result = pg_query($conn, $query,$Username,$password);
-	
 }
 ?>
