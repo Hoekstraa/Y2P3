@@ -83,9 +83,9 @@ function DatabaseConnect()
 }
 
 // This function closes a connection to the datababase
-function DatabaseClose($db)
+function DatabaseClose($conn)
 {
-	pgclose($db);
+	pg_close($conn);
 }
 
 // This function returns ip adres form the user.
@@ -169,18 +169,23 @@ function UserLogIn($Username,$Passwd)
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
+	// Create perpared statement and executes the statement
 	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1 AND password = $2");
 	$result = pg_execute($conn, "my_query", array($Username,$Passwd));
+	// Checks if login was succesfull 
 	$login_check = pg_num_rows($result);
 	if($login_check > 0)
 	{
+		// Create session Username and put the username in the session
 		$_SESSION["Username"] = $Username;
+		// Redirect to Dashboard.php
 		header("Location: Dashboard.php");
 	}
 	else 
 	{
 		
 	}
-
+	// This function closes database connection
+	DatabaseClose($conn);
 }
 ?>
