@@ -7,11 +7,14 @@ session_start();
 error_reporting(E_ERROR | E_PARSE);
 
 //Variables
+$Session_name = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+$Int_10 = 10;
 
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
 CheckIfBanned($IP,$MAC);
+Set_session($IP,$MAC);
 
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
@@ -55,8 +58,6 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
-
-
 // This function opens a connection to the datababase
 function DatabaseConnect()
 {
@@ -68,7 +69,6 @@ function DatabaseConnect()
 	return $conn;
 	
 }
-
 // This function creates the database
 function DatabaseCreation($conn)
 {
@@ -83,13 +83,11 @@ function DatabaseCreation($conn)
 	// Show if query was succesfull
 	echo var_dump($result);
 }
-
 // This function closes a connection to the datababase
 function DatabaseClose($conn)
 {
 	pg_close($conn);
 }
-
 // This function returns ip adres form the user.
 function GetIP()
 {
@@ -129,10 +127,14 @@ function GetMAC()
 	$MAC = strtok($MAC, ' ');
 	return $MAC;
 }
-
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
 function CheckIfBanned($IP,$MAC)
 {
+	if(isset($_SESSION['Banned']) && !empty($_SESSION['Banned'])) {
+		$status = $_SESSION['Banned'];
+	 if ($status == "True")
+	 header("Location: Banned.php");
+	}
 	// Declare file
 	$filename = 'Banned.txt';
 	$contents = file($filename);
@@ -173,14 +175,13 @@ function LogInValidation($IP,$MAC,$Username,$Passwd)
 			Ban($IP,$MAC);
 		}
 		else
-		{	
+		{
 				// Calls Userlogin function with the userame and password as variables
-				UserLogIn($Username,$Passwd);
+				UserLogIn($Username,$Passwd,$IP,$MAC);
 		}
 }
-
 // This functions logs user in.
-function UserLogIn($Username,$Passwd)
+function UserLogIn($Username,$Passwd,$IP,$MAC)
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
@@ -195,10 +196,13 @@ function UserLogIn($Username,$Passwd)
 		$_SESSION["Username"] = $Username;
 		// Redirect to Dashboard.php
 		header("Location: Dashboard.php");
+
+		$Encrypt = base64_encode($Int_10);
+		$_SESSION[$Session_name] = $Encrypt;
 	}
 	else 
 	{
-		
+		FailedLogIn($IP,$MAC);
 	}
 	// This function closes database connection
 	DatabaseClose($conn);
@@ -206,6 +210,59 @@ function UserLogIn($Username,$Passwd)
 // This function checks if the user is logged in
 function CheckIfLoggedIn()
 {
-
+	
+}
+// This function encrypts a int
+function Set_session($IP,$MAC) 
+{
+	if(isset($_SESSION[$Session_name]) && !empty($_SESSION[$Session_name])) 
+	{
+		// Pull the encrypted data from the session
+		$encrypted = $_SESSION[$Session_name];
+		// Decrypt the data
+		$decrypt = base64_decode($encrypted);
+		// Check if the counter greater is then 10 if so then the data has been changed then call the ban function // TODO ff overleggen
+		if($counter > $Int_10)
+		{
+			Ban($IP,$MAC);
+		}
+	}
+	else
+	{
+		// Encrypt the data 
+		$encrypt =  base64_encode($Int_10); 
+		// Put encrypted data in the session
+		$_SESSION[$Session_name] = $encrypt;
+	}
+}
+// This function checks if the users log in failed not more then 3 times
+function FailedLogIn($IP,$MAC)
+{
+	// Checks if session is set and not empty
+	if(isset($_SESSION[$Session_name]) && !empty($_SESSION[$Session_name])) 
+	{
+		// Pulls encrypted data from session
+		$encrypted = $_SESSION[$Session_name];
+		// Decrypt the data
+		$decrypt = base64_decode($encrypted);
+		// Decrease the counter by 1
+		$counter = $decrypt - 1;
+		// Encrypt the counter
+		$counter_live = base64_encode($counter);
+		// Put the encrypted data in the session
+		$_SESSION[$Session_name] = $counter_live;
+		// Check if the counter is 0 or lower then call the ban function
+		if($counter <= 0)
+		{
+			Ban($IP,$MAC);
+		}
+	}
+	else
+	{
+		// Encrypt the data 
+		$encrypt =  base64_encode($Int_10); 
+		// Put encrypted data in the session
+		$_SESSION[$Session_name] = $encrypt;
+	}
 }
 ?>
