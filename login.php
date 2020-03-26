@@ -9,11 +9,7 @@ session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
-//Global Variables
-$Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
-$Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
-$Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
-$Int_10 = 10;
+
 
 //functions
 $IP = GetIP();
@@ -67,21 +63,13 @@ echo "</html>";
 
 // This function validates the users input.
 function LogInValidation($IP,$MAC,$Username,$Passwd)
-{
+{		
 		// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
-		if (strpos($Username, "'") !== false) 
+		if (strpos($Username, $Characters) !== false) 
 		{
 			Ban($IP,$MAC);
 		}
-		elseif(strpos($Passwd,"'") !== false)
-		{
-			Ban($IP,$MAC);
-		}
-		elseif(strpos($Username,"<script>") !== false)
-		{
-			Ban($IP,$MAC); 
-		}
-		elseif(strpos($Passwd,"<script>") !== false)
+		elseif(strpos($Passwd,$Characters) !== false)
 		{
 			Ban($IP,$MAC);
 		}

@@ -1,4 +1,14 @@
 <?php
+
+//Global Variables
+$Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+$Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
+$Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+$Int_10 = 10;
+
+// Array with character to filter
+$Characters =array("<script>","1=1","1 =1","1= 1","1 = 1");
+
 // This function bannes the user when called.
 function Ban($IP,$MAC)
 {
@@ -41,6 +51,7 @@ function GetIP()
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
 function CheckIfBanned($IP,$MAC)
 {
+	
 	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) {
 		// Pull encrypted data from session
 		$Encrypted_status = $_SESSION[$Session_banned];
@@ -95,6 +106,7 @@ function DatabaseConnect()
 	// Execute connection string
 	$conn = pg_connect($conn_string);
 	// Return $conn variable
+	echo var_dump($conn);
 	return $conn;
 }
 ?>
