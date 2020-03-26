@@ -19,11 +19,11 @@ CheckIfBanned($IP,$MAC);
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
-	$Mail = $_POST['email'];
-	$username = $_POST['username'];
-	$password1 = $_POST['password'];
-	$password2 = $_POST['repeat-password'];
-	LogInValidation($IP,$MAC,$mail,$Username,$password1,$password2);
+	$mail = htmlspecialchars($_POST['email']);
+	$username = htmlspecialchars($_POST['username']);
+	$password1 = htmlspecialchars($_POST['password']);
+	$password2 = htmlspecialchars($_POST['repeat-password']);
+	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2);
 }
 
 $title = "Home";
@@ -70,7 +70,7 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$Mail,$Username,$password1,$password2)
+function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 {
 	// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
 	// if (strpos($Mail, "@") == false) 
@@ -81,11 +81,11 @@ function LogInValidation($IP,$MAC,$Mail,$Username,$password1,$password2)
 	// 		</script>';
 	// }
 	//else
-	if (strpos($Mail, $Characters) !== false) 
+	if (strpos($mail, $Characters) !== false) 
 	{
 		Ban($IP,$MAC);
 	}
-	elseif (strpos($Username, $Characters) !== false) 
+	elseif (strpos($username, $Characters) !== false) 
 	{
 		Ban($IP,$MAC);
 	}
@@ -107,22 +107,18 @@ function LogInValidation($IP,$MAC,$Mail,$Username,$password1,$password2)
 	}
 	else
 	{
-		SignUp($mail,$Username,$Passwd);
+		SignUp($mail,$username,$password1);
 	}
 }
 
-function SignUp($mail,$Username,$Passwd)
+function SignUp($mail,$username,$password1)
 {
 	// This function connects to the database
 	$conn = DatabaseConnect();
-	// Create perpared statement and executes the statement
-
-	//$result = pg_query($conn, "INSERT INTO bank  (username, email, password) VALUES ('$1','$2','$3')");
-
-	
-	$result = pg_prepare($conn, "my_query", "INSERT INTO bank (username, email, password) VALUES ($1,$2,$3)");
-	$result = pg_execute($conn, "my_query", array($Username,$mail,$Passwd));
-	echo var_dump($result);
+	// Create perpared statement 
+	$result = pg_prepare($conn, "my_query", "INSERT INTO bank  (username, email, password) VALUES ($1,$2,$3)");
+	// Executes the prepared statement with the variables
+	$result = pg_execute($conn, "my_query", array($username,$mail,$password1));
 	//This function closes database connection
 	DatabaseClose($conn);
 	
