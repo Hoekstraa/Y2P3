@@ -6,9 +6,10 @@ session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
-//Variables
+//Global Variables
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
+$Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
 $Int_10 = 10;
 
 //functions
@@ -17,6 +18,7 @@ $MAC = GetMAC();
 CheckIfBanned($IP,$MAC);
 Set_session($IP,$MAC);
 CheckIfLoggedIn();
+
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
@@ -110,8 +112,9 @@ function GetIP()
 // This function bannes the user when called.
 function Ban($IP,$MAC)
 {
+	$Encrypted_true = base64_encode("True");
 	// Set Banned session to true
-	$_SESSION["Banned"] = "True";
+	$_SESSION[$Session_banned] = $Encrypted_true;
 	// Open banned.txt and write IP to it and new line
 	file_put_contents("Banned.txt", PHP_EOL .  $IP, FILE_APPEND);
 	// Open banned.txt and write MAC to it and new line
@@ -119,7 +122,6 @@ function Ban($IP,$MAC)
 	// Redirect to banned.php
     header("Location: Banned.php");
 }
-
 // This function returns the mac adres from the user.
 function GetMAC()
 {
@@ -131,14 +133,17 @@ function GetMAC()
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
 function CheckIfBanned($IP,$MAC)
 {
-	if(isset($_SESSION['Banned']) && !empty($_SESSION['Banned'])) {
-		$status = $_SESSION['Banned'];
-	 if ($status == "True")
+	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) {
+		// Pull encrypted data from session
+		$Encrypted_status = $_SESSION[$Session_banned];
+		// Decrypt the data
+		$Decrypted_status = base64_decode($Encrypted_status);
+		// Check if data = true if so then redirect to banned.php
+	 if ($Decrypted_status == "True")
 	 header("Location: Banned.php");
 	}
 	// Declare file
-	$filename = 'Banned.txt';
-	$contents = file($filename);
+	$contents = file("Banned.txt");
 	// Loop through the file line by line
 	foreach($contents as $line) {
 		// Check if line is the same as the ip of the user if yes then redirect
@@ -193,8 +198,9 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 	$login_check = pg_num_rows($result);
 	if($login_check > 0)
 	{
-		// Create session Username and put the username in the session
-		$_SESSION["Username"] = $Username;
+		$EncryptedUsername = base64_encode($Username);
+		// Create session Username and put the encrypted username in the session
+		$_SESSION[$Session_name_user] = $EncryptedUsername;
 		// Redirect to Dashboard.php
 		header("Location: Dashboard.php");
 
@@ -217,7 +223,6 @@ function CheckIfLoggedIn()
 		// Redirect to dashboard.php
 		header("Location: Dashboard.php");
 	}
-	
 }
 // This function encrypts a int
 function Set_session($IP,$MAC) 
