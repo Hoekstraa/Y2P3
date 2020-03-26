@@ -73,15 +73,14 @@ echo "</html>";
 function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 {
 	// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
-	// if (strpos($Mail, "@") == false) 
-	// {
-	// 	echo '<script type="text/javascript">
-	// 		alert("U moet een @ gebruiken");
-	// 		window.location.href = "register.php";
-	// 		</script>';
-	// }
-	//else
-	if (strpos($mail, $Characters) !== false) 
+	if (strpos($mail, "@") == false) 
+	{
+		echo '<script type="text/javascript">
+			alert("U moet een @ gebruiken");
+			window.location.href = "register.php";
+			</script>';
+	}
+	elseif (strpos($mail, $Characters) !== false) 
 	{
 		Ban($IP,$MAC);
 	}
