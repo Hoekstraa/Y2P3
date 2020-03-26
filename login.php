@@ -7,7 +7,8 @@ session_start();
 error_reporting(E_ERROR | E_PARSE);
 
 //Variables
-$Session_name = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+$Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+$Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Int_10 = 10;
 
 //functions
@@ -15,7 +16,7 @@ $IP = GetIP();
 $MAC = GetMAC();
 CheckIfBanned($IP,$MAC);
 Set_session($IP,$MAC);
-
+CheckIfLoggedIn();
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
@@ -210,12 +211,18 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 // This function checks if the user is logged in
 function CheckIfLoggedIn()
 {
+	// Checks if the session exists and is not empty
+	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+	{
+		// Redirect to dashboard.php
+		header("Location: Dashboard.php");
+	}
 	
 }
 // This function encrypts a int
 function Set_session($IP,$MAC) 
 {
-	if(isset($_SESSION[$Session_name]) && !empty($_SESSION[$Session_name])) 
+	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pull the encrypted data from the session
 		$encrypted = $_SESSION[$Session_name];
@@ -239,10 +246,10 @@ function Set_session($IP,$MAC)
 function FailedLogIn($IP,$MAC)
 {
 	// Checks if session is set and not empty
-	if(isset($_SESSION[$Session_name]) && !empty($_SESSION[$Session_name])) 
+	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pulls encrypted data from session
-		$encrypted = $_SESSION[$Session_name];
+		$encrypted = $_SESSION[$Session_name_counter];
 		// Decrypt the data
 		$decrypt = base64_decode($encrypted);
 		// Decrease the counter by 1
@@ -250,7 +257,7 @@ function FailedLogIn($IP,$MAC)
 		// Encrypt the counter
 		$counter_live = base64_encode($counter);
 		// Put the encrypted data in the session
-		$_SESSION[$Session_name] = $counter_live;
+		$_SESSION[$Session_name_counter] = $counter_live;
 		// Check if the counter is 0 or lower then call the ban function
 		if($counter <= 0)
 		{
