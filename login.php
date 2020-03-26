@@ -1,13 +1,18 @@
 <?php
+// Recuire php files 
 require "classes/NavbarItem.php";
+// Include php files
+include "Global_functions.php";
 
 // start the sessions
 session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
-//Variables
-$Session_name = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+//Global Variables
+$Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+$Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
+$Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
 $Int_10 = 10;
 
 //functions
@@ -15,6 +20,7 @@ $IP = GetIP();
 $MAC = GetMAC();
 CheckIfBanned($IP,$MAC);
 Set_session($IP,$MAC);
+CheckIfLoggedIn();
 
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
@@ -58,102 +64,7 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
-// This function opens a connection to the datababase
-function DatabaseConnect()
-{
-	// Declare connection variables
-	$conn_string = "host=localhost port=5432 dbname=test user=postgres password=Xyppyp99";
-	// Execute connection string
-	$conn = pg_connect($conn_string);
-	// Return $conn variable
-	return $conn;
-	
-}
-// This function creates the database
-function DatabaseCreation($conn)
-{
-	// calls data baseconnect function
-	$conn = DatabaseConnect();
-	//query for database creation
-	$result = pg_query($conn, "CREATE TABLE Bank (
-		UserId serial PRIMARY KEY,
-		Username VARCHAR (50) NOT NULL,
-		EMail VARCHAR (50) NOT NULL,
-		Password VARCHAR (50) NOT NULL)");
-	// Show if query was succesfull
-	echo var_dump($result);
-}
-// This function closes a connection to the datababase
-function DatabaseClose($conn)
-{
-	pg_close($conn);
-}
-// This function returns ip adres form the user.
-function GetIP()
-{
-	// Get the users ip and put it in the $IP variable
-	if(!empty($_SERVER["HTTP_CLIENT_IP"]))
-	{
-    $IP = $_SERVER["HTTP_CLIENT_IP"];
-	}
-	else if(!empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
-	{
-    $IP = $_SERVER["HTTP_X_FORWARDED_FOR"];
-	}
-	else
- 	{
-    $IP = $_SERVER["REMOTE_ADDR"];
-	} 
-	return $IP;
-}
-// This function bannes the user when called.
-function Ban($IP,$MAC)
-{
-	// Set Banned session to true
-	$_SESSION["Banned"] = "True";
-	// Open banned.txt and write IP to it and new line
-	file_put_contents("Banned.txt", PHP_EOL .  $IP, FILE_APPEND);
-	// Open banned.txt and write MAC to it and new line
-	file_put_contents("Banned.txt", PHP_EOL .  $MAC, FILE_APPEND);
-	// Redirect to banned.php
-    header("Location: Banned.php");
-}
 
-// This function returns the mac adres from the user.
-function GetMAC()
-{
-	// Get mac addres and put it in the $mac variable
-	$MAC = exec('getmac');
-	$MAC = strtok($MAC, ' ');
-	return $MAC;
-}
-// This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
-function CheckIfBanned($IP,$MAC)
-{
-	if(isset($_SESSION['Banned']) && !empty($_SESSION['Banned'])) {
-		$status = $_SESSION['Banned'];
-	 if ($status == "True")
-	 header("Location: Banned.php");
-	}
-	// Declare file
-	$filename = 'Banned.txt';
-	$contents = file($filename);
-	// Loop through the file line by line
-	foreach($contents as $line) {
-		// Check if line is the same as the ip of the user if yes then redirect
-		if($line == $IP)
-		{
-			// Redirect to banned.php
-			header("Location: Banned.php");
-		}
-		// Check if line is the same as the mac of the user if yes then redirect
-		elseif($line == $MAC)
-		{
-			// Redirect to banned.php
-			header("Location: Banned.php");
-		}
-	}
-}
 // This function validates the users input.
 function LogInValidation($IP,$MAC,$Username,$Passwd)
 {
@@ -192,8 +103,9 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 	$login_check = pg_num_rows($result);
 	if($login_check > 0)
 	{
-		// Create session Username and put the username in the session
-		$_SESSION["Username"] = $Username;
+		$EncryptedUsername = base64_encode($Username);
+		// Create session Username and put the encrypted username in the session
+		$_SESSION[$Session_name_user] = $EncryptedUsername;
 		// Redirect to Dashboard.php
 		header("Location: Dashboard.php");
 
@@ -210,12 +122,17 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 // This function checks if the user is logged in
 function CheckIfLoggedIn()
 {
-	
+	// Checks if the session exists and is not empty
+	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+	{
+		// Redirect to dashboard.php
+		header("Location: Dashboard.php");
+	}
 }
 // This function encrypts a int
 function Set_session($IP,$MAC) 
 {
-	if(isset($_SESSION[$Session_name]) && !empty($_SESSION[$Session_name])) 
+	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pull the encrypted data from the session
 		$encrypted = $_SESSION[$Session_name];
@@ -239,10 +156,10 @@ function Set_session($IP,$MAC)
 function FailedLogIn($IP,$MAC)
 {
 	// Checks if session is set and not empty
-	if(isset($_SESSION[$Session_name]) && !empty($_SESSION[$Session_name])) 
+	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pulls encrypted data from session
-		$encrypted = $_SESSION[$Session_name];
+		$encrypted = $_SESSION[$Session_name_counter];
 		// Decrypt the data
 		$decrypt = base64_decode($encrypted);
 		// Decrease the counter by 1
@@ -250,7 +167,7 @@ function FailedLogIn($IP,$MAC)
 		// Encrypt the counter
 		$counter_live = base64_encode($counter);
 		// Put the encrypted data in the session
-		$_SESSION[$Session_name] = $counter_live;
+		$_SESSION[$Session_name_counter] = $counter_live;
 		// Check if the counter is 0 or lower then call the ban function
 		if($counter <= 0)
 		{
