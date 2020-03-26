@@ -12,7 +12,6 @@ function Ban($IP,$MAC)
 	// Redirect to banned.php
     header("Location: Banned.php");
 }
-
 // This function returns the mac adres from the user.
 function GetMAC()
 {
@@ -21,7 +20,6 @@ function GetMAC()
 	$MAC = strtok($MAC, ' ');
 	return $MAC;
 }
-
 // This function returns ip adres form the user.
 function GetIP()
 {
@@ -40,7 +38,6 @@ function GetIP()
 	} 
 	return $IP;
 }
-
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
 function CheckIfBanned($IP,$MAC)
 {
@@ -71,7 +68,6 @@ function CheckIfBanned($IP,$MAC)
 		}
 	}
 }
-
 // This function creates the database
 function DatabaseCreation($conn)
 {
@@ -91,7 +87,6 @@ function DatabaseClose($conn)
 {
 	pg_close($conn);
 }
-
 // This function opens a connection to the datababase
 function DatabaseConnect()
 {
@@ -101,6 +96,5 @@ function DatabaseConnect()
 	$conn = pg_connect($conn_string);
 	// Return $conn variable
 	return $conn;
-	
 }
 ?>

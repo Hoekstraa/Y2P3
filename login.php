@@ -65,7 +65,6 @@ echo '<html lang="nl">';
 	echo "</body>";
 echo "</html>";
 
-
 // This function validates the users input.
 function LogInValidation($IP,$MAC,$Username,$Passwd)
 {
