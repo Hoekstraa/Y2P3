@@ -15,7 +15,7 @@
 			}
 		}
 	?>
-	<!-- <link rel="stylesheet" href="css/pure-min.css"> -->
-	<!-- <link rel="stylesheet" href="css/custom.css"> -->
+	<link rel="stylesheet" href="css/pure-min.css">
+	<link rel="stylesheet" href="css/custom.css">
 	<!-- <script src="js/scripts.js"></script> -->
 </head>

@@ -178,3 +178,27 @@ div.login-box input.valid {
 	border: 0.1rem solid var(--valid);
 	color: var(--valid) !important;
 }
+
+div.adviser-box {
+    text-align: center;
+    padding: 10vh 2vw;
+    max-width: 255vw;
+    min-width: 10vw;
+}
+
+div.adviser-box input.empty {
+    border: 0.1rem solid #d1d1d1;
+    color: #d1d1d1 !important;
+}
+
+div.adviser-box input.invalid {
+    border: 0.1rem solid var(--invalid) !important;
+    color: var(--invalid) !important;
+}
+
+div.adviser-box input.valid {
+    border: 0.1rem solid #d1d1d1;
+    color: #d1d1d1 !important;
+}
+
+
