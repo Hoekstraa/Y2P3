@@ -1,11 +1,11 @@
-// Valideer firstname with 2-10 character
+// Validate firstname with 2-50 characters
 function ValidateFirstName(firstname){
-    var regex = /^(?=.{2,10}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/;
+    var regex = /^(?=.{2,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/;
     return regex.test(String(firstname).toLowerCase());
 }
-// Validate lastname with 2-10 characters
+// Validate lastname with 2-50 characters
 function ValidateLastName(lastname){
-    var regex = /^(?=.{2,10}$)[a-zA-Z]+$/;
+    var regex = /^(?=.{2,50}$)[a-zA-Z]+$/;
     return regex.test(String(lastname).toLowerCase());
 }
 // Validate Address
