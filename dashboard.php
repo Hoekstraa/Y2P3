@@ -10,8 +10,8 @@ $navigation = [
 ];
 $status = "Hypotheek aangevraagd";
 // DEBUG
-$_SESSION['user'] = "Thimo";
-$_SESSION['userId'] = 0;
+/* $_SESSION['user'] = "Thimo"; */
+/* $_SESSION['userId'] = 0; */
 
 if (isset($_SESSION['user']) && isset($_SESSION['userId'])) {
 echo '<html lang="nl">';
@@ -40,7 +40,8 @@ echo '<html lang="nl">';
 						Contact opnemen
 					</b>
 					</a>
-					<a href=\"logout.php\" class=\"item\" id=\"logout\"><b>
+					<a href=\"logout.php\" class=\"item\" id=\"logout\">
+					<b>
 						<i class=\"fas fa-sign-out-alt\"></i><br>
 						Uitloggen
 					</b></div>

@@ -175,7 +175,7 @@ div.login-box input.invalid {
 }
 
 div.login-box input.valid {
-	border: 0.1rem solid var(--valid);
+	border: 0.1rem solid var(--valid) !important;
 	color: var(--valid) !important;
 }
 
