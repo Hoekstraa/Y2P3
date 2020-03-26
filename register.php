@@ -9,12 +9,10 @@ session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
-
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
 CheckIfBanned($IP,$MAC);
-
 
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
@@ -75,6 +73,7 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 	// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
 	if (strpos($mail, "@") == false) 
 	{
+		// This gives a popup and after user clicks on it the user is redirected to register.php
 		echo '<script type="text/javascript">
 			alert("U moet een @ gebruiken");
 			window.location.href = "register.php";
@@ -99,6 +98,7 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 	}
 	elseif($password1 != $password2)
 	{
+		// This gives a popup and after user clicks on it the user is redirected to register.php
 		echo '<script type="text/javascript">
 		alert("De 2 wachtwoorden moeten gelijk zijn!");
 		window.location.href = "register.php";
@@ -109,7 +109,7 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 		SignUp($mail,$username,$password1);
 	}
 }
-
+// This function enters the users data in to the database after validation
 function SignUp($mail,$username,$password1)
 {
 	// This function connects to the database
@@ -123,5 +123,4 @@ function SignUp($mail,$username,$password1)
 	// Redirect to Dashboard.php
 	header("Location: login.php");
 }
-
 ?>
