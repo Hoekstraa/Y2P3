@@ -9,6 +9,7 @@ $navigation = [
 	new NavbarItem("Register", "register.php"),
 ];
 $status = "Hypotheek aangevraagd";
+// DEBUG
 $_SESSION['user'] = "Thimo";
 $_SESSION['userId'] = 0;
 

@@ -15,6 +15,8 @@
 			}
 		}
 	?>
+	<!-- FontAwesome Free 5.4.1 -- local is broken for now -->
+	<!-- <link rel="stylesheet" href="css/fontawesome.css"> -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 	<!-- <link rel="stylesheet" href="css/pure-min.css"> -->
 	<!-- <link rel="stylesheet" href="css/custom.css"> -->
