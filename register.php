@@ -121,7 +121,8 @@ function SignUp($mail,$username,$password1)
 	$result = pg_execute($conn, "my_query", array($username,$mail,$password1));
 	//This function closes database connection
 	DatabaseClose($conn);
-	
+	// Redirect to Dashboard.php
+	header("Location: login.php");
 }
 
 ?>
