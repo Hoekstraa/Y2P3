@@ -11,7 +11,7 @@ $navigation = [
 
 echo '<html lang="nl">';
 	include("modular/head.php");
-	echo "<body onload=\"emailValidation()\">";
+	echo "<body onload=\"initListeners()\">";
 		include("modular/navbar.php");
 		include("modular/header.php");
 		echo "<script src=\"scripts/EmailValidation.js\"></script>";
@@ -26,7 +26,7 @@ echo '<html lang="nl">';
 						<input type=\"email\" id=\"email\" name=\"email\"></input>
 						<br><br>
 						<label for=\"username\">Gebruikersnaam</label><br>
-						<input type=\"text\" name=\"email\"></input>
+						<input type=\"text\" id=\"username\" name=\"username\"></input>
 						<br><br>
 						<label for=\"password\">Wachtwoord</label><br>
 						<input type=\"password\" name=\"password\"></input>

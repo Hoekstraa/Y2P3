@@ -1,11 +1,44 @@
+var email;
+var username;
+function initListeners() {
+		email = document.getElementById("email");
+		email.addEventListener('input', emailValidation);
+		username = document.getElementById("username");
+		username.addEventListener('input', usernameValidation);
+}
+
+function usernameValidation() {
+		// Empty username
+		if (username.value == '') {
+				username.classList.remove("valid");
+				username.classList.remove("invalid");
+				username.classList.add("empty");
+				username.style.border = "0.1rem solid #d1d1d1"; 
+				username.style.border = "0.1rem solid #d1d1d1"; 
+		}
+		
+		// Valid username
+		else if (username.value.length <= 49)
+		{
+				username.classList.remove("invalid");
+				username.classList.remove("empty");
+				username.classList.add("valid");
+				username.style.border = "0.1rem solid #038A1E;"
+				username.style.color = "#038A1E;"
+		}
+		// Invalid username
+		else {
+				username.classList.remove("valid");
+				username.classList.remove("empty");
+				username.classList.add("invalid");
+				username.style.border = "0.1rem solid #8A031E !important"
+				username.style.color = "#8A031E; !important"
+		}
+}
 // Called when e-mail input changes
 function emailValidation() {
-		var email = document.getElementById("email");
-		email.addEventListener('input', emailValidation);
-		
 		// Empty E-mail
 		if (email.value == '') {
-				console.log("empty");
 				email.classList.remove("valid");
 				email.classList.remove("invalid");
 				email.classList.add("empty");
@@ -14,9 +47,8 @@ function emailValidation() {
 		}
 		
 		// Valid E-mail
-		else if (ValidateEmail(email.value))
+		else if (email.value.length <= 49 && ValidateEmail(email.value))
 		{
-				console.log("valid");
 				email.classList.remove("invalid");
 				email.classList.remove("empty");
 				email.classList.add("valid");
@@ -25,7 +57,6 @@ function emailValidation() {
 		}
 		// Invalid E-mail
 		else {
-				console.log("invalid");
 				email.classList.remove("valid");
 				email.classList.remove("empty");
 				email.classList.add("invalid");
