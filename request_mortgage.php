@@ -1,25 +1,31 @@
 <?php
 require "classes/NavbarItem.php";
+session_start();
+
 //Validate the form data
 if (isset($_POST['submit'])) 
-{ 
+{
 
- $Firstname = $_POST['firstname'];
- $Lastname = $_POST['lastname'];
- $Address = $_POST['address'];
- $Postalcode = $_POST['postalcode'];
- $Phonenumber = $_POST['phone-number'];
- $Emailaddress = $_POST['email'];
- $errorMsg = '';
+$_SESSION['firstname'] = $_POST['firstname'];
+$_SESSION['lastname'] = $_POST['lastname'];
+$_SESSION['address'] = $_POST['address'];
+$_SESSION['postalcode'] = $_POST['postalcode'];
+$_SESSION['phone-number'] = $_POST['phone-number'];
+$_SESSION['email'] = $_POST['email'];
 
- RequestValidation($Firstname, $Lastname, $Address, $Postalcode, $Phonenumber, $Emailaddress);
+$Firstname = $_POST['firstname'];
+$Lastname = $_POST['lastname'];
+$Address = $_POST['address'];
+$Postalcode = $_POST['postalcode'];
+$Phonenumber = $_POST['phone-number'];
+$Emailaddress = $_POST['email'];
 
-} else{
-echo "niet gelukt";
+$errorMsg = '';
+
+RequestValidation($Firstname, $Lastname, $Address, $Postalcode, $Phonenumber, $Emailaddress);
 }
 
-
-$title = "Home";
+$title = "Hypotheek aanvragen";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
 	new NavbarItem("Thuis", "index.php", false),
@@ -33,25 +39,23 @@ $navigation = [
 	//"test"
 ];
 
-/*
+//DEBUG
 $_SESSION['user'] = "Sang";
 $_SESSION['userId'] = 0;
-*/
+if (isset($_SESSION['user']) && isset($_SESSION['userId'])) {
 echo '<html lang="nl">';
 	include("modular/head.php");
-	echo "<body onload=\"emailValidation(); firstNameValidation(); lastNameValidation(); addressValidation(); postalCodeValidation(); phoneNumberValidation()\">";
-	echo $errorMsg;
+	echo "<body onload=\"initListeners()\">";
 		include("modular/navbar.php");
         include("modular/header.php");
 		echo "<script src=\"scripts/RequestValidation.js\"></script>";
-		echo "<script src=\"scripts/EmailValidation.js\"></script>";
 		echo "
 			<main>
 			<div class=\"mortgage-request\">
                 <h1>Hypotheek aanvragen</h1>
                 <p id=\"head\">Vraag hier uw hypotheek aan.</p>
 				<div class=\"login-box\">
-					<form method=\"post\" action=\"\">
+					<form method=\"post\"action=\"\">
 						<label for=\"firstname\">Voornaam</label><br>
 						<input type=\"text\" id=\"firstname\" name=\"firstname\" placeholder=\"Vul uw voornaam in (2-10 tekens)\"></input>
 						<br><br>
@@ -77,6 +81,13 @@ echo '<html lang="nl">';
 		</main>
 		";
 		include("modular/footer.php");
+	}
+	// If user is not logged in, redirect them from dashboard to homepage
+	else {
+		//header("HTTP/1.1 401 Unauthorized");
+		header('Location: index.php');
+		exit;
+	}
 	echo "</body>";
 echo "</html>";
 

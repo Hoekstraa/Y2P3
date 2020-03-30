@@ -1,3 +1,25 @@
+var firstname;
+var lastname;
+var address;
+var postalcode;
+var phonenumber;
+var email;
+
+function initListeners() {
+    firstname = document.getElementById("firstname");
+    firstname.addEventListener('input', firstNameValidation);
+    lastname = document.getElementById("lastname");
+    lastname.addEventListener('input', lastNameValidation);
+    address = document.getElementById("address");
+    address.addEventListener('input', addressValidation);
+    postalcode = document.getElementById("postalcode");
+    postalcode.addEventListener('input', postalCodeValidation);
+    phonenumber = document.getElementById("phone-number");
+    phonenumber.addEventListener('input', phoneNumberValidation);
+    email = document.getElementById("email");
+    email.addEventListener('input', emailValidation);
+}
+
 // Validate firstname with 2-50 characters
 function ValidateFirstName(firstname){
     var regex = /^(?=.{2,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/;
@@ -22,6 +44,12 @@ function ValidatePostalCode(postalcode) {
 function ValidatePhoneNumber(phonenumber) {
     var regex = /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$/;
     return regex.test(String(phonenumber).toLowerCase());
+}
+
+// Returns true on valid e-mail input, false if it's not a valid e-mail address.
+function ValidateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }
 
 function firstNameValidation() {
@@ -93,9 +121,6 @@ function lastNameValidation() {
 }
 
 function addressValidation(){
-    var address = document.getElementById("address");
-    address.addEventListener('input', addressValidation);
-    
     if (address.value == '') {
         console.log("empty");
         address.classList.remove("valid");
@@ -127,9 +152,6 @@ function addressValidation(){
 }
 
 function postalCodeValidation(){
-    var postalcode = document.getElementById("postalcode");
-    postalcode.addEventListener('input', postalCodeValidation);
-    
     if (postalcode.value == '') {
         console.log("empty");
         postalcode.classList.remove("valid");
@@ -161,9 +183,6 @@ function postalCodeValidation(){
 }
 
 function phoneNumberValidation(){
-    var phonenumber = document.getElementById("phone-number");
-    phonenumber.addEventListener('input', phoneNumberValidation);
-    
     if (phonenumber.value == '') {
         console.log("empty");
         phonenumber.classList.remove("valid");
@@ -191,5 +210,34 @@ function phoneNumberValidation(){
         phonenumber.classList.add("invalid");
         phonenumber.style.border = "0.1rem solid #8A031E !important"
         phonenumber.style.color = "#8A031E; !important"
+    }
+}
+
+function emailValidation() {
+    // Empty E-mail
+    if (email.value == '') {
+            email.classList.remove("valid");
+            email.classList.remove("invalid");
+            email.classList.add("empty");
+            email.style.border = "0.1rem solid #d1d1d1"; 
+            email.style.border = "0.1rem solid #d1d1d1"; 
+    }
+    
+    // Valid E-mail
+    else if (ValidateEmail(email.value))
+    {
+            email.classList.remove("invalid");
+            email.classList.remove("empty");
+            email.classList.add("valid");
+            email.style.border = "0.1rem solid #038A1E;"
+            email.style.color = "#038A1E;"
+    }
+    // Invalid E-mail
+    else {
+            email.classList.remove("valid");
+            email.classList.remove("empty");
+            email.classList.add("invalid");
+            email.style.border = "0.1rem solid #8A031E !important"
+            email.style.color = "#8A031E; !important"
     }
 }
