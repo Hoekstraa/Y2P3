@@ -5,6 +5,7 @@ require "classes/NavbarItem.php";
 include "Global_functions.php";
 // Set global variable
 $DecryptedUsername = GetUsername($Session_name_user);
+$status = GetStatus($Session_id_user);
 
 // Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
@@ -22,7 +23,6 @@ $navigation = [
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
 
-$status = "Hypotheek aangevraagd";
 
 echo '<html lang="nl">';
 	include("modular/head.php");
@@ -65,9 +65,24 @@ echo '<html lang="nl">';
 echo "</html>";
 
 
-function GetStatus()
+function GetStatus($Session_id_user)
 {
-	
+	// Get userid from session
+	$encrypted_userid = $_SESSION[$Session_id_user];
+	// Decrypt the encrypted username
+	$userid = base64_decode($encrypted_userid);
+	// calls data baseconnect function
+	$conn = DatabaseConnect();
+	// Create perpared statement and executes the statement
+	$result = pg_prepare($conn, "status", "SELECT Hypotheek_status FROM hypotheken WHERE userid = $1");
+	$result = pg_execute($conn, "status", array($userid));
+	// Get data from sql return
+	while ($row = pg_fetch_row($result)) 
+		{
+			// Get userid from sql query return
+			$status = $row[0];
+	}
+	return $status;
 }
 
 ?>

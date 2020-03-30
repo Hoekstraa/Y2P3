@@ -135,7 +135,7 @@ function DatabaseCreation($conn)
 }
 
 // This function creates the morgage database 
-function DatabaseMorgae($conn)
+function DatabaseMorgage($conn)
 {
 	// calls data baseconnect function
 	$conn = DatabaseConnect();
