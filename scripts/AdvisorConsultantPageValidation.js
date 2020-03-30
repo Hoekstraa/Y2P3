@@ -7,7 +7,15 @@ function validateQuestion(question) {
     return regex.test(String(question).toLowerCase())
 }
 function validateDateTime() {
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
 
+    var fistPossibleDate = new Date().addDays(5).toISOString().split('T')[0];
+    document.getElementById("meetingTime").setAttribute('min',fistPossibleDate)
+    document.getElementById("meetingTime").setAttribute('value',fistPossibleDate)
 }
 
 function subjectValidation() {
@@ -76,5 +84,6 @@ function questionValidation() {
 
 }
 function dateTimeValidation() {
-
+    var datetime = document.getElementById("meetingTime")
+    datetime.addEventListener("input", validateDateTime(datetime))
 }
