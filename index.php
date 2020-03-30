@@ -1,5 +1,14 @@
 <?php
+// Recuire php files 
 require "classes/NavbarItem.php";
+// Include php files
+include "Global_functions.php";
+// stop php errors 
+error_reporting(E_ERROR | E_PARSE);
+
+$IP = GetIP();
+$MAC = GetMAC();
+CheckIfBanned($IP,$MAC,$Session_banned);
 
 $title = "Home";
 $navigation = [

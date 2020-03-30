@@ -9,8 +9,7 @@ error_reporting(E_ERROR | E_PARSE);
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
-
-CheckIfBanned($IP,$MAC);
+CheckIfBanned($IP,$MAC,$Session_banned);
 Set_session($IP,$MAC,$Session_name_counter,$Int_10);
 CheckIfLoggedIn($Session_name_user,$page);
 
@@ -19,7 +18,7 @@ if ( isset( $_POST['submit'] ) )
 { 
 	$Username = $_POST['username'];
 	$Passwd = $_POST['password'];
-	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter);
+	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned);
 }
 $title = "Home";
 $navigation = [
@@ -58,16 +57,16 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter)
+function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned)
 {		
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
 		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 		{
-			Ban($IP,$MAC);
+			Ban($IP,$MAC,$Session_banned);
 		}
 		elseif (strpos($Passwd, "<script>") || strpos($Passwd, "1=1") || strpos($Passwd, "1 =1") || strpos($Passwd, "1= 1") || strpos($Passwd, "1 = 1") !== false) 
 		{
-			Ban($IP,$MAC);
+			Ban($IP,$MAC,$Session_banned);
 		}
 		else
 		{
@@ -116,7 +115,7 @@ function Set_session($IP,$MAC,$Session_name_counter,$Int_10)
 		// Check if the counter greater is then 10 if so then the data has been changed then call the ban function // TODO ff overleggen
 		if($decrypted_counter > $Int_10)
 		{
-			Ban($IP,$MAC);
+			Ban($IP,$MAC,$Session_banned);
 		}
 	}
 	elseif(!isset($_SESSION[$Session_name_counter]) && empty($_SESSION[$Session_name_counter])) 

@@ -44,7 +44,7 @@ function CheckIfLoggedIn($Session_name_user,$page)
 	}
 }
 // This function bannes the user when called.
-function Ban($IP,$MAC)
+function Ban($IP,$MAC,$Session_banned)
 {
 	$Encrypted_true = base64_encode("True");
 	// Set Banned session to true
@@ -83,17 +83,20 @@ function GetIP()
 	return $IP;
 }
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
-function CheckIfBanned($IP,$MAC)
+function CheckIfBanned($IP,$MAC,$Session_banned)
 {
 	
-	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) {
+	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) 
+	{
 		// Pull encrypted data from session
 		$Encrypted_status = $_SESSION[$Session_banned];
 		// Decrypt the data
 		$Decrypted_status = base64_decode($Encrypted_status);
 		// Check if data = true if so then redirect to banned.php
-	 if ($Decrypted_status == "True")
-	 header("Location: Banned.php");
+	 if($Decrypted_status == "True")
+	 {
+	 	header("Location: Banned.php");
+	 }
 	}
 	// Declare file
 	$contents = file("Banned.txt");

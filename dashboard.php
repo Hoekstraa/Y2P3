@@ -8,6 +8,9 @@ $DecryptedUsername = GetUsername($Session_name_user);
 
 // Functions
 CheckIfLoggedIn($Session_name_user,$page);
+$IP = GetIP();
+$MAC = GetMAC();
+CheckIfBanned($IP,$MAC,$Session_banned);
 
 $title = "Home";
 $navigation = [

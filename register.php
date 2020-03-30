@@ -10,7 +10,7 @@ error_reporting(E_ERROR | E_PARSE);
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
-CheckIfBanned($IP,$MAC);
+CheckIfBanned($IP,$MAC,$Session_banned);
 CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed
@@ -20,7 +20,7 @@ if ( isset( $_POST['submit'] ) )
 	$username = htmlspecialchars($_POST['username']);
 	$password1 = htmlspecialchars($_POST['password']);
 	$password2 = htmlspecialchars($_POST['repeat-password']);
-	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2);
+	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned);
 }
 
 $title = "Home";
@@ -67,7 +67,7 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
+function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned)
 {
 	// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
 	if (strpos($mail, "@") == false) 
@@ -80,19 +80,19 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 	}
 	elseif(strpos($mail, "<script>") || strpos($mail, "1=1") || strpos($mail, "1 =1") || strpos($mail, "1= 1") || strpos($mail, "1 = 1") !== false) 
 	{
-		Ban($IP,$MAC);
+		Ban($IP,$MAC,$Session_banned);
 	}
 	elseif(strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 	{
-		Ban($IP,$MAC);
+		Ban($IP,$MAC,$Session_banned);
 	}
 	elseif(strpos($password1, "<script>") || strpos($password1, "1=1") || strpos($password1, "1 =1") || strpos($password1, "1= 1") || strpos($password1, "1 = 1") !== false) 
 	{
-		Ban($IP,$MAC);
+		Ban($IP,$MAC,$Session_banned);
 	}
 	elseif(strpos($password2, "<script>") || strpos($password2, "1=1") || strpos($password2, "1 =1") || strpos($password2, "1= 1") || strpos($password2, "1 = 1") !== false) 
 	{
-		Ban($IP,$MAC);
+		Ban($IP,$MAC,$Session_banned);
 		
 	}
 	elseif($password1 != $password2)
