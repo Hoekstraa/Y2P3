@@ -1,15 +1,26 @@
 <?php
 
+// start the sessions
+session_start();
+
 //Global Variables
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
 
-
+// Variable 10 
 $Int_10 = 10;
 
-// Array with character to filter
-$Characters =array("<script>","1=1","1 =1","1= 1","1 = 1");
+// This function checks if the user is logged in
+function CheckIfLoggedIn()
+{
+	// Checks if the session exists and is not empty
+	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+	{
+		// Redirect to dashboard.php
+		header("Location: Dashboard.php");
+	}
+}
 
 // This function bannes the user when called.
 function Ban($IP,$MAC)
@@ -110,16 +121,22 @@ function DatabaseConnect()
 	// Return $conn variable
 	return $conn;
 }
-
 // This function pulls the users username form the session
-function GetUsername()
+function GetUsername($Session_name_user)
 {
+	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+	{
 	// Get encrypted username form session
 	$EncryptedUsername = $_SESSION[$Session_name_user];
 	// Decrypt the encrypted username
-	$DecryptedUsername = base64_encode($EncryptedUsername);
+	$DecryptedUsername = base64_Decode($EncryptedUsername);
 	// Return the Decrypted username
 	return $DecryptedUsername;
+	}
+	else
+	{
+		header("Location: login.php");
+	}
 }
 
 // This function checks if the users a admin
@@ -161,6 +178,9 @@ Function CheckIfAdmin()
 		</script>';
 	}
 }
+// This function prevents CSRF
+function AntiCSRF()
+{
 
-
+}
 ?>

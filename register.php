@@ -4,8 +4,6 @@ require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
 
-// start the sessions
-session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
@@ -79,19 +77,19 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 			window.location.href = "register.php";
 			</script>';
 	}
-	elseif (strpos($mail, $Characters) !== false) 
+	elseif(strpos($mail, "<script>") || strpos($mail, "1=1") || strpos($mail, "1 =1") || strpos($mail, "1= 1") || strpos($mail, "1 = 1") !== false) 
 	{
 		Ban($IP,$MAC);
 	}
-	elseif (strpos($username, $Characters) !== false) 
+	elseif(strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 	{
 		Ban($IP,$MAC);
 	}
-	elseif (strpos($password1, $Characters) !== false) 
+	elseif(strpos($password1, "<script>") || strpos($password1, "1=1") || strpos($password1, "1 =1") || strpos($password1, "1= 1") || strpos($password1, "1 = 1") !== false) 
 	{
 		Ban($IP,$MAC);
 	}
-	elseif (strpos($password2, $Characters) !== false) 
+	elseif(strpos($password2, "<script>") || strpos($password2, "1=1") || strpos($password2, "1 =1") || strpos($password2, "1= 1") || strpos($password2, "1 = 1") !== false) 
 	{
 		Ban($IP,$MAC);
 		

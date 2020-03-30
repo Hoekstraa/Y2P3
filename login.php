@@ -3,8 +3,6 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
-// start the sessions
-session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
@@ -20,7 +18,7 @@ if ( isset( $_POST['submit'] ) )
 { 
 	$Username = $_POST['username'];
 	$Passwd = $_POST['password'];
-	LogInValidation($IP,$MAC,$Username,$Passwd);
+	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user);
 }
 $title = "Home";
 $navigation = [
@@ -59,25 +57,25 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$Username,$Passwd)
+function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user)
 {		
-		// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
-		if (strpos($Username, $Characters) !== false) 
+		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
+		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 		{
 			Ban($IP,$MAC);
 		}
-		elseif(strpos($Passwd,$Characters) !== false)
+		elseif (strpos($Passwd, "<script>") || strpos($Passwd, "1=1") || strpos($Passwd, "1 =1") || strpos($Passwd, "1= 1") || strpos($Passwd, "1 = 1") !== false) 
 		{
 			Ban($IP,$MAC);
 		}
 		else
 		{
 				// Calls Userlogin function with the userame and password as variables
-				UserLogIn($Username,$Passwd,$IP,$MAC);
+				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user);
 		}
 }
 // This functions logs user in.
-function UserLogIn($Username,$Passwd,$IP,$MAC)
+function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user)
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
@@ -91,11 +89,12 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 		$EncryptedUsername = base64_encode($Username);
 		// Create session Username and put the encrypted username in the session
 		$_SESSION[$Session_name_user] = $EncryptedUsername;
-		// Redirect to Dashboard.php
-		header("Location: Dashboard.php");
-
+		// Reset the failed log in counter
 		$Encrypt = base64_encode($Int_10);
 		$_SESSION[$Session_name] = $Encrypt;
+		// Redirect to dashboard.php
+		header("Location: dashboard.php");
+
 	}
 	else 
 	{
@@ -104,28 +103,19 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 	// This function closes database connection
 	DatabaseClose($conn);
 }
-// This function checks if the user is logged in
-function CheckIfLoggedIn()
-{
-	// Checks if the session exists and is not empty
-	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
-	{
-		// Redirect to dashboard.php
-		header("Location: Dashboard.php");
-	}
-}
 // This function encrypts a int
 function Set_session($IP,$MAC) 
 {
 	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pull the encrypted data from the session
-		$encrypted = $_SESSION[$Session_name];
+		$encrypted = $_SESSION[$Session_name_counter];
 		// Decrypt the data
 		$decrypt = base64_decode($encrypted);
 		// Check if the counter greater is then 10 if so then the data has been changed then call the ban function // TODO ff overleggen
 		if($counter > $Int_10)
 		{
+			echo $counter;
 			Ban($IP,$MAC);
 		}
 	}
