@@ -3,13 +3,10 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
-
 // start the sessions
 session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
-
-
 
 //functions
 $IP = GetIP();
@@ -21,9 +18,9 @@ CheckIfLoggedIn();
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
-		$Username = $_POST['username'];
-		$Passwd = $_POST['password'];
-		LogInValidation($IP,$MAC,$Username,$Passwd);
+	$Username = $_POST['username'];
+	$Passwd = $_POST['password'];
+	LogInValidation($IP,$MAC,$Username,$Passwd);
 }
 $title = "Home";
 $navigation = [

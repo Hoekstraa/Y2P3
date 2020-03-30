@@ -4,6 +4,8 @@
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+
+
 $Int_10 = 10;
 
 // Array with character to filter
@@ -106,7 +108,59 @@ function DatabaseConnect()
 	// Execute connection string
 	$conn = pg_connect($conn_string);
 	// Return $conn variable
-	echo var_dump($conn);
 	return $conn;
 }
+
+// This function pulls the users username form the session
+function GetUsername()
+{
+	// Get encrypted username form session
+	$EncryptedUsername = $_SESSION[$Session_name_user];
+	// Decrypt the encrypted username
+	$DecryptedUsername = base64_encode($EncryptedUsername);
+	// Return the Decrypted username
+	return $DecryptedUsername;
+}
+
+// This function checks if the users a admin
+Function CheckIfAdmin()
+{
+	// Set users mac addres into a variable
+	$MAC = GetMAC();
+	// Set users ip addres into a variable
+	$IP = GetIP();
+	// Set the file name into a variable
+	$filename = 'Admins.txt';
+	$contents = file($filename);
+	// Set a variable found to false
+	$found = false;
+	// Loop through the file line by line
+	foreach ($contents as $admin)
+	{
+	// If the current line is the same as the users ip or mac set the found variable then break out of the loop
+   	if($admin == $MAC Or  $admin == $IP)
+    {
+		// set the found variable to true
+		$found = true;
+		// Break out of the loop
+        break;
+	}
+	}
+	// Check if the found variable is true
+	if($found == true)
+	{
+		// if found is true then pop up window with the text welkom
+		echo '<script type="text/javascript">alert("Welkom admin");</script>';
+	}
+	else
+	{
+		// if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
+		echo '<script type="text/javascript">
+		alert("U bent geen admin vraag dit aan bij een van onze beheerders.");
+		window.location.href = "index.php";
+		</script>';
+	}
+}
+
+
 ?>
