@@ -5,9 +5,10 @@ require "classes/NavbarItem.php";
 include "Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
-
+//Get variables
 $IP = GetIP();
 $MAC = GetMAC();
+// Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 
 $title = "Home";
@@ -16,7 +17,6 @@ $navigation = [
 	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php"),
-	//"test"
 ];
 
 echo '<html lang="nl">';

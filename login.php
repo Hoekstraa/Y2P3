@@ -6,11 +6,14 @@ include "Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
-//functions
+// Get variables
 $IP = GetIP();
 $MAC = GetMAC();
+// Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
+// Set the failed login session to 10
 Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps);
+// Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed

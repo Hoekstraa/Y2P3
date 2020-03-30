@@ -6,10 +6,12 @@ include "Global_functions.php";
 // Set global variable
 $DecryptedUsername = GetUsername($Session_name_user);
 
-// Functions
+// Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
+// Set variables
 $IP = GetIP();
 $MAC = GetMAC();
+// Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 
 $title = "Home";
@@ -17,7 +19,7 @@ $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem($DecryptedUsername, "Account.php"),
-	new NavbarItem("Uitloggen", "register.php"),
+	new NavbarItem("Uitloggen", "logout.php"),
 ];
 
 $status = "Hypotheek aangevraagd";

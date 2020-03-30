@@ -1,5 +1,4 @@
 <?php
-
 // start the sessions
 session_start();
 
@@ -15,6 +14,7 @@ $FailedAttemps = 10;
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user,$page)
 {
+	// Checks the users current page
 	if($page == "/Project2.3/login.php")
 	{
 		// Checks if the session exists and is not empty
@@ -24,6 +24,7 @@ function CheckIfLoggedIn($Session_name_user,$page)
 			header("Location: Dashboard.php");
 		}
 	}
+	// Checks the users current page
 	elseif($page == "/Project2.3/register.php")
 	{
 		// Checks if the session exists and is not empty
@@ -33,6 +34,7 @@ function CheckIfLoggedIn($Session_name_user,$page)
 			header("Location: dashboard.php");
 		}
 	}
+	// Checks the users current page
 	elseif($page == "/Project2.3/dashboard.php")
 	{
 		// Checks if the session exists and is not empty
@@ -159,6 +161,7 @@ function GetUsername($Session_name_user)
 	}
 	else
 	{
+		// Redirect to login.php
 		header("Location: login.php");
 	}
 }
@@ -205,5 +208,13 @@ Function CheckIfAdmin()
 function AntiCSRF()
 {
 
+}
+// This function Logs user out
+function LogOut($Session_name_user)
+{
+	// Delete the session username
+	unset($_SESSION[$Session_name_user]);
+	// Redirect to index.php
+	header("Location: index.php");
 }
 ?>

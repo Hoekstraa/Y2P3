@@ -7,10 +7,12 @@ include "Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 
-//functions
+// Set variables
 $IP = GetIP();
 $MAC = GetMAC();
+// Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
+// Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed
@@ -105,6 +107,7 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session
 	}
 	else
 	{
+		// Call sign up function
 		SignUp($mail,$username,$password1);
 	}
 }
