@@ -5,7 +5,6 @@ require "classes/NavbarItem.php";
 include "Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
-
 // Get variables
 $IP = GetIP();
 $MAC = GetMAC();
@@ -21,7 +20,7 @@ if ( isset( $_POST['submit'] ) )
 { 
 	$Username = $_POST['username'];
 	$Passwd = $_POST['password'];
-	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps);
+	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user);
 }
 $title = "Home";
 $navigation = [
@@ -60,7 +59,7 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps)
+function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user)
 {		
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
 		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
@@ -74,11 +73,11 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_us
 		else
 		{
 				// Calls Userlogin function with the userame and password as variables
-				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps);
+				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user);
 		}
 }
 // This functions logs user in.
-function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps)
+function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user)
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
@@ -89,6 +88,19 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 	$login_check = pg_num_rows($result);
 	if($login_check > 0)
 	{
+		// Get userid from database
+		$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
+		$userid = pg_execute($conn, "userid", array($Username));
+		while ($row = pg_fetch_row($userid)) 
+		{
+			// Get userid from sql query return
+			$user_id = $row[0];
+		}
+		// Encrypt user id
+		$EncryptedUserid = base64_encode($user_id);
+		// Put encrypted user id in a session
+		$_SESSION[$Session_id_user] = $EncryptedUserid;
+		// Encrypt user name
 		$EncryptedUsername = base64_encode($Username);
 		// Create session Username and put the encrypted username in the session
 		$_SESSION[$Session_name_user] = $EncryptedUsername;

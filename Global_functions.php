@@ -5,6 +5,7 @@ session_start();
 //Global Variables
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
+$Session_id_user = "AiS7M5emJjrZw3YlWvPwzKsxwMI6wt07kBgjnMwxenaFI9U0Oc15E9dl1DCEL0CNnmwsM6bxpnVUFWQ3gna5TAEAelMwFTN2oXpI";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
 $page = $_SERVER['REQUEST_URI'];
 
@@ -132,6 +133,25 @@ function DatabaseCreation($conn)
 	// Show if query was succesfull
 	echo var_dump($result);
 }
+
+// This function creates the morgage database 
+function DatabaseMorgae($conn)
+{
+	// calls data baseconnect function
+	$conn = DatabaseConnect();
+	//query for database creation
+	$result = pg_query($conn, "CREATE TABLE Hypotheken (
+		HypotheekID serial PRIMARY KEY,
+		userid VARCHAR (50) NOT NULL,
+		Adres VARCHAR (100) NOT NULL,
+		Bedrag VARCHAR (100) NOT NULL,
+		Rente VARCHAR (100) NOT NULL,
+		Werknemer VARCHAR (100) NOT NULL,
+		Hypotheek_status VARCHAR (100) NOT NULL)");
+	// Show if query was succesfull
+	echo var_dump($result);
+}
+
 // This function closes a connection to the datababase
 function DatabaseClose($conn)
 {
