@@ -9,9 +9,10 @@ error_reporting(E_ERROR | E_PARSE);
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
+
 CheckIfBanned($IP,$MAC);
 Set_session($IP,$MAC,$Session_name_counter,$Int_10);
-//CheckIfLoggedIn();
+CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 

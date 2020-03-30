@@ -7,23 +7,40 @@ session_start();
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+$page = $_SERVER['REQUEST_URI'];
 
 // Variable 10 
 $Int_10 = 10;
 
 // This function checks if the user is logged in and ifnot redirect to login.php
-function CheckIfLoggedIn()
+function CheckIfLoggedIn($Session_name_user,$page)
 {
-	// Checks if the session exists and is not empty
-	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+	if($page == "/Project2.3/login.php")
 	{
-		// Redirect to dashboard.php
-		header("Location: Dashboard.php");
+		// Checks if the session exists and is not empty
+		if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: Dashboard.php");
+		}
 	}
-	else
+	elseif($page == "/Project2.3/register.php")
 	{
-		// Redirect to dashboard.php
-		header("Location: login.php");
+		// Checks if the session exists and is not empty
+		if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: dashboard.php");
+		}
+	}
+	elseif($page == "/Project2.3/dashboard.php")
+	{
+		// Checks if the session exists and is not empty
+		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: login.php");
+		}
 	}
 }
 // This function bannes the user when called.
@@ -142,7 +159,6 @@ function GetUsername($Session_name_user)
 		header("Location: login.php");
 	}
 }
-
 // This function checks if the users a admin
 Function CheckIfAdmin()
 {

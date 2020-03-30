@@ -11,6 +11,7 @@ error_reporting(E_ERROR | E_PARSE);
 $IP = GetIP();
 $MAC = GetMAC();
 CheckIfBanned($IP,$MAC);
+CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 

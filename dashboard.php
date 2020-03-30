@@ -7,7 +7,7 @@ include "Global_functions.php";
 $DecryptedUsername = GetUsername($Session_name_user);
 
 // Functions
-CheckIfLoggedIn();
+CheckIfLoggedIn($Session_name_user,$page);
 
 $title = "Home";
 $navigation = [
@@ -16,6 +16,7 @@ $navigation = [
 	new NavbarItem($DecryptedUsername, "Account.php"),
 	new NavbarItem("Uitloggen", "register.php"),
 ];
+
 $status = "Hypotheek aangevraagd";
 
 echo '<html lang="nl">';
