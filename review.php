@@ -2,6 +2,7 @@
 require "classes/NavbarItem.php";
 session_start();
 
+//Data
 $Firstname = $_SESSION['firstname'];
 $Lastname = $_SESSION['lastname'];
 $Address = $_SESSION['address'];
@@ -9,40 +10,16 @@ $Postalcode = $_SESSION['postalcode'];
 $Phonenumber = $_SESSION['phone-number'];
 $Emailaddress = $_SESSION['email'];
 
-if ( isset( $_POST['back'] ) ) 
+if ( isset( $_POST['back'])) 
 { 
   //Go back to the request page
   header("Location: request_mortgage.php"); 
 }
 
-if ( isset( $_POST['submit'] ) ) 
+if ( isset( $_POST['submit'])) 
 { 
-/* Attempt MySQL server connection. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
-$link = mysqli_connect("localhost", "root", "", "demo");
- 
-// Check connection
-if($link === false){
-    die("ERROR: Could not connect. " . mysqli_connect_error());
-}
- 
-// Attempt insert query execution
-$sql = "INSERT INTO persons (first_name, last_name, email) VALUES ('Peter', 'Parker', 'peterparker@mail.com')";
-if(mysqli_query($link, $sql)){
-    echo "Records inserted successfully.";
-} else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-}
- 
-// Close connection
-mysqli_close($link);
+//Insert values into the database
 
-$conn = DatabaseConnect();
-// Create perpared statement and executes the statement
-$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1 AND password = $2");
-$result = pg_execute($conn, "my_query", array($Username,$Passwd));
-// Checks if login was succesfull 
-$login_check = pg_num_rows($result);
 }
 
 $title = "Home";

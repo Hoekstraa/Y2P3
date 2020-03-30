@@ -42,6 +42,7 @@ $navigation = [
 //DEBUG
 $_SESSION['user'] = "Sang";
 $_SESSION['userId'] = 0;
+
 if (isset($_SESSION['user']) && isset($_SESSION['userId'])) {
 echo '<html lang="nl">';
 	include("modular/head.php");
