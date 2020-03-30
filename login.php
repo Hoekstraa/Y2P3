@@ -10,7 +10,7 @@ error_reporting(E_ERROR | E_PARSE);
 $IP = GetIP();
 $MAC = GetMAC();
 CheckIfBanned($IP,$MAC,$Session_banned);
-Set_session($IP,$MAC,$Session_name_counter,$Int_10);
+Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps);
 CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed
@@ -18,7 +18,7 @@ if ( isset( $_POST['submit'] ) )
 { 
 	$Username = $_POST['username'];
 	$Passwd = $_POST['password'];
-	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned);
+	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps);
 }
 $title = "Home";
 $navigation = [
@@ -57,7 +57,7 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned)
+function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps)
 {		
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
 		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
@@ -71,11 +71,11 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_us
 		else
 		{
 				// Calls Userlogin function with the userame and password as variables
-				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter);
+				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps);
 		}
 }
 // This functions logs user in.
-function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter)
+function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps)
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
@@ -90,8 +90,8 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 		// Create session Username and put the encrypted username in the session
 		$_SESSION[$Session_name_user] = $EncryptedUsername;
 		// Reset the failed log in counter
-		$Encrypt = base64_encode($Int_10);
-		$_SESSION[$Session_name] = $Encrypt;
+		$Encrypt = base64_encode($FailedAttemps);
+		$_SESSION[$Session_name_counter] = $Encrypt;
 		// Redirect to dashboard.php
 		header("Location: dashboard.php");
 
@@ -104,7 +104,7 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 	DatabaseClose($conn);
 }
 
-function Set_session($IP,$MAC,$Session_name_counter,$Int_10) 
+function Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps) 
 {
 	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
@@ -113,7 +113,7 @@ function Set_session($IP,$MAC,$Session_name_counter,$Int_10)
 		// Decrypt the data
 		$decrypted_counter = base64_decode($encrypted_counter);
 		// Check if the counter greater is then 10 if so then the data has been changed then call the ban function // TODO ff overleggen
-		if($decrypted_counter > $Int_10)
+		if($decrypted_counter > $FailedAttemps)
 		{
 			Ban($IP,$MAC,$Session_banned);
 		}
@@ -121,7 +121,7 @@ function Set_session($IP,$MAC,$Session_name_counter,$Int_10)
 	elseif(!isset($_SESSION[$Session_name_counter]) && empty($_SESSION[$Session_name_counter])) 
 	{
 		// Encrypt the data 
-		$encrypt_10 =  base64_encode($Int_10); 
+		$encrypt_10 =  base64_encode($FailedAttemps); 
 		// Put encrypted data in the session
 		$_SESSION[$Session_name_counter] = $encrypt_10;
 	}
@@ -138,6 +138,7 @@ function FailedLogIn($IP,$MAC,$Session_name_counter)
 		$decrypted = base64_decode($encrypted);
 		// Decrease the counter by 1
 		$counter = $decrypted - 1;
+		echo $counter;
 		// Check if the counter is 0 or lower then call the ban function
 		if($counter <= 0)
 		{

@@ -10,7 +10,7 @@ $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7
 $page = $_SERVER['REQUEST_URI'];
 
 // Variable 10 
-$Int_10 = 10;
+$FailedAttemps = 10;
 
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user,$page)
