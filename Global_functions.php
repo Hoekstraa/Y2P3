@@ -11,7 +11,7 @@ $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7
 // Variable 10 
 $Int_10 = 10;
 
-// This function checks if the user is logged in
+// This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn()
 {
 	// Checks if the session exists and is not empty
@@ -20,8 +20,12 @@ function CheckIfLoggedIn()
 		// Redirect to dashboard.php
 		header("Location: Dashboard.php");
 	}
+	else
+	{
+		// Redirect to dashboard.php
+		header("Location: login.php");
+	}
 }
-
 // This function bannes the user when called.
 function Ban($IP,$MAC)
 {

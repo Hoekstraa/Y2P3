@@ -6,6 +6,9 @@ include "Global_functions.php";
 // Set global variable
 $DecryptedUsername = GetUsername($Session_name_user);
 
+// Functions
+CheckIfLoggedIn();
+
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
