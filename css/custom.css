@@ -240,3 +240,24 @@ div.adviser-box input.valid {
     border: 0.1rem solid #d1d1d1;
     color: var(--valid) !important;
 }
+
+table.table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+table.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #464655;
+    color: white;
+  }
+
+table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+table.table tr:hover {background-color: #ddd;}
