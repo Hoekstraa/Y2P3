@@ -78,6 +78,7 @@ function ValidateEmail(email) {
 }
 
 function passwordValidation() {
+		// Empty input - show gray input box
 		if (password.value == '') {
 				password.classList.remove("valid");
 				password.classList.remove("invalid");
