@@ -29,10 +29,10 @@ echo '<html lang="nl">';
 						<input type=\"text\" id=\"username\" name=\"username\"></input>
 						<br><br>
 						<label for=\"password\">Wachtwoord</label><br>
-						<input type=\"password\" name=\"password\"></input>
+						<input id=\"password\" type=\"password\" name=\"password\"></input>
 						<br><br>
 						<label for=\"repeat-password\">Herhaal uw wachtwoord</label><br>
-						<input type=\"password\" name=\"repeat-password\"></input>
+						<input id=\"password2\" type=\"password\" name=\"repeat-password\"></input>
 						<br><br>
 						<input class=\"submit\" type=\"submit\" value=\"Login\"></input>
 					</form>

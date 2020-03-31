@@ -1,10 +1,16 @@
 var email;
 var username;
+var password;
+var password2;
 function initListeners() {
 		email = document.getElementById("email");
 		email.addEventListener('input', emailValidation);
 		username = document.getElementById("username");
 		username.addEventListener('input', usernameValidation);
+		password = document.getElementById("password");
+		password.addEventListener('input', passwordValidation);
+		password2 = document.getElementById("password2");
+		password2.addEventListener('input', password2Validation);
 }
 
 function usernameValidation() {
@@ -69,5 +75,69 @@ function emailValidation() {
 function ValidateEmail(email) {
 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(String(email).toLowerCase());
+}
+
+function passwordValidation() {
+		if (password.value == '') {
+				password.classList.remove("valid");
+				password.classList.remove("invalid");
+				password.classList.add("empty");
+				password.style.border = "0.1rem solid #d1d1d1"; 
+				password.style.border = "0.1rem solid #d1d1d1"; 
+		}
+
+		// Valid username
+		else if (password.value.length <= 49)
+		{
+				password.classList.remove("invalid");
+				password.classList.remove("empty");
+				password.classList.add("valid");
+				password.style.border = "0.1rem solid #038A1E;"
+				password.style.color = "#038A1E;"
+		}
+		// Invalid username
+		else {
+				password.classList.remove("valid");
+				password.classList.remove("empty");
+				password.classList.add("invalid");
+				password.style.border = "0.1rem solid #8A031E !important"
+				password.style.color = "#8A031E; !important"
+		}
+}
+
+function password2Validation() {
+		if (password2.value == '') {
+				password2.classList.remove("valid");
+				password2.classList.remove("invalid");
+				password2.classList.add("empty");
+				password2.style.border = "0.1rem solid #d1d1d1"; 
+				password2.style.border = "0.1rem solid #d1d1d1"; 
+		}
+
+	else if(password2.value != password.value) {
+				password2.classList.remove("valid");
+				password2.classList.remove("empty");
+				password2.classList.add("invalid");
+				password2.style.border = "0.1rem solid #8A031E !important"
+				password2.style.color = "#8A031E; !important"
+	}
+		
+		// Valid username
+		else if (password2.value.length <= 49)
+		{
+				password2.classList.remove("invalid");
+				password2.classList.remove("empty");
+				password2.classList.add("valid");
+				password2.style.border = "0.1rem solid #038A1E;"
+				password2.style.color = "#038A1E;"
+		}
+		// Invalid username
+		else {
+				password2.classList.remove("valid");
+				password2.classList.remove("empty");
+				password2.classList.add("invalid");
+				password2.style.border = "0.1rem solid #8A031E !important"
+				password2.style.color = "#8A031E; !important"
+		}
 }
 
