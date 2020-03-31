@@ -6,12 +6,9 @@ include "Global_functions.php";
 // Set global variable
 $DecryptedUsername = GetUsername($Session_name_user);
 $status = GetStatus($Session_id_user);
-
 // Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
 // Set variables
-$IP = GetIP();
-$MAC = GetMAC();
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 

@@ -5,9 +5,6 @@ require "classes/NavbarItem.php";
 include "Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
-// Get variables
-$IP = GetIP();
-$MAC = GetMAC();
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 // Set the failed login session to 10

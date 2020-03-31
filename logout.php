@@ -13,5 +13,4 @@ else
     // Redirect to dashboard.php
 	header("Location: Index.php");
 }
-
 ?>

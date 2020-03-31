@@ -6,10 +6,6 @@ include "Global_functions.php";
 
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
-
-// Set variables
-$IP = GetIP();
-$MAC = GetMAC();
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 // Check if the user is logged in

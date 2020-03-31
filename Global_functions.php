@@ -11,6 +11,10 @@ $page = $_SERVER['REQUEST_URI'];
 
 // Variable 10 
 $FailedAttemps = 10;
+// Set global ip variable
+$IP = GetIP();
+// Set global mac variable
+$MAC = GetMAC();
 
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user,$page)
@@ -37,6 +41,15 @@ function CheckIfLoggedIn($Session_name_user,$page)
 	}
 	// Checks the users current page
 	elseif($page == "/Project2.3/dashboard.php")
+	{
+		// Checks if the session exists and is not empty
+		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: login.php");
+		}
+	}
+	elseif($page == "/Project2.3/request_morgage.php")
 	{
 		// Checks if the session exists and is not empty
 		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
@@ -88,7 +101,6 @@ function GetIP()
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
 function CheckIfBanned($IP,$MAC,$Session_banned)
 {
-	
 	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) 
 	{
 		// Pull encrypted data from session
@@ -103,11 +115,13 @@ function CheckIfBanned($IP,$MAC,$Session_banned)
 	}
 	// Declare file
 	$contents = file("Banned.txt");
+
 	// Loop through the file line by line
 	foreach($contents as $line) {
 		// Check if line is the same as the ip of the user if yes then redirect
 		if($line == $IP)
 		{
+			
 			// Redirect to banned.php
 			header("Location: Banned.php");
 		}
@@ -236,5 +250,35 @@ function LogOut($Session_name_user)
 	unset($_SESSION[$Session_name_user]);
 	// Redirect to index.php
 	header("Location: index.php");
+}
+// This function checks if the user is banned or not
+function BannedCheckForBannedPage($IP,$MAC,$Session_banned)
+{
+	// If users session isnt set and empty then redirect to index.php
+	if(!isset($_SESSION[$Session_banned]) && empty($_SESSION[$Session_banned])) 
+	{
+		header("Location: index.php");
+	}
+	// Declare file
+	$contents = file("Banned.txt");
+	$found = false;
+	// Loop through the file line by line
+	foreach($contents as $line) {
+		// Check if line is the same as the ip of the user if yes then redirect
+		if($line == $IP)
+		{
+			$found = true;
+		}
+		// Check if line is the same as the mac of the user if yes then redirect
+		elseif($line == $MAC)
+		{
+			$found = true;
+		}
+	}
+	// If found = true meaning user isnt banned then redirect to index.php
+	if($found = false)
+	{
+		header("Location: index.php");
+	}
 }
 ?>

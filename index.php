@@ -6,13 +6,10 @@ include "Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 //Get variables
-$IP = GetIP();
-$MAC = GetMAC();
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 
-
-
+// If user is logged in then show different top bar
 if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
 {
 	$DecryptedUsername = GetUsername($Session_name_user);
@@ -25,6 +22,7 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 		new NavbarItem("Uitloggen", "logout.php"),
 	];	
 }
+// If user isnt logged in then show different top bar
 else
 {
 	$title = "Home";
