@@ -2,7 +2,6 @@
 class NavbarItem {
 	public $name;
 	public $href;
-	public $active;
 
 	public function __constuct($nm, $hr, $active = false) {
 		$this->name = $nm;

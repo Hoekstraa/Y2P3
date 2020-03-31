@@ -33,7 +33,7 @@ echo '<html lang="nl">';
 		include("modular/navbar.php");
 		include("modular/header.php");
 		echo "
-			<main>
+		<main>
 			<div class=\"login\">
 				<h1>Login</h1>
 				<p>Voer uw gegevens in om toegang te verkrijgen tot uw account.</p>

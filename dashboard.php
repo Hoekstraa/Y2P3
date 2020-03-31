@@ -33,7 +33,7 @@ echo '<html lang="nl">';
 				<p>Voer uw gegevens in om toegang te verkrijgen tot uw account.</p>
 				<div class=\"status\">" . $status . "</div>
 				<div class=\"dashboard\">
-					<a href=\"hypotheek.php\" class=\"item\" id=\"hypotheek\">
+					<a href=\"request_mortgage.php\" class=\"item\" id=\"hypotheek\">
 					<b>
 						<i class=\"fas fa-money-check-alt\"></i>
 						<br>
