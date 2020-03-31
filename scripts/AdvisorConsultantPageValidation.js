@@ -1,17 +1,19 @@
 function validateSubject(subject) {
-    var regex = /^(?=.{2,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/;
-    return regex.test(String(subject).toLowerCase());
+    if (!(subject.length < 10 || subject.length >= 200)) {
+        return true;
+    }
 }
 function validateQuestion(question) {
-    var regex = /^(?=.{2,2000}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/;
-    return regex.test(String(question).toLowerCase())
+   if(!(question.length < 50 || question.length >= 3000)){
+       return true;
+   }
 }
 function validateDateTime() {
     Date.prototype.addDays = function(days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
         return date;
-    }
+    };
 
     var fistPossibleDate = new Date().addDays(5).toISOString().split('T')[0];
     document.getElementById("meetingTime").setAttribute('min',fistPossibleDate)
@@ -35,9 +37,9 @@ function subjectValidation() {
         console.log("valid");
         subject.classList.remove("invalid");
         subject.classList.remove("empty");
-        subject.classList.add("valid");
-        subject.style.border = "0.1rem solid #038A1E;"
-        subject.style.color = "#038A1E;"
+        subject.classList.remove("valid");
+        subject.style.border = "0.1rem solid #d1d1d1";
+        subject.style.color = "#000000";
     }
     // Invalid First name
     else
@@ -46,13 +48,13 @@ function subjectValidation() {
         subject.classList.remove("valid");
         subject.classList.remove("empty");
         subject.classList.add("invalid");
-        subject.style.border = "0.1rem solid #8A031E !important"
-        subject.style.color = "#8A031E; !important"
+        subject.style.border = "0.1rem solid #8A031E";
+        subject.style.color = "#8A031E"
     }
 }
 function questionValidation() {
-    var question = document.getElementById("question")
-    question.addEventListener('input',questionValidation)
+    var question = document.getElementById("question");
+    question.addEventListener('input',questionValidation);
     if (question.value == '') {
         console.log("empty");
         question.classList.remove("valid");
@@ -68,8 +70,8 @@ function questionValidation() {
         question.classList.remove("invalid");
         question.classList.remove("empty");
         question.classList.add("valid");
-        question.style.border = "0.1rem solid #038A1E;"
-        question.style.color = "#038A1E;"
+        question.style.border = "0.1rem solid #d1d1d1";
+        question.style.color = "#000000";
     }
     // Invalid Last name
     else
@@ -78,12 +80,12 @@ function questionValidation() {
         question.classList.remove("valid");
         question.classList.remove("empty");
         question.classList.add("invalid");
-        question.style.border = "0.1rem solid #8A031E !important"
-        question.style.color = "#8A031E; !important"
+        question.style.border = "0.1rem solid #8A031E";
+        question.style.color = "#8A031E";
     }
 
 }
 function dateTimeValidation() {
-    var datetime = document.getElementById("meetingTime")
+    var datetime = document.getElementById("meetingTime");
     datetime.addEventListener("input", validateDateTime(datetime))
 }
