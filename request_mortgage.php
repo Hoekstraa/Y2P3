@@ -8,6 +8,8 @@ $DecryptedUsername = GetUsername($Session_name_user);
 CheckIfLoggedIn($Session_name_user,$page);
 CheckIfBanned($IP,$MAC,$Session_banned);
 
+
+
 //Validate the form data
 if (isset($_POST['submit'])) 
 {
@@ -17,6 +19,7 @@ $Postalcode = $_POST['postalcode'];
 $Phonenumber = $_POST['phone-number'];
 $bedrag = $_POST['bedrag'];
 $Rekeningnummer = $_POST['Rekeningnummer'];
+
 
 $_SESSION['address'] = $_POST['address'];
 $_SESSION['postalcode'] = $_POST['postalcode'];
@@ -36,7 +39,7 @@ $navigation = [
 	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
     new NavbarItem("Uitloggen", "logout.php", false)
 ];
-
+$string = "token";
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body onload=\"initListeners()\">";
@@ -68,8 +71,8 @@ echo '<html lang="nl">';
 						<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Hypotheek aanvragen\"></input>
 					</form>
 				</div>
-			</div>
-		</main>
+			</div>s
+		</main>S
 		";
 		include("modular/footer.php");
 	echo "</body>";

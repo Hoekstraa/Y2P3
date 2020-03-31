@@ -7,9 +7,15 @@ include "Global_functions.php";
 CheckIfLoggedIn($Session_name_user,$page);
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
+
+// Generate random token
+generate_token($token_session);
+
+
+
 // Get userid
 $e_userid = $_SESSION[$Session_id_user];
-$userid = base64_edcode($e_userid);
+$userid = base64_decode($e_userid);
 
 //Data
 $Username = $DecryptedUsername;
@@ -28,7 +34,7 @@ if ( isset( $_POST['back']))
 
 if ( isset( $_POST['submit'])) 
 { 
-    AddMorgage($userid,$Address,$bedrag,$Rekeningnummer);
+    CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
 }
 
 $title = "Home";
@@ -72,6 +78,7 @@ echo '<html lang="nl">';
                     <label for=\"Bedrag\">Bedrag</label><br>
                     $bedrag
                     <br><br>
+                    <input type=\"hidden\" name=\"token\" value=\" $_SESSION[$token_session] \"\>
                     <input class=\"submit\" type=\"submit\" name=\"back\" value=\"Terug gaan\"></input>
                     <input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Bevestigen\"></input>
                 </form>
@@ -83,7 +90,7 @@ echo '<html lang="nl">';
 	echo "</body>";
 echo "</html>";
 
-function AddMorgage($userid,$Address,$bedrag,$Rekeningnummer)
+function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
 {
     $status = "Aanvraag in werking";
     $rente = "13%";
@@ -96,7 +103,7 @@ function AddMorgage($userid,$Address,$bedrag,$Rekeningnummer)
 	$result = pg_execute($conn, "my_query", array($userid,$Address,$bedrag,$rente,$werknemer,$Rekeningnummer,$status));
 	//This function closes database connection
     DatabaseClose($conn);
-    header("Location: dashboard.php"); 
+    //header("Location: dashboard.php"); 
 }
 
 function GetEmail($Username)
