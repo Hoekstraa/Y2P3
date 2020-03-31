@@ -1,6 +1,50 @@
 <?php
+
+// start the sessions
+session_start();
+
+//Global Variables
+$Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
+$Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
+$Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+$page = $_SERVER['REQUEST_URI'];
+
+// Variable 10 
+$Int_10 = 10;
+
+// This function checks if the user is logged in and ifnot redirect to login.php
+function CheckIfLoggedIn($Session_name_user,$page)
+{
+	if($page == "/Project2.3/login.php")
+	{
+		// Checks if the session exists and is not empty
+		if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: Dashboard.php");
+		}
+	}
+	elseif($page == "/Project2.3/register.php")
+	{
+		// Checks if the session exists and is not empty
+		if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: dashboard.php");
+		}
+	}
+	elseif($page == "/Project2.3/dashboard.php")
+	{
+		// Checks if the session exists and is not empty
+		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: login.php");
+		}
+	}
+}
 // This function bannes the user when called.
-function Ban($IP,$MAC)
+function Ban($IP,$MAC,$Session_banned)
 {
 	$Encrypted_true = base64_encode("True");
 	// Set Banned session to true
@@ -39,16 +83,20 @@ function GetIP()
 	return $IP;
 }
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
-function CheckIfBanned($IP,$MAC)
+function CheckIfBanned($IP,$MAC,$Session_banned)
 {
-	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) {
+	
+	if(isset($_SESSION[$Session_banned]) && !empty($_SESSION[$Session_banned])) 
+	{
 		// Pull encrypted data from session
 		$Encrypted_status = $_SESSION[$Session_banned];
 		// Decrypt the data
 		$Decrypted_status = base64_decode($Encrypted_status);
 		// Check if data = true if so then redirect to banned.php
-	 if ($Decrypted_status == "True")
-	 header("Location: Banned.php");
+	 if($Decrypted_status == "True")
+	 {
+	 	header("Location: Banned.php");
+	 }
 	}
 	// Declare file
 	$contents = file("Banned.txt");
@@ -96,5 +144,66 @@ function DatabaseConnect()
 	$conn = pg_connect($conn_string);
 	// Return $conn variable
 	return $conn;
+}
+// This function pulls the users username form the session
+function GetUsername($Session_name_user)
+{
+	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
+	{
+	// Get encrypted username form session
+	$EncryptedUsername = $_SESSION[$Session_name_user];
+	// Decrypt the encrypted username
+	$DecryptedUsername = base64_Decode($EncryptedUsername);
+	// Return the Decrypted username
+	return $DecryptedUsername;
+	}
+	else
+	{
+		header("Location: login.php");
+	}
+}
+// This function checks if the users a admin
+Function CheckIfAdmin()
+{
+	// Set users mac addres into a variable
+	$MAC = GetMAC();
+	// Set users ip addres into a variable
+	$IP = GetIP();
+	// Set the file name into a variable
+	$filename = 'Admins.txt';
+	$contents = file($filename);
+	// Set a variable found to false
+	$found = false;
+	// Loop through the file line by line
+	foreach ($contents as $admin)
+	{
+	// If the current line is the same as the users ip or mac set the found variable then break out of the loop
+   	if($admin == $MAC Or  $admin == $IP)
+    {
+		// set the found variable to true
+		$found = true;
+		// Break out of the loop
+        break;
+	}
+	}
+	// Check if the found variable is true
+	if($found == true)
+	{
+		// if found is true then pop up window with the text welkom
+		echo '<script type="text/javascript">alert("Welkom admin");</script>';
+	}
+	else
+	{
+		// if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
+		echo '<script type="text/javascript">
+		alert("U bent geen admin vraag dit aan bij een van onze beheerders.");
+		window.location.href = "index.php";
+		</script>';
+	}
+}
+// This function prevents CSRF
+function AntiCSRF()
+{
+
 }
 ?>

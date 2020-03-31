@@ -3,31 +3,22 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
-
-// start the sessions
-session_start();
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
-
-//Global Variables
-$Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
-$Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
-$Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
-$Int_10 = 10;
 
 //functions
 $IP = GetIP();
 $MAC = GetMAC();
-CheckIfBanned($IP,$MAC);
-Set_session($IP,$MAC);
-CheckIfLoggedIn();
+CheckIfBanned($IP,$MAC,$Session_banned);
+Set_session($IP,$MAC,$Session_name_counter,$Int_10);
+CheckIfLoggedIn($Session_name_user,$page);
 
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
-		$Username = $_POST['username'];
-		$Passwd = $_POST['password'];
-		LogInValidation($IP,$MAC,$Username,$Passwd);
+	$Username = $_POST['username'];
+	$Passwd = $_POST['password'];
+	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned);
 }
 $title = "Home";
 $navigation = [
@@ -66,33 +57,25 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$Username,$Passwd)
-{
-		// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
-		if (strpos($Username, "'") !== false) 
+function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned)
+{		
+		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
+		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 		{
-			Ban($IP,$MAC);
+			Ban($IP,$MAC,$Session_banned);
 		}
-		elseif(strpos($Passwd,"'") !== false)
+		elseif (strpos($Passwd, "<script>") || strpos($Passwd, "1=1") || strpos($Passwd, "1 =1") || strpos($Passwd, "1= 1") || strpos($Passwd, "1 = 1") !== false) 
 		{
-			Ban($IP,$MAC);
-		}
-		elseif(strpos($Username,"<script>") !== false)
-		{
-			Ban($IP,$MAC); 
-		}
-		elseif(strpos($Passwd,"<script>") !== false)
-		{
-			Ban($IP,$MAC);
+			Ban($IP,$MAC,$Session_banned);
 		}
 		else
 		{
-			// Calls Userlogin function with the userame and password as variables
-			UserLogIn($Username,$Passwd,$IP,$MAC);
+				// Calls Userlogin function with the userame and password as variables
+				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter);
 		}
 }
 // This functions logs user in.
-function UserLogIn($Username,$Passwd,$IP,$MAC)
+function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter)
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
@@ -106,54 +89,45 @@ function UserLogIn($Username,$Passwd,$IP,$MAC)
 		$EncryptedUsername = base64_encode($Username);
 		// Create session Username and put the encrypted username in the session
 		$_SESSION[$Session_name_user] = $EncryptedUsername;
-		// Redirect to Dashboard.php
-		header("Location: Dashboard.php");
-
+		// Reset the failed log in counter
 		$Encrypt = base64_encode($Int_10);
 		$_SESSION[$Session_name] = $Encrypt;
+		// Redirect to dashboard.php
+		header("Location: dashboard.php");
+
 	}
 	else 
 	{
-		FailedLogIn($IP,$MAC);
+		FailedLogIn($IP,$MAC,$Session_name_counter);
 	}
 	// This function closes database connection
 	DatabaseClose($conn);
 }
-// This function checks if the user is logged in
-function CheckIfLoggedIn()
-{
-	// Checks if the session exists and is not empty
-	if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
-	{
-		// Redirect to dashboard.php
-		header("Location: Dashboard.php");
-	}
-}
-// This function encrypts a int
-function Set_session($IP,$MAC) 
+
+function Set_session($IP,$MAC,$Session_name_counter,$Int_10) 
 {
 	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pull the encrypted data from the session
-		$encrypted = $_SESSION[$Session_name];
+		$encrypted_counter = $_SESSION[$Session_name_counter];
 		// Decrypt the data
-		$decrypt = base64_decode($encrypted);
+		$decrypted_counter = base64_decode($encrypted_counter);
 		// Check if the counter greater is then 10 if so then the data has been changed then call the ban function // TODO ff overleggen
-		if($counter > $Int_10)
+		if($decrypted_counter > $Int_10)
 		{
-			Ban($IP,$MAC);
+			Ban($IP,$MAC,$Session_banned);
 		}
 	}
-	else
+	elseif(!isset($_SESSION[$Session_name_counter]) && empty($_SESSION[$Session_name_counter])) 
 	{
 		// Encrypt the data 
-		$encrypt =  base64_encode($Int_10); 
+		$encrypt_10 =  base64_encode($Int_10); 
 		// Put encrypted data in the session
-		$_SESSION[$Session_name] = $encrypt;
+		$_SESSION[$Session_name_counter] = $encrypt_10;
 	}
 }
 // This function checks if the users log in failed not more then 3 times
-function FailedLogIn($IP,$MAC)
+function FailedLogIn($IP,$MAC,$Session_name_counter)
 {
 	// Checks if session is set and not empty
 	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
@@ -161,25 +135,21 @@ function FailedLogIn($IP,$MAC)
 		// Pulls encrypted data from session
 		$encrypted = $_SESSION[$Session_name_counter];
 		// Decrypt the data
-		$decrypt = base64_decode($encrypted);
+		$decrypted = base64_decode($encrypted);
 		// Decrease the counter by 1
-		$counter = $decrypt - 1;
-		// Encrypt the counter
-		$counter_live = base64_encode($counter);
-		// Put the encrypted data in the session
-		$_SESSION[$Session_name_counter] = $counter_live;
+		$counter = $decrypted - 1;
 		// Check if the counter is 0 or lower then call the ban function
 		if($counter <= 0)
 		{
 			Ban($IP,$MAC);
 		}
+		else
+		{
+		// Encrypt the counter
+		$counter_live = base64_encode($counter);
+		// Put the encrypted data in the session
+		$_SESSION[$Session_name_counter] = $counter_live;
+		}
 	}
-	else
-	{
-		// Encrypt the data 
-		$encrypt =  base64_encode($Int_10); 
-		// Put encrypted data in the session
-		$_SESSION[$Session_name] = $encrypt;
 	}
-}
 ?>

@@ -1,19 +1,27 @@
 <?php
+// Recuire php files 
 require "classes/NavbarItem.php";
+// Include php files
+include "Global_functions.php";
+// Set global variable
+$DecryptedUsername = GetUsername($Session_name_user);
+
+// Functions
+CheckIfLoggedIn($Session_name_user,$page);
+$IP = GetIP();
+$MAC = GetMAC();
+CheckIfBanned($IP,$MAC,$Session_banned);
 
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem("Bye", "bye.php"),
-	new NavbarItem("Login", "login.php"),
-	new NavbarItem("Register", "register.php"),
+	new NavbarItem($DecryptedUsername, "Account.php"),
+	new NavbarItem("Uitloggen", "register.php"),
 ];
-$status = "Hypotheek aangevraagd";
-// DEBUG
-/* $_SESSION['user'] = "Thimo"; */
-/* $_SESSION['userId'] = 0; */
 
-if (isset($_SESSION['user']) && isset($_SESSION['userId'])) {
+$status = "Hypotheek aangevraagd";
+
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body>";
@@ -51,12 +59,5 @@ echo '<html lang="nl">';
 		</main>
 		";
 		include("modular/footer.php");
-}
-// If user is not logged in, redirect them from dashboard to homepage
-else {
-	//header("HTTP/1.1 401 Unauthorized");
-	header('Location: index.php');
-    exit;
-}
 	echo "</body>";
 echo "</html>";
