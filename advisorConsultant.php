@@ -44,17 +44,21 @@ include("modular/footer.php");
 echo "</body>";
 echo "</html>";
 
+//validates the information and puts it in the database
 function getAdvisorMeeting($subject,$question,$date){
     if(validateInformation($subject,$question,$date)){
         putMeetingInDB($subject,$question,$date);
     }
 }
+
+// puts the validated infromation in to the database and rederects the user
 function putMeetingInDB($subject,$question,$date){
     // get user info name last name mailaders ect
     //put the info in the database
     header("Location: index.php");
 }
 
+//validates the information
 function validateInformation($subject,$question,$date){
     $validinfo = true;
     if(empty($subject)){
@@ -76,12 +80,13 @@ function validateInformation($subject,$question,$date){
     return $validinfo;
 
 }
-function checkforsneakyinput($input){
+
+// check for input that can create vulnerabilities
+function checkForSneakyInput($input){
     if(strpos($input,"<script>") !==false){
 
         header("Location: login.php");
         return true;
     }
-
 }
 ?>
