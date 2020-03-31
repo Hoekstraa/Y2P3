@@ -1,34 +1,43 @@
 <?php
+// Require navbar.php
 require "classes/NavbarItem.php";
-session_start();
+// Include php files
+include "Global_functions.php";
+// Checks if user is logged in
+CheckIfLoggedIn($Session_name_user,$page);
+// Get username
+$DecryptedUsername = GetUsername($Session_name_user);
+// Get userid
+$e_userid = $_SESSION[$Session_id_user];
+$userid = base64_edcode($e_userid);
 
 //Data
-$Firstname = $_SESSION['firstname'];
-$Lastname = $_SESSION['lastname'];
+$Username = $DecryptedUsername;
+$Emailaddress = 
 $Address = $_SESSION['address'];
 $Postalcode = $_SESSION['postalcode'];
 $Phonenumber = $_SESSION['phone-number'];
-$Emailaddress = $_SESSION['email'];
-
+$Rekeningnummer = $_SESSION['Rekeningnummer'];
+$bedrag = $_SESSION['bedrag'];
+$E_Mail = GetEmail($Username);
 if ( isset( $_POST['back'])) 
 { 
-  //Go back to the request page
+  // Go back to the request page
   header("Location: request_mortgage.php"); 
 }
 
 if ( isset( $_POST['submit'])) 
 { 
-//Insert values into the database
-
+    AddMorgage($userid,$Address,$bedrag,$Rekeningnummer);
 }
 
 $title = "Home";
 $navigation = [
-	new NavbarItem("Ritsema Banken", "index.php", true),
-	new NavbarItem("Bye", "bye.php"),
-	new NavbarItem("Login", "login.php"),
-	new NavbarItem("Register", "register.php"),
-	//"test"
+	new NavbarItem("Ritsema Banken", "index.php", false),
+    new NavbarItem("$DecryptedUsername", "dashboard.php", false),
+	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
+    new NavbarItem("Uitloggen", "logout.php", false)
+
 ];
 echo '<html lang="nl">';
 	include("modular/head.php");
@@ -42,11 +51,8 @@ echo '<html lang="nl">';
             <p id=\"head\">Kloppen uw gegevens hieronder?</p>
             <div class=\"login-box\">
                 <form method=\"post\">
-                    <label for=\"firstname\">Voornaam</label><br>
-                    $Firstname
-                    <br><br>
-                    <label for=\"lastname\">Achternaam</label><br>
-                    $Lastname
+                    <label for=\"Naam\">Naam</label><br>
+                    $Username
                     <br><br>
                     <label for=\"address\">Adres</label><br>
                     $Address
@@ -58,7 +64,13 @@ echo '<html lang="nl">';
                     $Phonenumber
                     <br><br>
                     <label for=\"email\">Emailadres</label><br>
-                    $Emailaddress
+                    $E_Mail
+                    <br><br>
+                    <label for=\"Rekeningnummer\">Rekeningnummer</label><br>
+                    $Rekeningnummer
+                    <br><br>
+                    <label for=\"Bedrag\">Bedrag</label><br>
+                    $bedrag
                     <br><br>
                     <input class=\"submit\" type=\"submit\" name=\"back\" value=\"Terug gaan\"></input>
                     <input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Bevestigen\"></input>
@@ -70,4 +82,35 @@ echo '<html lang="nl">';
         include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
+
+function AddMorgage($userid,$Address,$bedrag,$Rekeningnummer)
+{
+    $status = "Aanvraag in werking";
+    $rente = "13%";
+    //TODO deze werknemer uit ldap database pullen
+    $werknemer = 1;
+    $conn = DatabaseConnect();
+    // Create perpared statement 
+	$result = pg_prepare($conn, "my_query", "INSERT INTO hypotheken  (userid,adres,bedrag, rente, werknemer,rekeningnummer,hypotheek_status) VALUES ($1,$2,$3,$4,$5,$6,$7)");
+	// Executes the prepared statement with the variables
+	$result = pg_execute($conn, "my_query", array($userid,$Address,$bedrag,$rente,$werknemer,$Rekeningnummer,$status));
+	//This function closes database connection
+    DatabaseClose($conn);
+    header("Location: dashboard.php"); 
+}
+
+function GetEmail($Username)
+{
+	// This function connects to the database
+    $conn = DatabaseConnect();
+    // Get userid from database
+	$UserMail = pg_prepare($conn, "mail", "SELECT email FROM bank WHERE username = $1");
+	$UserMail = pg_execute($conn, "mail", array($Username));
+		while ($row = pg_fetch_row($UserMail)) 
+		{
+			// Get userid from sql query return
+			$E_Mail = $row[0];
+        }
+    return $E_Mail;
+}
 ?>

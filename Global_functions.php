@@ -58,6 +58,15 @@ function CheckIfLoggedIn($Session_name_user,$page)
 			header("Location: login.php");
 		}
 	}
+	elseif($page == "/Project2.3/review.php")
+	{
+		// Checks if the session exists and is not empty
+		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: login.php");
+		}
+	}
 }
 // This function bannes the user when called.
 function Ban($IP,$MAC,$Session_banned)
@@ -161,6 +170,7 @@ function DatabaseMorgage($conn)
 		Bedrag VARCHAR (100) NOT NULL,
 		Rente VARCHAR (100) NOT NULL,
 		Werknemer VARCHAR (100) NOT NULL,
+		Rekeningnummer VARCHAR (25) NOT NULL,
 		Hypotheek_status VARCHAR (100) NOT NULL)");
 	// Show if query was succesfull
 	echo var_dump($result);
@@ -227,7 +237,7 @@ Function CheckIfAdmin()
 	if($found == true)
 	{
 		// if found is true then pop up window with the text welkom
-		echo '<script type="text/javascript">alert("Welkom admin");</script>';
+		echo '<script type="text/javascript">alert("Welkom");</script>';
 	}
 	else
 	{
