@@ -1,17 +1,20 @@
 <?php
 require "classes/NavbarItem.php";
+// Include php files
+include "Global_functions.php";
+// Set global variable
+$DecryptedUsername = GetUsername($Session_name_user);
+
+CheckIfLoggedIn($Session_name_user,$page);
+$IP = GetIP();
+$MAC = GetMAC();
+CheckIfBanned($IP,$MAC,$Session_banned);
+
 session_start();
 
 //Validate the form data
 if (isset($_POST['submit'])) 
 {
-
-$_SESSION['firstname'] = $_POST['firstname'];
-$_SESSION['lastname'] = $_POST['lastname'];
-$_SESSION['address'] = $_POST['address'];
-$_SESSION['postalcode'] = $_POST['postalcode'];
-$_SESSION['phone-number'] = $_POST['phone-number'];
-$_SESSION['email'] = $_POST['email'];
 
 $Firstname = $_POST['firstname'];
 $Lastname = $_POST['lastname'];
@@ -19,6 +22,13 @@ $Address = $_POST['address'];
 $Postalcode = $_POST['postalcode'];
 $Phonenumber = $_POST['phone-number'];
 $Emailaddress = $_POST['email'];
+
+$_SESSION['firstname'] = $_POST['firstname'];
+$_SESSION['lastname'] = $_POST['lastname'];
+$_SESSION['address'] = $_POST['address'];
+$_SESSION['postalcode'] = $_POST['postalcode'];
+$_SESSION['phone-number'] = $_POST['phone-number'];
+$_SESSION['email'] = $_POST['email'];
 
 $errorMsg = '';
 
@@ -31,19 +41,13 @@ $navigation = [
 	new NavbarItem("Thuis", "index.php", false),
 	new NavbarItem("Over ons", "index.php", false),
     new NavbarItem("Contact", "register.php", false),
-    new NavbarItem("Gebruiker", "dashboard.php", false),
+    new NavbarItem("$DecryptedUsername", "dashboard.php", false),
 	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
     new NavbarItem("Status", "status.php", false),
     new NavbarItem("Uitloggen", "logout.php", false)
-
 	//"test"
 ];
 
-//DEBUG
-$_SESSION['user'] = "Sang";
-$_SESSION['userId'] = 0;
-
-if (isset($_SESSION['user']) && isset($_SESSION['userId'])) {
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body onload=\"initListeners()\">";
@@ -82,17 +86,10 @@ echo '<html lang="nl">';
 		</main>
 		";
 		include("modular/footer.php");
-	}
-	// If user is not logged in, redirect them from dashboard to homepage
-	else {
-		//header("HTTP/1.1 401 Unauthorized");
-		header('Location: index.php');
-		exit;
-	}
 	echo "</body>";
 echo "</html>";
 
-//Check if the data is valid
+//Check if the data is valid and checks character lengths
 function RequestValidation($Firstname,$Lastname,$Address,$Postalcode,$Phonenumber, $Emailaddress)
 {	
 	if (!preg_match("/^(?=.{2,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/", $Firstname)) {
