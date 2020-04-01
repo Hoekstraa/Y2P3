@@ -70,8 +70,8 @@ echo '<html lang="nl">';
 						<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Hypotheek aanvragen\"></input>
 					</form>
 				</div>
-			</div>s
-		</main>S
+			</div>
+		</main>
 		";
 		include("modular/footer.php");
 	echo "</body>";
