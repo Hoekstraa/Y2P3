@@ -35,7 +35,7 @@ else
 
 echo '<html lang="nl">';
 	include("modular/head.php");
-    echo "<body onload=\"test()\">";
+    echo "<body onload=\"ClickOnRow()\">";
         include("modular/navbar.php");
         include("modular/header.php");
         echo "<script src=\"scripts/ClickableRow.js\"></script>";
@@ -43,27 +43,27 @@ echo '<html lang="nl">';
         <main>
         <h1> Lijst van hypotheken aanvragen</h1>
         <table class=\"table\" style=\"border: 2px solid black;\">
-                <tr>
-                    <th>Status</th>
-                    <th>Datum</th>
-                    <th>Aanvrager</th>
-                    <th>Aanvraagnummer</th>
-                    <th>Check</th>
-                </tr>
-                <tr>
-                    <td>?</td>
-                    <td>Datum</td>
-                    <td>Aanvrager</td>
-                    <td>Aanvraagnummer</td>
-                    <td>Check</td>
-                </tr>
-                <tr>
-                    <td>?</td>
-                    <td>10-02-2013</td>
-                    <td>Aanvrager Hypotheek123</td>
-                    <td>01230580924</td>
-                    <td><input type=\"checkbox\" name=\"check\" />&nbsp;</td>
-                </tr>
+            <tr>
+                <th>Status</th>
+                <th>Datum</th>
+                <th>Aanvrager</th>
+                <th>Aanvraagnummer</th>
+                <th>Check</th>
+            </tr>
+            <tr>
+                <td>?</td>
+                <td>Datum</td>
+                <td>Aanvrager</td>
+                <td>Aanvraagnummer</td>
+                <td>Check</td>
+            </tr>
+            <tr>
+                <td>?</td>
+                <td>10-02-2013</td>
+                <td>Aanvrager Hypotheek123</td>
+                <td>01230580924</td>
+                <td><input type=\"checkbox\" name=\"check\" />&nbsp;</td>
+            </tr>
         </table>
 		";
         include("modular/footer.php");
