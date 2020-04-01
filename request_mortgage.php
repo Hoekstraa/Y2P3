@@ -4,11 +4,10 @@ require "classes/NavbarItem.php";
 include "Global_functions.php";
 // Set global variable
 $DecryptedUsername = GetUsername($Session_name_user);
-
+// Checks if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
+// Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
-
-
 
 //Validate the form data
 if (isset($_POST['submit'])) 
@@ -70,8 +69,8 @@ echo '<html lang="nl">';
 						<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Hypotheek aanvragen\"></input>
 					</form>
 				</div>
-			</div>s
-		</main>S
+			</div>
+		</main>
 		";
 		include("modular/footer.php");
 	echo "</body>";
