@@ -48,10 +48,15 @@ echo '<html lang="nl">';
 						<input type=\"text\" id=\"username\" name=\"username\"></input>
 						<br><br>
 						<label for=\"password\">Wachtwoord</label><br>
-						<input type=\"password\" name=\"password\"></input>
+						<b>Vereisten:</b><br>
+							<i id=\"reqminamountchars\">Minimaal 5 karakters</i><br>
+							<i id=\"reqmaxamountchars\">Maximaal 50 karakters</i><br>
+							<i id=\"requppercase\">Minimaal 1 hoofdletter</i><br>
+							<i id=\"reqnonalphanumeric\">Minimaal 1 niet-alfanumeriek symbool</i><br>
+						<input id=\"password\" type=\"password\" name=\"password\"></input>
 						<br><br>
 						<label for=\"repeat-password\">Herhaal uw wachtwoord</label><br>
-						<input type=\"password\" name=\"repeat-password\"></input>
+						<input id=\"password2\" type=\"password\" name=\"repeat-password\"></input>
 						<br><br>
 						<input class=\"submit\" name=\"submit\" type=\"submit\" value=\"Login\"></input>
 					</form>

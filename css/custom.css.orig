@@ -219,6 +219,7 @@ div.dashboard a.item#hypotheek {
 div.dashboard a.item#logout {
 	background: var(--invalid);
 }
+<<<<<<< HEAD
 div.adviser-box {
     text-align: center;
     padding: 10vh 2vw;
@@ -239,7 +240,7 @@ div.adviser-box input.invalid {
 div.adviser-box input.valid {
     border: 0.1rem solid #d1d1d1;
     color: var(--valid) !important;
-}
+=======
 
 .greentext {
 	color: var(--valid) !important;
