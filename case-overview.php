@@ -52,14 +52,15 @@ echo '<html lang="nl">';
                 <th>Bedrag</th>
             </tr>
         ";
-            for($i=0;$i<4;$i++){
+            for($i = 0; $i < 4; $i++){
                 echo '<tr>'; 
-                 for($i=0;$i<5;$i++){ 
-                   echo '<td>'.$array[$i].'</td>'; 
+                 for($x = 0; $x < 5; $x++){ 
+                   echo '<td>'.$array[$x].'</td>'; 
                  } 
                 echo '</tr>'; 
            }
-        echo "</table>";
+		echo "</table>
+			</main>";
         include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
