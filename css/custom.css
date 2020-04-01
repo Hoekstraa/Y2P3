@@ -219,3 +219,11 @@ div.dashboard a.item#hypotheek {
 div.dashboard a.item#logout {
 	background: var(--invalid);
 }
+
+.greentext {
+	color: var(--valid) !important;
+}
+
+.redtext {
+	color: var(--invalid) !important;
+}

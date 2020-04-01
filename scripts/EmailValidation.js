@@ -78,6 +78,54 @@ function ValidateEmail(email) {
 }
 
 function passwordValidation() {
+	var reqmaxamountchars = document.getElementById("reqmaxamountchars");
+	if(password.value.length < 50) {
+		reqmaxamountchars.style.color = "#038A1E; !important"
+		reqmaxamountchars.classList.remove("redtext");
+		reqmaxamountchars.classList.add("greentext");
+	}
+	else {
+		reqmaxamountchars.style.color = "#8A031E; !important"
+		reqmaxamountchars.classList.remove("greentext");
+		reqmaxamountchars.classList.add("redtext");
+	}
+
+	var reqminamountchars = document.getElementById("reqminamountchars");
+	if(password.value.length >= 5) {
+		reqminamountchars.style.color = "#038A1E; !important"
+		reqminamountchars.classList.remove("redtext");
+		reqminamountchars.classList.add("greentext");
+	}
+	else {
+		reqminamountchars.style.color = "#8A031E; !important"
+		reqminamountchars.classList.remove("greentext");
+		reqminamountchars.classList.add("redtext");
+	}
+
+	var requppercase = document.getElementById("requppercase");
+	if(hasUppercase(password.value)) {
+		requppercase.classList.remove("redtext");
+		requppercase.classList.add("greentext");
+		requppercase.style.color = "#038A1E;"
+	}
+	else {
+		requppercase.classList.remove("greentext");
+		requppercase.classList.add("redtext");
+		requppercase.style.color = "#8A031E;"
+	}
+
+	var reqnonalphanumeric = document.getElementById("reqnonalphanumeric");
+	if(hasNonAlphanumeric(password.value)) {
+		reqnonalphanumeric.classList.remove("redtext");
+		reqnonalphanumeric.classList.add("greentext");
+		reqnonalphanumeric.style.color = "#038A1E;"
+	}
+	else {
+		reqnonalphanumeric.classList.remove("greentext");
+		reqnonalphanumeric.classList.add("redtext");
+		reqnonalphanumeric.style.color = "#8A031E;"
+	}
+
 		// Empty input - show gray input box
 		if (password.value == '') {
 				password.classList.remove("valid");
@@ -88,7 +136,7 @@ function passwordValidation() {
 		}
 
 		// Valid username
-		else if (password.value.length <= 49)
+	else if (password.value.length <= 49 && hasNonAlphanumeric(password.value) && hasUppercase(password.value) && password.value.length >= 5)
 		{
 				password.classList.remove("invalid");
 				password.classList.remove("empty");
@@ -142,3 +190,10 @@ function password2Validation() {
 		}
 }
 
+function hasUppercase(str) {
+    return (/[A-Z]/.test(str));
+}
+
+function hasNonAlphanumeric(str) {
+	return (/[^a-zA-Z0-9]/.test(str));
+}
