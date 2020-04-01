@@ -15,8 +15,11 @@ CheckIfLoggedIn($Session_name_user,$page);
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
+	// Pull username from post request
 	$Username = $_POST['username'];
+	// Pull Passwd from post request
 	$Passwd = $_POST['password'];
+	// Call login validation function
 	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user);
 }
 
@@ -61,10 +64,12 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_us
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
 		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 		{
+			// Call the banned function
 			Ban($IP,$MAC,$Session_banned);
 		}
 		elseif (strpos($Passwd, "<script>") || strpos($Passwd, "1=1") || strpos($Passwd, "1 =1") || strpos($Passwd, "1= 1") || strpos($Passwd, "1 = 1") !== false) 
 		{
+			// Call the banned function
 			Ban($IP,$MAC,$Session_banned);
 		}
 		else
@@ -78,16 +83,19 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
-	// Create perpared statement and executes the statement
+	// Create perpared statement 
 	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1 AND password = $2");
+	// Execute the prepared statement with variables
 	$result = pg_execute($conn, "my_query", array($Username,$Passwd));
 	// Checks if login was succesfull 
 	$login_check = pg_num_rows($result);
 	if($login_check > 0)
 	{
-		// Get userid from database
+		// Create perpared statement
 		$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
+		// Execute prepared statement with variable
 		$userid = pg_execute($conn, "userid", array($Username));
+		// Get data from sql result
 		while ($row = pg_fetch_row($userid)) 
 		{
 			// Get userid from sql query return
@@ -110,14 +118,16 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 	}
 	else 
 	{
+		// Call failedlogin function
 		FailedLogIn($IP,$MAC,$Session_name_counter);
 	}
 	// This function closes database connection
 	DatabaseClose($conn);
 }
-
+// This function checks if the failed session session is set and not tampered with
 function Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps) 
 {
+	// Check if session name counter is set and not empty
 	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
 	{
 		// Pull the encrypted data from the session
@@ -127,6 +137,7 @@ function Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps)
 		// Check if the counter greater is then 10 if so then the data has been changed then call the ban function // TODO ff overleggen
 		if($decrypted_counter > $FailedAttemps)
 		{
+			// Call the ban function
 			Ban($IP,$MAC,$Session_banned);
 		}
 	}
@@ -150,10 +161,10 @@ function FailedLogIn($IP,$MAC,$Session_name_counter)
 		$decrypted = base64_decode($encrypted);
 		// Decrease the counter by 1
 		$counter = $decrypted - 1;
-		echo $counter;
 		// Check if the counter is 0 or lower then call the ban function
 		if($counter <= 0)
 		{
+			// Call the banned function
 			Ban($IP,$MAC);
 		}
 		else

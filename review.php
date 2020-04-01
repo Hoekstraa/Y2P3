@@ -13,23 +13,30 @@ generate_token($token_session);
 $userid = GetUserID($Session_id_user);
 
 
-//Data
+// Set username variable as decryptedusername
 $Username = $DecryptedUsername;
-$Emailaddress = 
+// Set address variable to session
 $Address = $_SESSION['address'];
+// Set postal code variable to session
 $Postalcode = $_SESSION['postalcode'];
+// Set phonenumber variable to session
 $Phonenumber = $_SESSION['phone-number'];
+// Set rekeningnummer variable to session
 $Rekeningnummer = $_SESSION['Rekeningnummer'];
+// Set bedrag variable to session
 $bedrag = $_SESSION['bedrag'];
+// Set email variable as the return value of getemail function
 $E_Mail = GetEmail($Username);
+// Check if post back is set
 if ( isset( $_POST['back'])) 
 { 
-  // Go back to the request page
+  // Redirect to request_mortgage.php
   header("Location: request_mortgage.php"); 
 }
-
+// Check if submit post is set
 if ( isset( $_POST['submit'])) 
 { 
+    // Call compare token mortgage function
     CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
 }
 
@@ -87,10 +94,13 @@ echo "</html>";
 //This function adds the mortgage to the database
 function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
 {
+    // Set status function
     $status = "Aanvraag in werking";
+    // Set rente variable
     $rente = "13%";
     //TODO deze werknemer uit ldap database pullen
     $werknemer = 1;
+    // Connect to the database and put connection in conn variable
     $conn = DatabaseConnect();
     // Create perpared statement 
 	$result = pg_prepare($conn, "my_query", "INSERT INTO hypotheken  (userid,adres,bedrag, rente, werknemer,rekeningnummer,hypotheek_status) VALUES ($1,$2,$3,$4,$5,$6,$7)");
@@ -98,21 +108,25 @@ function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
 	$result = pg_execute($conn, "my_query", array($userid,$Address,$bedrag,$rente,$werknemer,$Rekeningnummer,$status));
 	//This function closes database connection
     DatabaseClose($conn);
-    //header("Location: dashboard.php"); 
+    // Redirect to dashboard.php
+    header("Location: dashboard.php"); 
 }
 //This function gets the users email from the database
 function GetEmail($Username)
 {
 	// This function connects to the database
     $conn = DatabaseConnect();
-    // Get userid from database
-	$UserMail = pg_prepare($conn, "mail", "SELECT email FROM bank WHERE username = $1");
-	$UserMail = pg_execute($conn, "mail", array($Username));
+    // Create prepared statement
+    $UserMail = pg_prepare($conn, "mail", "SELECT email FROM bank WHERE username = $1");
+    // Execute prepared statement
+    $UserMail = pg_execute($conn, "mail", array($Username));
+        // Get data from sql return
 		while ($row = pg_fetch_row($UserMail)) 
 		{
 			// Get userid from sql query return
 			$E_Mail = $row[0];
         }
+    // return email variable
     return $E_Mail;
 }
 ?>

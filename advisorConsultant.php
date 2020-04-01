@@ -69,35 +69,53 @@ function putMeetingInDB($subject,$question,$date,$userid){
 	$result = pg_execute($conn, "my_query", array($userid,$werknemer,$subject,$question,$date));
 	//This function closes database connection
     DatabaseClose($conn);
+    // Redirect to dashboard.php
     header("Location: dashboard.php");
 }
 
 //validates the information
 function validateInformation($subject,$question,$date){
+    // Set validinfo variable to true
     $validinfo = true;
+    // Check if subject variable is empty
     if(empty($subject)){
+        // Create global variable subject error
         global $subjectError;
+        // Set subject error variable data to vul dit in
         $subjectError = "vul dit in ";
+        // Change valid info variable to false
         $validinfo = false;
     }
+    // Check if question variable is empty
     elseif(empty($question)){
+        // Set global question error variable
         global $questionError;
+        // Set question error variable data to vul dit in 
         $questionError = "vul dit in";
+        // Change validinfo variable to false
         $validinfo = false;
     }
+    // Check if sneaky input function returns true
     if(checkforsneakyinput($subject)){
+        // Change valid info variable to false
         $validinfo = false;
     }
+    // Check if sneaky input function returns true
     if(checkforsneakyinput($question)){
+        // Change valid info variable to false 
         $validinfo = false;
     }
+    // Return valid info variable
     return $validinfo;
 
 }
-// check for input that can create vulnerabilities
+// This function checks for input that can create vulnerabilities
 function checkForSneakyInput($input){
+    // Check if string contains <script>
     if(strpos($input,"<script>") !==false){
+        // Call ban function
         Ban($IP,$MAC,$Session_banned);
+        // Return true
         return true;
     }
 }
