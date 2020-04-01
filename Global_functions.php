@@ -2,12 +2,14 @@
 // start the sessions
 session_start();
 
+
 //Global Variables
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_id_user = "AiS7M5emJjrZw3YlWvPwzKsxwMI6wt07kBgjnMwxenaFI9U0Oc15E9dl1DCEL0CNnmwsM6bxpnVUFWQ3gna5TAEAelMwFTN2oXpI";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
 $page = $_SERVER['REQUEST_URI'];
+$token_session = "token";
 
 // Variable 10 
 $FailedAttemps = 10;
@@ -50,6 +52,15 @@ function CheckIfLoggedIn($Session_name_user,$page)
 		}
 	}
 	elseif($page == "/Project2.3/request_morgage.php")
+	{
+		// Checks if the session exists and is not empty
+		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
+		{
+			// Redirect to dashboard.php
+			header("Location: login.php");
+		}
+	}
+	elseif($page == "/Project2.3/review.php")
 	{
 		// Checks if the session exists and is not empty
 		if(!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) 
@@ -149,7 +160,7 @@ function DatabaseCreation($conn)
 }
 
 // This function creates the morgage database 
-function DatabaseMorgage($conn)
+function DatabaseMortgage($conn)
 {
 	// calls data baseconnect function
 	$conn = DatabaseConnect();
@@ -161,6 +172,7 @@ function DatabaseMorgage($conn)
 		Bedrag VARCHAR (100) NOT NULL,
 		Rente VARCHAR (100) NOT NULL,
 		Werknemer VARCHAR (100) NOT NULL,
+		Rekeningnummer VARCHAR (25) NOT NULL,
 		Hypotheek_status VARCHAR (100) NOT NULL)");
 	// Show if query was succesfull
 	echo var_dump($result);
@@ -227,7 +239,7 @@ Function CheckIfAdmin()
 	if($found == true)
 	{
 		// if found is true then pop up window with the text welkom
-		echo '<script type="text/javascript">alert("Welkom admin");</script>';
+		echo '<script type="text/javascript">alert("Welkom");</script>';
 	}
 	else
 	{
@@ -237,11 +249,6 @@ Function CheckIfAdmin()
 		window.location.href = "index.php";
 		</script>';
 	}
-}
-// This function prevents CSRF
-function AntiCSRF()
-{
-
 }
 // This function Logs user out
 function LogOut($Session_name_user)
@@ -277,6 +284,34 @@ function BannedCheckForBannedPage($IP,$MAC,$Session_banned)
 	}
 	// If found = true meaning user isnt banned then redirect to index.php
 	if($found = false)
+	{
+		header("Location: index.php");
+	}
+}
+// This function generates
+function generate_token($token_session)
+{
+	if(!isset($_SESSION[$token_session]))
+	{
+		$_SESSION[$token_session] = md5(uniqid(mt_rand(), true));
+	}
+}
+// This fubction compares the token fomr hidden field with session token
+function CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
+{
+	$token1 = $_POST['token'];
+	$token2 = $_SESSION[$token_session];
+	$token3 = str_replace(' ', '', $token1);
+	if(!isset($_POST['token']))
+	{
+		header("Location: index.php");
+	}
+	if($token3 == $token2)
+	{
+		AddMortgage($userid,$Address,$bedrag,$Rekeningnummer);
+		header("Location: dashboard.php");
+	}
+	else
 	{
 		header("Location: index.php");
 	}

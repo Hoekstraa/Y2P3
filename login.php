@@ -19,10 +19,10 @@ if ( isset( $_POST['submit'] ) )
 	$Passwd = $_POST['password'];
 	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user);
 }
+
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem("Login", "login.php", true),
 	new NavbarItem("Register", "register.php"),
 ];

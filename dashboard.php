@@ -15,7 +15,6 @@ CheckIfBanned($IP,$MAC,$Session_banned);
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem($DecryptedUsername, "Account.php"),
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
