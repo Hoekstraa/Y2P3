@@ -316,4 +316,7 @@ function CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
 		header("Location: index.php");
 	}
 }
+function testFunction(){
+    return 'Hi atoum !';
+}
 ?>
