@@ -36,7 +36,6 @@ $title = "Hypotheek aanvragen";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
     new NavbarItem("$DecryptedUsername", "dashboard.php", false),
-	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
     new NavbarItem("Uitloggen", "logout.php", false)
 ];
 $string = "token";

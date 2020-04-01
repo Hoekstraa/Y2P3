@@ -16,9 +16,7 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 	$title = "Home";
 	$navigation = [
 		new NavbarItem("Ritsema Banken", "index.php"),
-		new NavbarItem("Bye", "bye.php"),
-		new NavbarItem("Dashboard", "dashboard.php"),
-		new NavbarItem($DecryptedUsername, "Account.php"),
+		new NavbarItem($DecryptedUsername, "dashboard.php"),
 		new NavbarItem("Uitloggen", "logout.php"),
 	];	
 }
@@ -28,7 +26,6 @@ else
 	$title = "Home";
 	$navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", true),
-	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php"),
 	];

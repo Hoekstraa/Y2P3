@@ -2,14 +2,14 @@
 // start the sessions
 session_start();
 
-$token_session = "token";
+
 //Global Variables
 $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3RaYiX7IO1fARE5h3I02y9rl9RlLtvRWhAMyPC3poj91Gz";
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_id_user = "AiS7M5emJjrZw3YlWvPwzKsxwMI6wt07kBgjnMwxenaFI9U0Oc15E9dl1DCEL0CNnmwsM6bxpnVUFWQ3gna5TAEAelMwFTN2oXpI";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
 $page = $_SERVER['REQUEST_URI'];
-
+$token_session = "token";
 
 // Variable 10 
 $FailedAttemps = 10;
@@ -160,7 +160,7 @@ function DatabaseCreation($conn)
 }
 
 // This function creates the morgage database 
-function DatabaseMorgage($conn)
+function DatabaseMortgage($conn)
 {
 	// calls data baseconnect function
 	$conn = DatabaseConnect();
@@ -295,7 +295,6 @@ function generate_token($token_session)
 	{
 		$_SESSION[$token_session] = md5(uniqid(mt_rand(), true));
 	}
-	
 }
 // This fubction compares the token fomr hidden field with session token
 function CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
@@ -307,17 +306,13 @@ function CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
 	{
 		header("Location: index.php");
 	}
-	
 	if($token3 == $token2)
 	{
-		echo "Token is het zelfde";
 		AddMortgage($userid,$Address,$bedrag,$Rekeningnummer);
 		header("Location: dashboard.php");
-
 	}
 	else
 	{
-		echo nl2br ("\n Tokens zijn niet het zelfde");
 		header("Location: index.php");
 	}
 }
