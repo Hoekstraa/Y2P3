@@ -3,6 +3,7 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
+
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 //Get variables
@@ -13,7 +14,7 @@ CheckIfBanned($IP,$MAC,$Session_banned);
 if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
 {
 	$DecryptedUsername = GetUsername($Session_name_user);
-	$title = "Home";
+	$title = "Overzicht van hypotheek aanvragen";
 	$navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem("Bye", "bye.php"),
@@ -24,7 +25,7 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 // If user isnt logged in then show different top bar
 else
 {
-	$title = "Home";
+	$title = "Overzicht van hypotheek aanvragen";
 	$navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", true),
 	new NavbarItem("Bye", "bye.php"),
@@ -48,24 +49,17 @@ echo '<html lang="nl">';
                 <th>Datum</th>
                 <th>Aanvrager</th>
                 <th>Aanvraagnummer</th>
-                <th>Check</th>
+                <th>Bedrag</th>
             </tr>
-            <tr>
-                <td>?</td>
-                <td>Datum</td>
-                <td>Aanvrager</td>
-                <td>Aanvraagnummer</td>
-                <td>Check</td>
-            </tr>
-            <tr>
-                <td>?</td>
-                <td>10-02-2013</td>
-                <td>Aanvrager Hypotheek123</td>
-                <td>01230580924</td>
-                <td><input type=\"checkbox\" name=\"check\" />&nbsp;</td>
-            </tr>
-        </table>
-		";
+        ";
+            for($i=0;$i<4;$i++){
+                echo '<tr>'; 
+                 for($i=0;$i<5;$i++){ 
+                   echo '<td>'.$array[$i].'</td>'; 
+                 } 
+                echo'</tr>'; 
+           }
+            echo "</table>";
         include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
