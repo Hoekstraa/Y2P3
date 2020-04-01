@@ -403,4 +403,52 @@ function CompareToken_Consultant($token_session,$userid)
 		header("Location: index.php");
 	}
 }
+// This function gets the right tilte 
+function GetTitle($page)
+{
+	// Checks the users current page is login.php
+	if($page == "/Project2.3/login.php")
+	{
+		// Change title variable to login
+		$title = "Login";
+	}
+	// Checks the users current page is register.php
+	elseif($page == "/Project2.3/register.php")
+	{
+		// Change title variable to Registreren
+		$title = "Registreren";	
+	}
+	// Checks the users current page is dashboard.php
+	elseif($page == "/Project2.3/dashboard.php")
+	{
+		// Change title variable to Dashboard
+		$title = "Dashboard";
+	}
+	// Checks the users current page is request_mortgage.php
+	elseif($page == "/Project2.3/request_mortgage.php")
+	{
+		// Change title variable to Hypotheekaanvragen
+		$title = "Hypotheekaanvragen";
+	}
+	// Checks the users current page is advisorConsultant.php
+	elseif($page == "/Project2.3/advisorConsultant.php")
+	{
+		// Change title variable to Gesprek aanvragen
+		$title = "Gesprek aanvragen";	
+	}
+	// Checks the users current page is index.php
+	elseif($page == "/Project2.3/index.php")
+	{
+		// Change title variable to Index
+		$title = "Index";
+	}
+	// Checks the users current page is review.php
+	elseif($page == "/Project2.3/review.php")
+	{
+		// Change title variable to Hypotheekaanvragen
+		$title = "Hypotheekaanvragen";
+	}
+// Return the title variable
+return $title;
+}
 ?>

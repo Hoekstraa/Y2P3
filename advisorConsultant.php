@@ -9,8 +9,8 @@ $DecryptedUsername = GetUsername($Session_name_user);
 $userid = GetUserID($Session_id_user);
 // Generate random token and put it in a session
 generate_token($token_session);
-
-$title = "Home";
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 $navigation = [
     new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem($DecryptedUsername, "Account.php"),

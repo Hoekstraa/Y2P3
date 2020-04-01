@@ -11,8 +11,8 @@ $DecryptedUsername = GetUsername($Session_name_user);
 generate_token($token_session);
 // Get userid
 $userid = GetUserID($Session_id_user);
-
-
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 // Set username variable as decryptedusername
 $Username = $DecryptedUsername;
 // Set address variable to session
@@ -40,7 +40,6 @@ if ( isset( $_POST['submit']))
     CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
 }
 
-$title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
     new NavbarItem("$DecryptedUsername", "dashboard.php", false),

@@ -11,7 +11,8 @@ CheckIfBanned($IP,$MAC,$Session_banned);
 Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps);
 // Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
-
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
@@ -23,7 +24,6 @@ if ( isset( $_POST['submit'] ) )
 	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user);
 }
 
-$title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem("Login", "login.php", true),
@@ -91,7 +91,7 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 	$login_check = pg_num_rows($result);
 	if($login_check > 0)
 	{
-		// Create perpared statement
+		// Create prepared statement
 		$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
 		// Execute prepared statement with variable
 		$userid = pg_execute($conn, "userid", array($Username));

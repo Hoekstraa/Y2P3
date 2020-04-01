@@ -11,8 +11,8 @@ $status = GetStatus($Session_id_user);
 CheckIfLoggedIn($Session_name_user,$page);
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
-
-$title = "Home";
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem($DecryptedUsername, "Account.php"),

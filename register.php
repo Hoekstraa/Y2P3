@@ -9,7 +9,8 @@ error_reporting(E_ERROR | E_PARSE);
 CheckIfBanned($IP,$MAC,$Session_banned);
 // Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
-
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
