@@ -6,48 +6,39 @@ include "Global_functions.php";
 $DecryptedUsername = GetUsername($Session_name_user);
 
 CheckIfLoggedIn($Session_name_user,$page);
-$IP = GetIP();
-$MAC = GetMAC();
 CheckIfBanned($IP,$MAC,$Session_banned);
 
-session_start();
+
 
 //Validate the form data
 if (isset($_POST['submit'])) 
 {
 
-$Firstname = $_POST['firstname'];
-$Lastname = $_POST['lastname'];
 $Address = $_POST['address'];
 $Postalcode = $_POST['postalcode'];
 $Phonenumber = $_POST['phone-number'];
-$Emailaddress = $_POST['email'];
+$bedrag = $_POST['bedrag'];
+$Rekeningnummer = $_POST['Rekeningnummer'];
 
-$_SESSION['firstname'] = $_POST['firstname'];
-$_SESSION['lastname'] = $_POST['lastname'];
+
 $_SESSION['address'] = $_POST['address'];
 $_SESSION['postalcode'] = $_POST['postalcode'];
 $_SESSION['phone-number'] = $_POST['phone-number'];
-$_SESSION['email'] = $_POST['email'];
+$_SESSION['bedrag'] = $_POST['bedrag'];
+$_SESSION['Rekeningnummer'] = $_POST['Rekeningnummer'];
 
 $errorMsg = '';
 
-RequestValidation($Firstname, $Lastname, $Address, $Postalcode, $Phonenumber, $Emailaddress);
+RequestValidation($Address, $Postalcode, $Phonenumber,$bedrag,$Rekeningnummer);
 }
 
 $title = "Hypotheek aanvragen";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
-	new NavbarItem("Thuis", "index.php", false),
-	new NavbarItem("Over ons", "index.php", false),
-    new NavbarItem("Contact", "register.php", false),
     new NavbarItem("$DecryptedUsername", "dashboard.php", false),
-	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
-    new NavbarItem("Status", "status.php", false),
     new NavbarItem("Uitloggen", "logout.php", false)
-	//"test"
 ];
-
+$string = "token";
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body onload=\"initListeners()\">";
@@ -61,12 +52,6 @@ echo '<html lang="nl">';
                 <p id=\"head\">Vraag hier uw hypotheek aan.</p>
 				<div class=\"login-box\">
 					<form method=\"post\"action=\"\">
-						<label for=\"firstname\">Voornaam</label><br>
-						<input type=\"text\" id=\"firstname\" name=\"firstname\" placeholder=\"Vul uw voornaam in (2-10 tekens)\"></input>
-						<br><br>
-						<label for=\"lastname\">Achternaam</label><br>
-						<input type=\"text\" id=\"lastname\" name=\"lastname\" placeholder=\"Vul uw achternaam in (2-10 tekens)\"></input>
-						<br><br>
 						<label for=\"address\">Adres</label><br>
 						<input type=\"text\" id=\"address\" name=\"address\" placeholder=\"Vul uw adres in\"></input>
 						<br><br>
@@ -75,30 +60,27 @@ echo '<html lang="nl">';
                         <br><br>
                         <label for=\"phone-number\">Telefoonnummer</label><br>
 						<input type=\"text\" id=\"phone-number\" name=\"phone-number\" placeholder=\"vb. 06 12345678\"></input>
-                        <br><br>
-                        <label for=\"email\">Emailadres</label><br>
-						<input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Vul uw emailadres in\"></input>
+						<br><br>
+						<label for=\"Bedrag\">Bedrag</label><br>
+						<input type=\"text\" id=\"bedrag\" name=\"bedrag\" placeholder=\"Bedrag\"></input>
+						<br><br>
+						<label for=\"Rekeningnummer\">Rekeningnummer</label><br>
+						<input type=\"text\" id=\"Rekeningnummer\" name=\"Rekeningnummer\" placeholder=\"Rekeningnummer\"></input>
 						<br><br>
 						<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Hypotheek aanvragen\"></input>
 					</form>
 				</div>
-			</div>
-		</main>
+			</div>s
+		</main>S
 		";
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
 
 //Check if the data is valid and checks character lengths
-function RequestValidation($Firstname,$Lastname,$Address,$Postalcode,$Phonenumber, $Emailaddress)
+function RequestValidation($Address,$Postalcode,$Phonenumber,$bedrag,$Rekeningnummer)
 {	
-	if (!preg_match("/^(?=.{2,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$/", $Firstname)) {
-		$errorMsg= 'error : You did not enter a valid firstname.';
-	}
-	elseif (!preg_match("/^(?=.{2,50}$)[a-zA-Z]+$/", $Lastname)) {
-		$errorMsg= 'error : You did not enter a valid lastname.';
-	}
-	elseif (!preg_match("/(?=.{1,}$)(?:\d+[a-z]*)$/", $Address)) {
+	if (!preg_match("/(?=.{1,}$)(?:\d+[a-z]*)$/", $Address)) {
 		$errorMsg= 'error : You did not enter a valid adres.';
 	}
 	elseif (!preg_match("/^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i", $Postalcode)) {
@@ -107,14 +89,10 @@ function RequestValidation($Firstname,$Lastname,$Address,$Postalcode,$Phonenumbe
 	elseif (!preg_match("/^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$/", $Phonenumber)) {
 		$errorMsg= 'error : You did not enter a valid phone number.';
 	} 
-	//check for valid email 
-	elseif (!preg_match("/^(([^<>()\[\]\\.,;:\s@]+(\.[^<>()\[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/", $Emailaddress)) {
-	  $errorMsg= 'error : You did not enter a valid email.';
-	}
-	else{
+	else
+	{
 		//final code will execute here.
 		header('Location: review.php');
-		echo "Success";
 	}
 }
 ?>

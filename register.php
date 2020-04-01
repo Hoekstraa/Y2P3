@@ -24,7 +24,6 @@ if ( isset( $_POST['submit'] ) )
 $title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php", true),
 ];

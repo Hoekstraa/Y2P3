@@ -19,13 +19,7 @@ if ( isset( $_POST['submit'] ) )
 	$Passwd = $_POST['password'];
 	LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user);
 }
-
-$title = "Home";
-$navigation = [
-	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Login", "login.php", true),
-	new NavbarItem("Register", "register.php"),
-];
+$title = "Employee login page";
 
 echo '<html lang="nl">';
 	include("modular/head.php");
@@ -34,16 +28,19 @@ echo '<html lang="nl">';
 		include("modular/header.php");
 		echo "
 		<main>
-			<div class=\"login\">
-				<h1>Login</h1>
+			<div align='center' class=\"login\">
+				<h1>Werknemers Login</h1>
 				<p>Voer uw gegevens in om toegang te verkrijgen tot uw account.</p>
 				<div class=\"login-box\">
 					<form method=\"post\">
 						<label for=\"username\">Gebruikersnaam</label><br>
-						<input type=\"text\" name=\"username\"></input>
+						<input type=\"text\" name=\"username\">
 						<br><br>
 						<label for=\"password\">Wachtwoord</label><br>
-						<input type=\"password\" name=\"password\"></input>
+						<input type=\"password\" name=\"password\"><br>
+						<br><br>
+						<label for=\"two_factor\">Two facotor athenthicatie</label><br>
+						<input type=\"text\" name=\"two_factor\">
 						<br><br>
 						<input class=\"submit\" name=\"submit\" type=\"submit\" value=\"Login\"></input>
 					</form>
