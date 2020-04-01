@@ -39,7 +39,7 @@ echo '<html lang="nl">';
 						Hypotheek aanvragen
 					</b>
 					</a>
-					<a href=\"contact.php\" class=\"item\" id=\"contact\">
+					<a href=\"advisorConsultant.php\" class=\"item\" id=\"contact\">
 					<b>
 						<i class=\"fas fa-address-card\"></i>
 						<br>

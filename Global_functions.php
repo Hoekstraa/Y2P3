@@ -178,6 +178,21 @@ function DatabaseMortgage($conn)
 	echo var_dump($result);
 }
 
+function Afspraken($conn)
+{
+	// calls data baseconnect function
+	$conn = DatabaseConnect();
+	//query for database creation
+	$result = pg_query($conn, "CREATE TABLE Afspraken (
+		userid VARCHAR (50) NOT NULL,
+		Werknemer VARCHAR (100) NOT NULL,
+		Onderwerp VARCHAR (100) NOT NULL,
+		Vraag VARCHAR (900) NOT NULL,
+		Datum VARCHAR (100) NOT NULL)");
+	// Show if query was succesfull
+	echo var_dump($result);
+}
+
 // This function closes a connection to the datababase
 function DatabaseClose($conn)
 {
@@ -297,7 +312,7 @@ function generate_token($token_session)
 	}
 }
 // This fubction compares the token fomr hidden field with session token
-function CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
+function CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
 {
 	$token1 = $_POST['token'];
 	$token2 = $_SESSION[$token_session];
@@ -308,7 +323,40 @@ function CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session)
 	}
 	if($token3 == $token2)
 	{
+		unset($_SESSION[$token_session]);
 		AddMortgage($userid,$Address,$bedrag,$Rekeningnummer);
+		header("Location: dashboard.php");
+		
+	}
+	else
+	{
+		header("Location: index.php");
+	}
+}
+// This function gets the user id from the session and decrypts it 
+function GetUserID($Session_id_user)
+{
+	$e_userid = $_SESSION[$Session_id_user];
+	$userid = base64_decode($e_userid);// TODO FUNCTIE van maken
+	return $userid;
+}
+// This fubction compares the token fomr hidden field with session token
+function CompareToken_Consultant($token_session,$userid)
+{
+	$token1 = $_POST['token'];
+	$token2 = $_SESSION[$token_session];
+	$token3 = str_replace(' ', '', $token1);
+	if(!isset($_POST['token']))
+	{
+		header("Location: index.php");
+	}
+	if($token3 == $token2)
+	{
+		unset($_SESSION[$token_session]);
+		$subject = $_POST['subject'];
+        $question = $_POST['question'];
+        $date = $_POST['meetingTime'];
+        getAdvisorMeeting($subject,$question,$date,$userid);
 		header("Location: dashboard.php");
 	}
 	else

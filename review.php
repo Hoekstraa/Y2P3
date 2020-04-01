@@ -7,15 +7,11 @@ include "Global_functions.php";
 CheckIfLoggedIn($Session_name_user,$page);
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
-
 // Generate random token
 generate_token($token_session);
-
-
-
 // Get userid
-$e_userid = $_SESSION[$Session_id_user];
-$userid = base64_decode($e_userid);
+$userid = GetUserID($Session_id_user);
+
 
 //Data
 $Username = $DecryptedUsername;
@@ -34,7 +30,7 @@ if ( isset( $_POST['back']))
 
 if ( isset( $_POST['submit'])) 
 { 
-    CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
+    CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
 }
 
 $title = "Home";
@@ -88,7 +84,7 @@ echo '<html lang="nl">';
         include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
-
+//This function adds the mortgage to the database
 function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
 {
     $status = "Aanvraag in werking";
@@ -104,7 +100,7 @@ function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
     DatabaseClose($conn);
     //header("Location: dashboard.php"); 
 }
-
+//This function gets the users email from the database
 function GetEmail($Username)
 {
 	// This function connects to the database
