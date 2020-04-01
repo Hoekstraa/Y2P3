@@ -4,6 +4,8 @@ require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
 
+$array = array("status","datum","aanvrager","aanvraagnummer","bedrag");
+
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 //Get variables
@@ -17,7 +19,6 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 	$title = "Overzicht van hypotheek aanvragen";
 	$navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem($DecryptedUsername, "Account.php"),
 	new NavbarItem("Uitloggen", "logout.php"),
 	];	
@@ -28,7 +29,6 @@ else
 	$title = "Overzicht van hypotheek aanvragen";
 	$navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", true),
-	new NavbarItem("Bye", "bye.php"),
 	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php"),
 	];
@@ -57,9 +57,9 @@ echo '<html lang="nl">';
                  for($i=0;$i<5;$i++){ 
                    echo '<td>'.$array[$i].'</td>'; 
                  } 
-                echo'</tr>'; 
+                echo '</tr>'; 
            }
-            echo "</table>";
+        echo "</table>";
         include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
