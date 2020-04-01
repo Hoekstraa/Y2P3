@@ -219,7 +219,6 @@ div.dashboard a.item#hypotheek {
 div.dashboard a.item#logout {
 	background: var(--invalid);
 }
-<<<<<<< HEAD
 div.adviser-box {
     text-align: center;
     padding: 10vh 2vw;
@@ -240,13 +239,35 @@ div.adviser-box input.invalid {
 div.adviser-box input.valid {
     border: 0.1rem solid #d1d1d1;
     color: var(--valid) !important;
-=======
+}
 
+<<<<<<< HEAD
 .greentext {
 	color: var(--valid) !important;
 }
 
 .redtext {
 	color: var(--invalid) !important;
->>>>>>> origin/register-better-frontend
 }
+=======
+table.table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+table.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #464655;
+    color: white;
+  }
+
+table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+table.table tr:hover {background-color: #ddd;}
+>>>>>>> origin/case-page
