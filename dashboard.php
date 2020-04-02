@@ -29,6 +29,24 @@ echo '<html lang="nl">';
 			<main>
 			<div class=\"login\">
 				<h1>Dashboard</h1>
+				<div class=\"pure-g\">
+				<div class=\"pure-u-1-2\">
+					<article class=\"textpadding-thick\">
+					<h4>Mijn gegevens</h4>
+					<div class =\"username\">Username: " .$username. "<div>
+					<div class =\"email\">Emailadres: " .$email. "<div>
+					<div class =\"postalcode\">Postcode: " .$postalcode. "<div>
+					<div class =\"phone-number\">Telefoonnummer: " .$phonenumber. "<div>
+					</article>
+				</div>
+				<div class=\"pure-u-1-2\">
+					<article class=\"textpadding-thick\">
+					<h4>Mijn producten of offertes</h4>
+					<div class =\"products\">Producten:" .$product. "<div>
+					<button type=\"button\" id=\"edit\" name=\"edit\">Beheren</button>
+					</article>
+				</div>
+				</div>
 				<p>Voer uw gegevens in om toegang te verkrijgen tot uw account.</p>
 				<div class=\"status\">" . $status . "</div>
 				<div class=\"dashboard\">
