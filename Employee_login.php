@@ -39,7 +39,7 @@ echo '<html lang="nl">';
 						<label for=\"password\">Wachtwoord</label><br>
 						<input type=\"password\" name=\"password\"><br>
 						<br><br>
-						<label for=\"two_factor\">Two facotor athenthicatie</label><br>
+						<label for=\"two_factor\">Tweestapsverificatie</label><br>
 						<input type=\"text\" name=\"two_factor\">
 						<br><br>
 						<input class=\"submit\" name=\"submit\" type=\"submit\" value=\"Login\"></input>

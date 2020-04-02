@@ -7,37 +7,39 @@ include "Global_functions.php";
 CheckIfLoggedIn($Session_name_user,$page);
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
-
 // Generate random token
 generate_token($token_session);
-
-
-
 // Get userid
-$e_userid = $_SESSION[$Session_id_user];
-$userid = base64_decode($e_userid);
-
-//Data
+$userid = GetUserID($Session_id_user);
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
+// Set username variable as decryptedusername
 $Username = $DecryptedUsername;
-$Emailaddress = 
+// Set address variable to session
 $Address = $_SESSION['address'];
+// Set postal code variable to session
 $Postalcode = $_SESSION['postalcode'];
+// Set phonenumber variable to session
 $Phonenumber = $_SESSION['phone-number'];
+// Set rekeningnummer variable to session
 $Rekeningnummer = $_SESSION['Rekeningnummer'];
+// Set bedrag variable to session
 $bedrag = $_SESSION['bedrag'];
+// Set email variable as the return value of getemail function
 $E_Mail = GetEmail($Username);
+// Check if post back is set
 if ( isset( $_POST['back'])) 
 { 
-  // Go back to the request page
+  // Redirect to request_mortgage.php
   header("Location: request_mortgage.php"); 
 }
-
+// Check if submit post is set
 if ( isset( $_POST['submit'])) 
 { 
-    CompareToken($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
+    // Call compare token mortgage function
+    CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
 }
 
-$title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
     new NavbarItem("$DecryptedUsername", "dashboard.php", false),
@@ -88,13 +90,16 @@ echo '<html lang="nl">';
         include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
-
+//This function adds the mortgage to the database
 function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
 {
+    // Set status function
     $status = "Aanvraag in werking";
+    // Set rente variable
     $rente = "13%";
     //TODO deze werknemer uit ldap database pullen
     $werknemer = 1;
+    // Connect to the database and put connection in conn variable
     $conn = DatabaseConnect();
     // Create perpared statement 
 	$result = pg_prepare($conn, "my_query", "INSERT INTO hypotheken  (userid,adres,bedrag, rente, werknemer,rekeningnummer,hypotheek_status) VALUES ($1,$2,$3,$4,$5,$6,$7)");
@@ -102,21 +107,25 @@ function AddMortgage($userid,$Address,$bedrag,$Rekeningnummer)
 	$result = pg_execute($conn, "my_query", array($userid,$Address,$bedrag,$rente,$werknemer,$Rekeningnummer,$status));
 	//This function closes database connection
     DatabaseClose($conn);
-    //header("Location: dashboard.php"); 
+    // Redirect to dashboard.php
+    header("Location: dashboard.php"); 
 }
-
+//This function gets the users email from the database
 function GetEmail($Username)
 {
 	// This function connects to the database
     $conn = DatabaseConnect();
-    // Get userid from database
-	$UserMail = pg_prepare($conn, "mail", "SELECT email FROM bank WHERE username = $1");
-	$UserMail = pg_execute($conn, "mail", array($Username));
+    // Create prepared statement
+    $UserMail = pg_prepare($conn, "mail", "SELECT email FROM bank WHERE username = $1");
+    // Execute prepared statement
+    $UserMail = pg_execute($conn, "mail", array($Username));
+        // Get data from sql return
 		while ($row = pg_fetch_row($UserMail)) 
 		{
 			// Get userid from sql query return
 			$E_Mail = $row[0];
         }
+    // return email variable
     return $E_Mail;
 }
 ?>

@@ -8,12 +8,12 @@ error_reporting(E_ERROR | E_PARSE);
 //Get variables
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
-
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 // If user is logged in then show different top bar
 if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
 {
 	$DecryptedUsername = GetUsername($Session_name_user);
-	$title = "Home";
 	$navigation = [
 		new NavbarItem("Ritsema Banken", "index.php"),
 		new NavbarItem($DecryptedUsername, "dashboard.php"),
@@ -23,7 +23,6 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 // If user isnt logged in then show different top bar
 else
 {
-	$title = "Home";
 	$navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", true),
 	new NavbarItem("Login", "login.php"),

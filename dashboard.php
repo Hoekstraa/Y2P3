@@ -3,16 +3,16 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
-// Set global variable
+// Get username
 $DecryptedUsername = GetUsername($Session_name_user);
+// Get status
 $status = GetStatus($Session_id_user);
 // Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
-// Set variables
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
-
-$title = "Home";
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem($DecryptedUsername, "Account.php"),
@@ -39,7 +39,7 @@ echo '<html lang="nl">';
 						Hypotheek aanvragen
 					</b>
 					</a>
-					<a href=\"contact.php\" class=\"item\" id=\"contact\">
+					<a href=\"advisorConsultant.php\" class=\"item\" id=\"contact\">
 					<b>
 						<i class=\"fas fa-address-card\"></i>
 						<br>
@@ -60,7 +60,7 @@ echo '<html lang="nl">';
 	echo "</body>";
 echo "</html>";
 
-
+// This function gets the status from the database
 function GetStatus($Session_id_user)
 {
 	// Get userid from session
@@ -69,8 +69,9 @@ function GetStatus($Session_id_user)
 	$userid = base64_decode($encrypted_userid);
 	// calls data baseconnect function
 	$conn = DatabaseConnect();
-	// Create perpared statement and executes the statement
+	// Create perpared statement 
 	$result = pg_prepare($conn, "status", "SELECT Hypotheek_status FROM hypotheken WHERE userid = $1");
+	// Execute prepared statement with variable
 	$result = pg_execute($conn, "status", array($userid));
 	// Get data from sql return
 	while ($row = pg_fetch_row($result)) 
@@ -78,7 +79,7 @@ function GetStatus($Session_id_user)
 			// Get userid from sql query return
 			$status = $row[0];
 	}
+	// return status variable
 	return $status;
 }
-
 ?>

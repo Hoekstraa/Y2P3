@@ -3,25 +3,29 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "Global_functions.php";
-
-// stop php errors 
+// Stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 // Check if the user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
-
+// Get the right title and put it in the title variable
+$title = GetTitle($page);
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
+	// Get mail variable form post
 	$mail = htmlspecialchars($_POST['email']);
+	// Get username variable from post
 	$username = htmlspecialchars($_POST['username']);
+	// Get password 1 variable from post
 	$password1 = htmlspecialchars($_POST['password']);
+	// Get password 2 variable from post
 	$password2 = htmlspecialchars($_POST['repeat-password']);
+	// Call login validation function
 	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned);
 }
 
-$title = "Home";
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
 	new NavbarItem("Login", "login.php"),
@@ -48,10 +52,15 @@ echo '<html lang="nl">';
 						<input type=\"text\" id=\"username\" name=\"username\"></input>
 						<br><br>
 						<label for=\"password\">Wachtwoord</label><br>
-						<input type=\"password\" name=\"password\"></input>
+						<b>Vereisten:</b><br>
+							<i id=\"reqminamountchars\">Minimaal 5 karakters</i><br>
+							<i id=\"reqmaxamountchars\">Maximaal 50 karakters</i><br>
+							<i id=\"requppercase\">Minimaal 1 hoofdletter</i><br>
+							<i id=\"reqnonalphanumeric\">Minimaal 1 niet-alfanumeriek symbool</i><br>
+						<input id=\"password\" type=\"password\" name=\"password\"></input>
 						<br><br>
 						<label for=\"repeat-password\">Herhaal uw wachtwoord</label><br>
-						<input type=\"password\" name=\"repeat-password\"></input>
+						<input id=\"password2\" type=\"password\" name=\"repeat-password\"></input>
 						<br><br>
 						<input class=\"submit\" name=\"submit\" type=\"submit\" value=\"Login\"></input>
 					</form>
@@ -75,23 +84,32 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session
 			window.location.href = "register.php";
 			</script>';
 	}
+	// Check if string contains any wrong characters
 	elseif(strpos($mail, "<script>") || strpos($mail, "1=1") || strpos($mail, "1 =1") || strpos($mail, "1= 1") || strpos($mail, "1 = 1") !== false) 
 	{
+		// Call the ban function
 		Ban($IP,$MAC,$Session_banned);
 	}
+	// Check if string contains any wrong characters
 	elseif(strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
 	{
+		// Call the ban function
 		Ban($IP,$MAC,$Session_banned);
 	}
+	// Check if string contains any wrong characters
 	elseif(strpos($password1, "<script>") || strpos($password1, "1=1") || strpos($password1, "1 =1") || strpos($password1, "1= 1") || strpos($password1, "1 = 1") !== false) 
 	{
+		// Call the ban function
 		Ban($IP,$MAC,$Session_banned);
 	}
+	// Check if string contains any wrong characters
 	elseif(strpos($password2, "<script>") || strpos($password2, "1=1") || strpos($password2, "1 =1") || strpos($password2, "1= 1") || strpos($password2, "1 = 1") !== false) 
 	{
+		// Call the ban function
 		Ban($IP,$MAC,$Session_banned);
 		
 	}
+	// Check if password 1 is the same as password 2
 	elseif($password1 != $password2)
 	{
 		// This gives a popup and after user clicks on it the user is redirected to register.php

@@ -241,6 +241,7 @@ div.adviser-box input.valid {
     color: var(--valid) !important;
 }
 
+<<<<<<< HEAD
 .greentext {
 	color: var(--valid) !important;
 }
@@ -248,11 +249,11 @@ div.adviser-box input.valid {
 .redtext {
 	color: var(--invalid) !important;
 }
-
+=======
 table.table td, table th {
     border: 1px solid #ddd;
     padding: 8px;
-}
+  }
 
 table.table th {
     padding-top: 12px;
@@ -260,14 +261,13 @@ table.table th {
     text-align: left;
     background-color: #464655;
     color: white;
-}
+  }
 
 table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
-}
+  }
 
-table.table tr:hover {
-	background-color: #ddd;
-}
+table.table tr:hover {background-color: #ddd;}
+>>>>>>> origin/case-page
