@@ -1,7 +1,8 @@
 <?php
 
 namespace vendor\Project\tests\units;
-include_once 'C:\xampp\htdocs\Y2P3\vendor\Project\secondtest.php';
+//include_once 'C:\xampp\htdocs\Y2P3\vendor\Project\secondtest.php';
+include_once dirname(__FILE__) . '/../../secondtest.php';
 
 use mageekguy\atoum;
 use vendor\project;
