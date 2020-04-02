@@ -27,6 +27,7 @@ else
 	new NavbarItem("Ritsema Banken", "index.php", true),
 	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php"),
+	new NavbarItem("Werknemers", "Employee_login.php"),
 	];
 }
 

@@ -349,7 +349,6 @@ function CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_s
 		AddMortgage($userid,$Address,$bedrag,$Rekeningnummer);
 		// Redirect to dashboard.php
 		header("Location: dashboard.php");
-		
 	}
 	else
 	{
