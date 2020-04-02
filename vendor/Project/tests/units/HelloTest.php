@@ -1,8 +1,6 @@
 <?php
 namespace vendor\Project\tests\units;
 
-//require_once 'path/to/atoum.phar';
-
 include_once 'C:\xampp\htdocs\Y2P3\vendor\Project\HelloTest.php';
 
 use mageekguy\atoum;
