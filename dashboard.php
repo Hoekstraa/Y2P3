@@ -63,6 +63,7 @@ echo "</html>";
 // This function gets the status from the database
 function GetStatus($Session_id_user)
 {
+	$status = "Geen hypotheek aangevraagd!";
 	// Get userid from session
 	$encrypted_userid = $_SESSION[$Session_id_user];
 	// Decrypt the encrypted username
