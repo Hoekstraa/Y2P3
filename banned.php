@@ -1,8 +1,6 @@
 <?php
 // Recuire php files 
 require "classes/NavbarItem.php";
-// Include php files
-include "Global_functions.php";
 // Check if the user is banned
 //BannedCheckForBannedPage($IP,$MAC,$Session_banned);
 

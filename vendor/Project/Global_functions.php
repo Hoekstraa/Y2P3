@@ -349,7 +349,6 @@ function CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_s
 		AddMortgage($userid,$Address,$bedrag,$Rekeningnummer);
 		// Redirect to dashboard.php
 		header("Location: dashboard.php");
-		
 	}
 	else
 	{
@@ -357,6 +356,7 @@ function CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_s
 		header("Location: index.php");
 	}
 }
+
 // This function gets the user id from the session and decrypts it 
 function GetUserID($Session_id_user)
 {

@@ -1,6 +1,6 @@
 <?php 
 // Include php files
-include "Global_functions.php";
+include "Vendor/Project/Global_functions.php";
 // Cal function that deletes the username session
 if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) 
 		{

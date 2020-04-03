@@ -2,7 +2,7 @@
 // Recuire php files 
 require "classes/NavbarItem.php";
 // Include php files
-include "Global_functions.php";
+include "Vendor/Project/Global_functions.php";
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
 // Get status
@@ -80,6 +80,7 @@ echo "</html>";
 // This function gets the status from the database
 function GetStatus($Session_id_user)
 {
+	$status = "Geen hypotheek aangevraagd!";
 	// Get userid from session
 	$encrypted_userid = $_SESSION[$Session_id_user];
 	// Decrypt the encrypted username

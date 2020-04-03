@@ -2,7 +2,7 @@
 // Recuire php files 
 require "classes/NavbarItem.php";
 // Include php files
-include "Global_functions.php";
+include "Vendor/Project/Global_functions.php";
 
 $array = array("status","datum","aanvrager","aanvraagnummer","bedrag");
 
