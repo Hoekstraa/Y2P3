@@ -52,6 +52,8 @@ echo '<html lang="nl">';
 					</form>
 				</div>
 			</div>
+			<p><a href=\"./register.php\">Klik hier als u nog geen account heeft.</a></p>
+			<p><a href=\"./Employee_login.php\">Klik hier als u in wilt loggen als een werknemer bij Ritsema Banken.</a></p>
 		</main>
 		";
 		include("modular/footer.php");
