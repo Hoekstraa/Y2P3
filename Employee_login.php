@@ -7,9 +7,8 @@ include "Global_functions.php";
 error_reporting(E_ERROR | E_PARSE);
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
-// Set the failed login session to 10
-// Check if the user is logged in
-
+// Get ldap connection
+$ldap = LDAPConnect();
 // Checks if submit button was pressed
 if ( isset( $_POST['submit'] ) ) 
 { 
@@ -61,7 +60,7 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_us
 		}
 		else
 		{
-			
+			LDAPLogin($ldap);
 		}
 }
 ?>

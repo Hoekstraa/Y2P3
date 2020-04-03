@@ -2,7 +2,7 @@
 // LDAP connection
 function LDAPConnect()
 {
-	$LDAPServer = "ldap://domaincontroller.mydomain.com"; //todo goedzetten naar juiste domain
+	$LDAPServer = "localhost"; //todo goedzetten naar juiste domain
 	$ldap = ldap_connect($LDAPServer);
 	return $ldap;
 }
@@ -17,7 +17,7 @@ function LDAPLogin()
 
     if ($bind) {
         $filter="(sAMAccountName=$username)";
-        $result = ldap_search($ldap,"dc=MYDOMAIN,dc=COM",$filter);
+        $result = ldap_search($ldap,"dc=ritsema,dc=frl",$filter);
         ldap_sort($ldap,$result,"sn");
         $info = ldap_get_entries($ldap, $result);
         for ($i=0; $i<$info["count"]; $i++)
@@ -36,7 +36,9 @@ function LDAPLogin()
         echo $msg;
     }
 
-}else{
+}
+else
+{
 
 }
 ?>
