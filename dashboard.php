@@ -43,7 +43,6 @@ echo '<html lang="nl">';
 					<article class=\"textpadding-thick\">
 					<h4>Mijn producten of offertes</h4>
 					<div class =\"products\">Producten:" .$product. "<div>
-					<button type=\"button\" id=\"edit\" name=\"edit\">Beheren</button>
 					</article>
 				</div>
 				</div>
