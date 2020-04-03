@@ -2,7 +2,7 @@
 // Require navbar.php
 require "classes/NavbarItem.php";
 // Include php files
-include "Vendor/Project/Global_functions.php";
+include "vendor/Project/Global_functions.php";
 
 $title = "Review the mortgage";
 $Username = "Piet hendriks rederaar";
