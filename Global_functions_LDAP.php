@@ -1,8 +1,11 @@
 <?
+// Global variables
+$Session_name_Emp = "sfL0wrpQD2VD4BXaYzJGRW2HUILMUNmny3zGg40cTBDREiF56e5W6ZridAVHP3aRQq2Fv74N4ybPe2nYPly3OQ4cdKmLDOjUDJyQ";
+
 // LDAP connection
 function LDAPConnect()
 {
-	$LDAPServer = "localhost"; //todo goedzetten naar juiste domain
+	$LDAPServer = "localhost"; 
 	$ldap = ldap_connect($LDAPServer);
 	return $ldap;
 }
@@ -11,8 +14,9 @@ function LDAPConnect()
 function LDAPLogin()
 {
     $username = $_POST['username'];
+    $EncryptedUsername = base64_encode($username);
 	$password = $_POST['password'];
-	$ldaprdn = 'mydomain' . "\\" . $username;
+	$ldaprdn = 'ritsema' . "\\" . $username;
 	$bind = @ldap_bind($ldap, $ldaprdn, $password);
 
     if ($bind) {
@@ -23,13 +27,12 @@ function LDAPLogin()
         for ($i=0; $i<$info["count"]; $i++)
         {
             if($info['count'] > 1)
+            {
                 break;
-            echo "<p>You are accessing <strong> ". $info[$i]["sn"][0] .", " . $info[$i]["givenname"][0] ."</strong><br /> (" . $info[$i]["samaccountname"][0] .")</p>\n";
-            echo '<pre>';
-            var_dump($info);
-            echo '</pre>';
-            $userDn = $info[$i]["distinguishedname"][0]; 
-        }
+                $_SESSION[$Session_name_Emp] = $EncryptedUsername;
+            }
+        
+            
         @ldap_close($ldap);
     } else {
         $msg = "Invalid email address / password";
@@ -37,8 +40,10 @@ function LDAPLogin()
     }
 
 }
-else
+// Get userid 
+function GetUserIDLdap()
 {
 
 }
+
 ?>
