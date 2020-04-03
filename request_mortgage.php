@@ -2,7 +2,7 @@
 // Include php files
 require "classes/NavbarItem.php";
 // Include php files
-include "Vendor/Project/Global_functions.php";
+include "vendor/Project/Global_functions.php";
 // Set global variable
 $DecryptedUsername = GetUsername($Session_name_user);
 // Checks if the user is logged in

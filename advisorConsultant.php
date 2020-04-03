@@ -2,7 +2,7 @@
 // Recuire php files 
 require "classes/NavbarItem.php";
 // Include php files
-include "Vendor/Project/Global_functions.php";
+include "vendor/Project/Global_functions.php";
 // Get Username from session
 $DecryptedUsername = GetUsername($Session_name_user);
 // Get userid

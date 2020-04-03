@@ -2,7 +2,7 @@
 // Require navbar.php
 require "classes/NavbarItem.php";
 // Include php files
-include "Vendor/Project/Global_functions.php";
+include "vendor/Project/Global_functions.php";
 // Checks if user is logged in
 CheckIfLoggedIn($Session_name_user,$page);
 // Get username
