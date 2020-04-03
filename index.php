@@ -1,8 +1,8 @@
 <?php
 // Recuire php files 
 require "classes/NavbarItem.php";
-// Include php files
-include "Global_functions.php";
+	// Include php files
+	include "Vendor/Project/Global_functions.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 //Get variables
