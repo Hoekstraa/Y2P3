@@ -19,7 +19,6 @@ $navigation = [
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
 
-
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body>";
@@ -33,7 +32,7 @@ echo '<html lang="nl">';
 				<div class=\"pure-u-1-2\">
 					<article class=\"textpadding-thick\">
 					<h4>Mijn gegevens</h4>
-					<div class =\"username\">Username: " .$username. "<div>
+					<div class =\"username\">Username: " .$DecryptedUsername. "<div>
 					<div class =\"email\">Emailadres: " .$email. "<div>
 					<div class =\"postalcode\">Postcode: " .$postalcode. "<div>
 					<div class =\"phone-number\">Telefoonnummer: " .$phonenumber. "<div>
