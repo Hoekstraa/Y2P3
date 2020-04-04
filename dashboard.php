@@ -6,7 +6,7 @@ include "vendor/Project/Global_functions.php";
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
 // Get email
-$email = GetInfo($$DecryptedUsername);
+$email = GetInfo($DecryptedUsername);
 // Get status
 $status = GetStatus($Session_id_user);
 // Check if the user is logged in
@@ -38,14 +38,9 @@ echo '<html lang="nl">';
 					<div class =\"email\">Emailadres: " .$email. "<div>
 					</article>
 				</div>
-				<div class=\"pure-u-1-2\">
-					<article class=\"textpadding-thick\">
-					<h4>Mijn producten of offertes</h4>
-					<div class =\"products\">Producten:" .$product. "<div>
-					</article>
+				
 				</div>
-				</div>
-				<p>Voer uw gegevens in om toegang te verkrijgen tot uw account.</p>
+				
 				<div class=\"status\">" . $status . "</div>
 				<div class=\"dashboard\">
 					<a href=\"request_mortgage.php\" class=\"item\" id=\"hypotheek\">
@@ -105,8 +100,8 @@ function GetInfo($Username)
 	// Connect to the database
 	$conn = DatabaseConnect();
 	// Create prepared statement
-	$UserMail = pg_prepare($conn, "SELECT email FROM bank WHERE username = $1");
-	$UserMail = pg_execute($conn, "mail", array($Username));
+	$UserMail = pg_prepare($conn, "email", "SELECT email FROM bank WHERE username = $1");
+	$UserMail = pg_execute($conn, "email", array($Username));
         // Get data from sql return
 		while ($row = pg_fetch_row($UserMail)) 
 		{
