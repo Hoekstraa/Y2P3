@@ -3,6 +3,8 @@
 require "classes/NavbarItem.php";
 // Include php files
 include "vendor/Project/Global_functions.php";
+// Include php files
+include "Global_functions_LDAP.php";
 // stop php errors 
 error_reporting(E_ERROR | E_PARSE);
 // Check if the user is banned
@@ -61,31 +63,4 @@ function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_us
 			LDAPLogin($ldap);
 		}
 }
-// This function checks if the users log in failed not more then 3 times
-function FailedLogIn($IP,$MAC,$Session_name_counter)
-{
-	// Checks if session is set and not empty
-	if(isset($_SESSION[$Session_name_counter]) && !empty($_SESSION[$Session_name_counter])) 
-	{
-		// Pulls encrypted data from session
-		$encrypted = $_SESSION[$Session_name_counter];
-		// Decrypt the data
-		$decrypted = base64_decode($encrypted);
-		// Decrease the counter by 1
-		$counter = $decrypted - 1;
-		echo $counter;
-		// Check if the counter is 0 or lower then call the ban function
-		if($counter <= 0)
-		{
-			Ban($IP,$MAC);
-		}
-		else
-		{
-		// Encrypt the counter
-		$counter_live = base64_encode($counter);
-		// Put the encrypted data in the session
-		$_SESSION[$Session_name_counter] = $counter_live;
-		}
-	}
-	}
 ?>

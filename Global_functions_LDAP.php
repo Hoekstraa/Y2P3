@@ -3,10 +3,10 @@
 function LDAPConnect()
 {
 	$LDAPServer = "localhost"; //todo goedzetten naar juiste domain
-	$ldap = ldap_connect($LDAPServer);
+    $ldap = ldap_connect($LDAPServer);
+    echo var_dump($ldap);
 	return $ldap;
 }
-
 // LDAP LOGIN
 function LDAPLogin()
 {
@@ -24,11 +24,7 @@ function LDAPLogin()
         {
             if($info['count'] > 1)
                 break;
-            echo "<p>You are accessing <strong> ". $info[$i]["sn"][0] .", " . $info[$i]["givenname"][0] ."</strong><br /> (" . $info[$i]["samaccountname"][0] .")</p>\n";
-            echo '<pre>';
-            var_dump($info);
-            echo '</pre>';
-            $userDn = $info[$i]["distinguishedname"][0]; 
+            echo "Succes";
         }
         @ldap_close($ldap);
     } else {
