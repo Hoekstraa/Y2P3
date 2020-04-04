@@ -5,6 +5,8 @@ require "classes/NavbarItem.php";
 include "vendor/Project/Global_functions.php";
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
+// Get email
+$email = GetInfo($$DecryptedUsername);
 // Get status
 $status = GetStatus($Session_id_user);
 // Check if the user is logged in
@@ -34,8 +36,6 @@ echo '<html lang="nl">';
 					<h4>Mijn gegevens</h4>
 					<div class =\"username\">Username: " .$DecryptedUsername. "<div>
 					<div class =\"email\">Emailadres: " .$email. "<div>
-					<div class =\"postalcode\">Postcode: " .$postalcode. "<div>
-					<div class =\"phone-number\">Telefoonnummer: " .$phonenumber. "<div>
 					</article>
 				</div>
 				<div class=\"pure-u-1-2\">
@@ -98,5 +98,22 @@ function GetStatus($Session_id_user)
 	}
 	// return status variable
 	return $status;
+}
+// Get userinfo
+function GetInfo($Username)
+{
+	// Connect to the database
+	$conn = DatabaseConnect();
+	// Create prepared statement
+	$UserMail = pg_prepare($conn, "SELECT email FROM bank WHERE username = $1");
+	$UserMail = pg_execute($conn, "mail", array($Username));
+        // Get data from sql return
+		while ($row = pg_fetch_row($UserMail)) 
+		{
+			// Get userid from sql query return
+			$E_Mail = $row[0];
+        }
+    // return email variable
+    return $E_Mail;
 }
 ?>
