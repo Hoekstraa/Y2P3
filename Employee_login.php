@@ -15,6 +15,7 @@ if ( isset( $_POST['submit'] ) )
 { 
 	$Username = $_POST['username'];
 	$Passwd = $_POST['password'];
+	LDAPLogin($ldap);
 }
 
 echo '<html lang="nl">';
