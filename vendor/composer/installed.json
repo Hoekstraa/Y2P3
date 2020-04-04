@@ -83,5 +83,106 @@
             "test",
             "unit testing"
         ]
+    },
+    {
+        "name": "atoum/stubs",
+        "version": "2.6.0",
+        "version_normalized": "2.6.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/atoum/stubs.git",
+            "reference": "df8b73b0358de7283ecba91d8f4a9683f583993d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/atoum/stubs/zipball/df8b73b0358de7283ecba91d8f4a9683f583993d",
+            "reference": "df8b73b0358de7283ecba91d8f4a9683f583993d",
+            "shasum": ""
+        },
+        "suggest": {
+            "atoum/atoum": "Include atoum in your projet dependencies"
+        },
+        "time": "2018-01-29T22:41:37+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Julien Bianchi",
+                "email": "julien.bianchi@atoum.org"
+            },
+            {
+                "name": "Ludovic Fleury",
+                "email": "ludovic.fleury@atoum.org"
+            }
+        ],
+        "description": "Stubs for atoum, the simple modern and intuitive unit testing framework for PHP 5.3+",
+        "homepage": "http://www.atoum.org",
+        "keywords": [
+            "TDD",
+            "atoum",
+            "test",
+            "unit testing"
+        ]
+    },
+    {
+        "name": "fzaninotto/faker",
+        "version": "v1.9.1",
+        "version_normalized": "1.9.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fzaninotto/Faker.git",
+            "reference": "fc10d778e4b84d5bd315dad194661e091d307c6f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/fc10d778e4b84d5bd315dad194661e091d307c6f",
+            "reference": "fc10d778e4b84d5bd315dad194661e091d307c6f",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "ext-intl": "*",
+            "phpunit/phpunit": "^4.8.35 || ^5.7",
+            "squizlabs/php_codesniffer": "^2.9.2"
+        },
+        "time": "2019-12-12T13:22:17+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.9-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Faker\\": "src/Faker/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "François Zaninotto"
+            }
+        ],
+        "description": "Faker is a PHP library that generates fake data for you.",
+        "keywords": [
+            "data",
+            "faker",
+            "fixtures"
+        ]
     }
 ]

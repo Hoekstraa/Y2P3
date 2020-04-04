@@ -1,5 +1,9 @@
 {
     "require-dev": {
         "atoum/atoum": "^3.4"
+    },
+    "require": {
+        "fzaninotto/faker": "^1.9",
+        "atoum/stubs": "^2.6"
     }
 }
