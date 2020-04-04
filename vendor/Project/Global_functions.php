@@ -1,6 +1,6 @@
 <?php
 // start the sessions
-namespace Vendor\Project;
+//namespace Vendor\Project;
 
 
 session_start();
@@ -10,8 +10,8 @@ $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_id_user = "AiS7M5emJjrZw3YlWvPwzKsxwMI6wt07kBgjnMwxenaFI9U0Oc15E9dl1DCEL0CNnmwsM6bxpnVUFWQ3gna5TAEAelMwFTN2oXpI";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
-if (isset($_SERVER['REQUEST_URI']))
-{
+//if (isset($_SERVER['REQUEST_URI']))
+//{
 
 $page = $_SERVER['REQUEST_URI'];
 
@@ -23,9 +23,9 @@ $FailedAttemps = 10;
 $IP = GetIP();
 // Set global mac variable
 $MAC = GetMAC();
-}
-class Global_functions
-{
+//}
+
+
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user, $page)
 {
@@ -200,7 +200,7 @@ function DatabaseClose($conn)
 function DatabaseConnect()
 {
     // Declare connection variables
-    $conn_string = "host=localhost port=5432 dbname=test user=postgres password=Xyppyp99";
+    $conn_string = "host=localhost port=5432 dbname=bank user=postgres password=123";
     // Execute connection string
     $conn = pg_connect($conn_string);
     // Return $conn variable
@@ -216,7 +216,7 @@ function GetUsername($Session_name_user)
         $EncryptedUsername = $_SESSION[$Session_name_user];
         // Decrypt the encrypted username
         $DecryptedUsername = base64_Decode($EncryptedUsername);
-        // Return the Decrypted username
+      // Return the Decrypted username
         return $DecryptedUsername;
     } else {
         // Redirect to login.php
@@ -384,31 +384,31 @@ function CompareToken_Consultant($token_session, $userid)
 function GetTitle($page)
 {
     // Checks the users current page is login.php
-    if ($page == "/Project2.3/login.php") {
+    if ($page == "/Y2P3/login.php") {
         // Change title variable to login
         $title = "Login";
     } // Checks the users current page is register.php
-    elseif ($page == "/Project2.3/register.php") {
+    elseif ($page == "/Y2P3/register.php") {
         // Change title variable to Registreren
         $title = "Registreren";
     } // Checks the users current page is dashboard.php
-    elseif ($page == "/Project2.3/dashboard.php") {
+    elseif ($page == "/Y2P3/dashboard.php") {
         // Change title variable to Dashboard
         $title = "Dashboard";
     } // Checks the users current page is request_mortgage.php
-    elseif ($page == "/Project2.3/request_mortgage.php") {
+    elseif ($page == "/Y2P3/request_mortgage.php") {
         // Change title variable to Hypotheekaanvragen
         $title = "Hypotheekaanvragen";
     } // Checks the users current page is advisorConsultant.php
-    elseif ($page == "/Project2.3/advisorConsultant.php") {
+    elseif ($page == "/Y2P3/advisorConsultant.php") {
         // Change title variable to Gesprek aanvragen
         $title = "Gesprek aanvragen";
     } // Checks the users current page is index.php
-    elseif ($page == "/Project2.3/index.php") {
+    elseif ($page == "/Y2P3/index.php") {
         // Change title variable to Index
         $title = "Index";
     } // Checks the users current page is review.php
-    elseif ($page == "/Project2.3/review.php") {
+    elseif ($page == "/Y2P3/review.php") {
         // Change title variable to Hypotheekaanvragen
         $title = "Hypotheekaanvragen";
     }
@@ -416,10 +416,3 @@ function GetTitle($page)
     return $title;
 }
 
-function hihi()
-{
-    $X = "HI";
-    return $X;
-}
-}
-?>

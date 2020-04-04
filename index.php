@@ -2,9 +2,9 @@
 // Recuire php files 
 require "classes/NavbarItem.php";
 	// Include php files
-	include "vendor/Project/Global_functions.php";
-// stop php errors 
+	include "vendor/Project/Global_functions.php"; 
 error_reporting(E_ERROR | E_PARSE);
+
 //Get variables
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
@@ -28,7 +28,7 @@ else
 	new NavbarItem("Login", "login.php"),
 	new NavbarItem("Register", "register.php"),
 	];
-}
+
 
 echo '<html lang="nl">';
 	include("modular/head.php");
@@ -39,4 +39,5 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
+}
 ?>
