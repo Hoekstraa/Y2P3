@@ -4,7 +4,7 @@ function LDAPConnect()
 {
 	$LDAPServer = "localhost"; //todo goedzetten naar juiste domain
     $ldap = ldap_connect($LDAPServer);
-    echo var_dump($ldap);
+   
 	return $ldap;
 }
 // LDAP LOGIN
@@ -22,19 +22,20 @@ function LDAPLogin()
         $info = ldap_get_entries($ldap, $result);
         for ($i=0; $i<$info["count"]; $i++)
         {
-            if($info['count'] > 1)
-                break;
-            echo "Succes";
+	if($info['count'] > 1)
+	{
+	echo("succes");
+	break;
+
+	}	
         }
         @ldap_close($ldap);
     } else {
         $msg = "Invalid email address / password";
-        echo $msg;
+        
     }
 
 }
-else
-{
 
-}
+
 ?>
