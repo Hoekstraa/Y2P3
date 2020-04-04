@@ -24,9 +24,8 @@ function LDAPLogin($ldap)
     $search = ldap_search($ldap,$base,$sr,$attr);
     $entry = ldap_get_entries($ldap, $search);
     echo $entry["count"]." entries returned\n";
-    $attrs = ldap_get_attributes($ldap, $entry);
-    for ($i=0; $i < $attrs["count"]; $i++) {
-        echo $attrs[$i] . "<br />";
+    for ($i=0; $i < $entry[0]["count"]; $i++) {
+        echo $entry[0][&i] . "<br />";
     }
 }
 ?>
