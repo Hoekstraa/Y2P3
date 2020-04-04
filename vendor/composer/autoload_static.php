@@ -6,6 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit8968660356663c26d439089d20b592ae
 {
+    public static $prefixLengthsPsr4 = array (
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
+        ),
+    );
+
     public static $classMap = array (
         'mageekguy\\atoum\\adapter' => __DIR__ . '/..' . '/atoum/atoum/classes/adapter.php',
         'mageekguy\\atoum\\adapter\\definition' => __DIR__ . '/..' . '/atoum/atoum/classes/adapter/definition.php',
@@ -324,6 +338,8 @@ class ComposerStaticInit8968660356663c26d439089d20b592ae
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8968660356663c26d439089d20b592ae::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8968660356663c26d439089d20b592ae::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit8968660356663c26d439089d20b592ae::$classMap;
 
         }, null, ClassLoader::class);

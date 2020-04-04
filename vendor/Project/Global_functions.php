@@ -293,9 +293,12 @@ function BannedCheckForBannedPage($IP, $MAC, $Session_banned)
         }
     }
     // If found = true meaning user isnt banned then redirect to index.php
-    if ($found = false) {
+    if (!$found) {
         // Redirect to index.php
         header("Location: index.php");
+        return false;
+    }else{
+        return true;
     }
 }
 
@@ -414,12 +417,6 @@ function GetTitle($page)
     }
 // Return the title variable
     return $title;
-}
-
-function hihi()
-{
-    $X = "HI";
-    return $X;
 }
 }
 ?>

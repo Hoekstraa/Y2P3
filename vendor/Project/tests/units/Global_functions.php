@@ -1,32 +1,32 @@
 <?php
 
 
-namespace vendor\Project\tests\units;
+namespace Vendor\Project\tests\units;
 
 include_once dirname(__FILE__) . '/../../Global_functions.php';
 
-use mageekguy\atoum;
-use vendor\project;
+use atoum;
+use Faker\Factory;
+use Faker\Generator;
 
-class Global_functions extends atoum\test
+class Global_functions extends atoum
 {
-    /*
-     * This method is dedicated to the getHiAtoum() method
-     */
-    public function testhihi()
-    {
+
+    public function testban(){
+        $faker = Factory::create();
+        $IP = $faker->ipv4;
+        $MAC = $faker->macAddress;
+        $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+
+
         $this
-            // creation of a new instance of the tested class
-            ->given($this->newTestedInstance)
-
+            ->given($this->newTestedInstance())
+            ->when($this->testedInstance->Ban($IP,$MAC,$Session_banned))
             ->then
+            ->boolean($this->testedInstance->BannedCheckForBannedPage($IP,$MAC,$Session_banned))
+            ->isTrue()
 
-            // we test that the getHiAtoum method returns
-            // a string...
-            ->string($this->testedInstance->hihi())
-            // ... and that this string is the one we want,
-            // namely 'Hi atoum !'
-            ->isEqualTo('HI')
         ;
     }
+
 }
