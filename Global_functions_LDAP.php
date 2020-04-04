@@ -17,13 +17,12 @@ function LDAPLogin($ldap)
     // Pull username from post request
 	$Uname = $_POST['username'];
 	// Pull Passwd from post request
-	$Passwd = $_POST['password'];
-    $attrs = ldap_get_attributes($ldap, "uid=$Uname,ou=Intranet,dc=ritsema,dc=frl");
+    $Passwd = $_POST['password'];
+    $sr = "uid=$Uname,ou=Intranet,dc=ritsema,dc=frl";
+    $entry = ldap_first_entry($ldap, $sr);
+    $attrs = ldap_get_attributes($ldap, $entry);
     for ($i=0; $i < $attrs["count"]; $i++) {
         echo $attrs[$i] . "<br />";
     }
-
 }
-
-
 ?>
