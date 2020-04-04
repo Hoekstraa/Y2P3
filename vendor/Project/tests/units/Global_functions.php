@@ -21,11 +21,14 @@ class Global_functions extends atoum
 
         $this
             ->given($this->newTestedInstance())
+                ->boolean($this->testedInstance->BannedCheckForBannedPage($IP,$MAC,$Session_banned))
+                ->isFalse()
+
+            ->given($this->newTestedInstance())
             ->when($this->testedInstance->Ban($IP,$MAC,$Session_banned))
             ->then
-            ->boolean($this->testedInstance->BannedCheckForBannedPage($IP,$MAC,$Session_banned))
-            ->isTrue()
-
+                ->boolean($this->testedInstance->BannedCheckForBannedPage($IP,$MAC,$Session_banned))
+                    ->isTrue()
         ;
     }
 
