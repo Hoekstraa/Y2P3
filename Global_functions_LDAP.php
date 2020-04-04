@@ -22,11 +22,8 @@ function LDAPLogin($ldap)
     $base = "ou=Intranet,dc=ritsema,dc=frl";
     $attr = array("uid","sn");
     $search = ldap_search($ldap,$base,$sr,$attr);
-    echo var_dump($search);
-
-
-    
-    $entry = ldap_first_entry($ldap, $sr);
+    $entry = ldap_get_entries($ldap, $search);
+    echo $entry["count"]." entries returned\n";
     $attrs = ldap_get_attributes($ldap, $entry);
     for ($i=0; $i < $attrs["count"]; $i++) {
         echo $attrs[$i] . "<br />";
