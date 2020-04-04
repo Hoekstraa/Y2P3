@@ -117,6 +117,7 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session
 		alert("De 2 wachtwoorden moeten gelijk zijn!");
 		window.location.href = "register.php";
 		</script>';
+		header("Location: register.php");
 	}
 	else
 	{

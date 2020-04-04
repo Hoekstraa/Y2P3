@@ -24,12 +24,12 @@ function LDAPLogin()
         {
 	if($info['count'] > 1)
 	{
-	echo("succes");
+        header("Location: Gekukt.php");
 	break;
-
-	}	
-        }
-        @ldap_close($ldap);
+    }	
+    @ldap_close($ldap);
+    }
+   
     } else {
         $msg = "Invalid email address / password";
         
