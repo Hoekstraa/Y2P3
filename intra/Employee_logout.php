@@ -2,5 +2,6 @@
 // Include php files
 include "../vendor/Project/Global_functions.php";
 unset($_SESSION[$Session_name_employee]);
-header("Location: https://log:out@ritsema.frl");
+$IP = $_SERVER['SERVER_ADDR'];
+header("Location: https://log:out@$IP");
 ?>

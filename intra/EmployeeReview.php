@@ -8,7 +8,7 @@ $Username = base64_decode($_SESSION[$Session_name_employee]);
 list ($userid, $type, $email) = GetEmployeeData($Username);
 $navigation = [
 	new NavbarItem("Overzicht", "EmployeeReview.php", false),
-	new NavbarItem("Uitloggen", "https://log:out@192.168.178.172", false),
+	new NavbarItem("Uitloggen", "Employee_logout.php", false),
 ];
 echo '<html lang="nl">';
 	include("Ihead.php");
