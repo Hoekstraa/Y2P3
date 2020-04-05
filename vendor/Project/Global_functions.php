@@ -13,7 +13,6 @@ $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7
 $Session_name_employee = "zIkUm3aLz7y4UJi84NpNpfjsfsU66BEjDyrKqkS7K3mQGvtQFKfj60Dmf2Kekleqr7fGZssDN4PDU4VQUCgWny6Y8ux5g13mxSc5"; 
 //if (isset($_SERVER['REQUEST_URI']))
 //{
-
 $page = $_SERVER['REQUEST_URI'];
 
 $token_session = "token";

@@ -12,10 +12,10 @@ $navigation = [
     new NavbarItem("Uitloggen", "logout.php", false)
 ];
 echo '<html lang="nl">';
-	include("../modular/head.php");
+	include("Ihead.php");
 	echo "<body>";
-		include("../modular/navbar.php");
-        include("../modular/header.php");
+		include("Inavbar.php");
+        include("Iheader.php");
         echo "
         <main>
         <div align='center' class=\"request-review\">
@@ -37,7 +37,7 @@ echo '<html lang="nl">';
         </div>
     </main>
     ";
-        include("../modular/footer.php");
+        include("Ifooter.php");
 	echo "</body>";
 echo "</html>";
 
