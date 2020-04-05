@@ -4,7 +4,8 @@ require "../classes/NavbarItem.php";
 // Include php files
 include "../vendor/Project/Global_functions.php";
 // Get employee data
-$Username = base64_decode($_SESSION[$Session_name_employee]);
+//$Username = base64_decode($_SESSION[$Session_name_employee]);
+$Username = "MCallagher";
 list ($userid, $type, $email) = GetEmployeeData($Username);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
@@ -93,12 +94,13 @@ function GetMorts($userid)
 {
     $conn = DatabaseConnect();
     // Create prepared statement
-    $morts = pg_prepare($conn, "mort", "SELECT hypotheekid,userid,bedrag,rente,werknemer,hypotheek_status FROM Hypotheken WHERE werknemer = $1");
+    $morts = pg_prepare($conn, "mort", "SELECT hypotheekid,userid,adres,bedrag,rente,hypotheek_status FROM Hypotheken WHERE werknemer = $1");
     // Execute prepared statement
     $morts = pg_execute($conn, "mort", array($userid));
     echo "<table>"; // start a table tag in the HTML
+    echo"<tr><th>hypotheekid</th><th>userid</th><th>adres</th><th>bedrag</th><th>rente</th><th>hypotheek_status</th></tr>";
     while($row = pg_fetch_row($morts)){   //Creates a loop to loop through results
-    echo "<tr><td>" . $row['hypotheekid'] . "</td><td>" . $row['userid'] . "</td></tr>". $row['bedrag'] . "</td></tr>". $row['rente'] . "</td></tr>". $row['werknemer'] . "</td></tr>". $row['hypotheek_status'] . "</td></tr>";  //$row['index'] the index here is a field name
+    echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>". $row[2] . "</td><td>". $row[3] . "</td><td>". $row[4] . "</td><td>". $row[4] . "</td></tr>";  //$row['index'] the index here is a field name
     }
     echo "</table>"; //Close the table in HTML
     // Closes database connection
