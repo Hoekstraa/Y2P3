@@ -4,7 +4,8 @@ require "classes/NavbarItem.php";
 	// Include php files
 	include "vendor/Project/Global_functions.php"; 
 error_reporting(E_ERROR | E_PARSE);
-
+drop_table();
+//DatabaseCreation($conn);
 //Get variables
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
@@ -39,4 +40,14 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
+
+
+function drop_table()
+{
+	$conn = DatabaseConnect();
+    // Create prepared statement
+    $morts = pg_prepare($conn, "mort", "DROP TABLE Bank");
+    // Execute prepared statement
+    $morts = pg_execute($conn, "mort");
+}
 ?>

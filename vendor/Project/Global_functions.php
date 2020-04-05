@@ -433,3 +433,11 @@ function GetTitle($page)
 // Return the title variable
     return $title;
 }
+// This function creates all the databases
+function Create_all_databases($conn)
+{
+    DatabaseCreation($conn);
+    DatabaseMortgage($conn);
+    Afspraken();
+    Werknemers();
+}
