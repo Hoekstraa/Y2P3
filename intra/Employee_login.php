@@ -7,5 +7,5 @@ $_SESSION[$Session_name_employee] = $Encrypted_uid;
 // Check if user is admin
 //CheckIfAdmin(); // Todo rechten aan dit bestand geven!
 // Redirect to employee review
-header("Location: EmplyeeReview.php");
+header("Location: EmployeeReview.php");
 ?>

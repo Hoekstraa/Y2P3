@@ -214,7 +214,7 @@ function DatabaseClose($conn)
 function DatabaseConnect()
 {
     // Declare connection variables
-    $conn_string = "host=localhost port=5432 dbname=test user=postgres password=Xyppyp99";
+    $conn_string = "host=localhost port=5432 dbname=bank user=postgres password=123";
     // Execute connection string
     $conn = pg_connect($conn_string);
     // Return $conn variable
