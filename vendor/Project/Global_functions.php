@@ -20,12 +20,18 @@ $token_session = "token";
 // Variable 10 
 $FailedAttemps = 10;
 // Set global ip variable
-$IP = GetIP();
+$IP = $this->GetIP();
 // Set global mac variable
-$MAC = GetMAC();
+$MAC = $this->getMAC();
 }
 class Global_functions
 {
+    function makeAdmin($IP,$MAC){
+
+            $content = fopen("admins.txt","w");
+            $newAdmin = $IP . ' ' . $MAC;
+            fwrite($content,$newAdmin);
+    }
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user, $page)
 {
@@ -144,7 +150,7 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
 function DatabaseCreation($conn)
 {
     // calls data baseconnect function
-    $conn = DatabaseConnect();
+    $conn = $this->DatabaseConnect();
     //query for database creation
     $result = pg_query($conn, "CREATE TABLE Bank (
 		UserId serial PRIMARY KEY,
@@ -225,12 +231,12 @@ function GetUsername($Session_name_user)
 }
 
 // This function checks if the users a admin
-Function CheckIfAdmin()
+Function CheckIfAdmin($MAC,$IP)
 {
     // Set users mac addres into a variable
-    $MAC = GetMAC();
+    //$MAC = $this->GetMAC();
     // Set users ip addres into a variable
-    $IP = GetIP();
+    //$IP = $this->GetIP();
     // Set the file name into a variable
     $filename = 'Admins.txt';
     $contents = file($filename);
@@ -239,7 +245,8 @@ Function CheckIfAdmin()
     // Loop through the file line by line
     foreach ($contents as $admin) {
         // If the current line is the same as the users ip or mac set the found variable then break out of the loop
-        if ($admin == $MAC Or $admin == $IP) {
+        $adminMacIp = explode(' ',$admin);
+        if ($adminMacIp[0] == $MAC and $adminMacIp[1] == $IP) {
             // set the found variable to true
             $found = true;
             // Break out of the loop
@@ -250,12 +257,14 @@ Function CheckIfAdmin()
     if ($found == true) {
         // if found is true then pop up window with the text welkom
         echo '<script type="text/javascript">alert("Welkom");</script>';
+        return true;
     } else {
         // if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
         echo '<script type="text/javascript">
 		alert("U bent geen admin vraag dit aan bij een van onze beheerders.");
 		window.location.href = "index.php";
 		</script>';
+        return false;
     }
 }
 
