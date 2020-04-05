@@ -4,7 +4,7 @@ require "classes/NavbarItem.php";
 	// Include php files
 	include "vendor/Project/Global_functions.php"; 
 error_reporting(E_ERROR | E_PARSE);
-
+AddUser();
 //Get variables
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
@@ -39,5 +39,18 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
+}
+
+
+
+function AddUser()
+{
+	// This function connects to the database
+	$conn = DatabaseConnect();
+	// Create perpared statement 
+	$result = pg_prepare($conn, "my_query", "INSERT INTO Werknemers (userid, uidm, typem,email) VALUES ($1,$2,$3,$4)");
+	// Executes the prepared statement with the variables
+	$result = pg_execute($conn, "my_query", array(1,"MCallagher" ,"Hypotheek adviseur","MCallagher@ritsema.frl"));
+	echo var_dump($result);
 }
 ?>
