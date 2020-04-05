@@ -4,7 +4,7 @@ require "../classes/NavbarItem.php";
 // Include php files
 include "../vendor/Project/Global_functions.php";
 // Get employee data
-$username = base64_decode($_SESSION[$Session_name_employee]);
+$Username = base64_decode($_SESSION[$Session_name_employee]);
 list ($userid, $type, $email) = GetEmployeeData($Username);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
@@ -27,7 +27,7 @@ echo '<html lang="nl">';
     <th>E-Mail</th>
   </tr>
   <tr>
-    <td>$username</td>
+    <td>$Username</td>
     <td>$type</td>
     <td>$email</td>
   </tr>
@@ -62,7 +62,7 @@ function GetEmployeeData($Username)
     // This function connects to the database
     $conn = DatabaseConnect();
     // Create prepared statement
-    $UserMail = pg_prepare($conn, "info", "SELECT userid,typeM,email FROM Werknemers WHERE uidm = $1");
+    $UserMail = pg_prepare($conn, "info", "SELECT userid,typem,email FROM Werknemers WHERE uidm = $1");
     // Execute prepared statement
     $UserMail = pg_execute($conn, "info", array($Username));
         // Get data from sql return
@@ -78,29 +78,5 @@ function GetEmployeeData($Username)
     // return email variable
     return array ($userid, $type, $email);
 }
-// Get mortgages with employee id 
-function GetMortages($userid)
-{
-    $emails = array();
-    // This function connects to the database
-    $conn = DatabaseConnect();
-    // Create prepared statement
-    $Mort_info = pg_prepare($conn, "mort", "SELECT HypotheekID,userid,Adres,Bedrag,Rente,Rekeningnummer,Hypotheek_status FROM Hypotheken WHERE Werknemer = $1");
-    // Execute prepared statement
-    $Mort_info = pg_execute($conn, "mort", array($userid));
-    while ($row = pg_fetch_row($Mort_info)) 
-		{
-            while ($row = pg_fetch_row($UserMail)) 
-		{
-			// Get userid from sql query return
-            echo($row[0]);
-            echo($row[1]);
-            echo($row[2]);
-            echo($row[3]);
-            echo($row[4]);
-            echo($row[6]);
-            echo($row[7]);
-        }
-        }
-}
+
 ?>
