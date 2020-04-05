@@ -5,7 +5,7 @@ require "../classes/NavbarItem.php";
 include "../vendor/Project/Global_functions.php";
 // Get employee data
 $username = base64_decode($_SESSION[$Session_name_employee]);
-GetEmployeeData($Username);
+list ($userid, $type, $email) = GetEmployeeData($Username);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
 	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
@@ -73,11 +73,10 @@ function GetEmployeeData($Username)
             $type = $row[1];
             $email = $row[2];
         }
-        $GLOBALS[$userid];
-        $GLOBALS[$type];
-        $GLOBALS[$email];
-    // return email variable
+    // Closes database connection
     DatabaseClose($conn);
+    // return email variable
+    return array ($userid, $type, $email);
 }
 // Get mortgages with employee id 
 function GetMortages($userid)
