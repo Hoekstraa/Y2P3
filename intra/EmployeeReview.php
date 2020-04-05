@@ -33,7 +33,13 @@ echo '<html lang="nl">';
   </tr>
             <br><br>
         </div>
-        <style>
+
+
+    
+
+
+
+<style>
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -50,13 +56,17 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 </style>
+
+
+
+
     </main>
     ";
     
         include("Ifooter.php");
 	echo "</body>";
 echo "</html>";
-
+GetMorts($userid);
 function GetEmployeeData($Username)
 {
     // This function connects to the database
@@ -78,5 +88,20 @@ function GetEmployeeData($Username)
     // return email variable
     return array ($userid, $type, $email);
 }
-
+// Get all the mortgages where the current user is the advisor
+function GetMorts($userid)
+{
+    $conn = DatabaseConnect();
+    // Create prepared statement
+    $morts = pg_prepare($conn, "mort", "SELECT hypotheekid,userid,bedrag,rente,werknemer,hypotheekstatus FROM Hypotheken WHERE werknemer = $1");
+    // Execute prepared statement
+    $morts = pg_execute($conn, "mort", array($userid));
+    echo "<table>"; // start a table tag in the HTML
+    while($row = pg_fetch_row($morts)){   //Creates a loop to loop through results
+    echo "<tr><td>" . $row['hypotheekid'] . "</td><td>" . $row['userid'] . "</td></tr>". $row['bedrag'] . "</td></tr>". $row['rente'] . "</td></tr>". $row['werknemer'] . "</td></tr>". $row['hypotheekstatus'] . "</td></tr>";  //$row['index'] the index here is a field name
+    }
+    echo "</table>"; //Close the table in HTML
+    // Closes database connection
+    DatabaseClose($conn);
+}
 ?>
