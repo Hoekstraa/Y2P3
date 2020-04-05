@@ -20,23 +20,39 @@ echo '<html lang="nl">';
         <main>
         <div align='center' class=\"request-review\">
             <h1>Overzicht van aangevraagde hypotheek </h1>
-            <div class=\"login-box\">
-                <form method=\"post\">
-                    <label for=\"Naam\">Naam: </label>
-                    $Username
-                    <br><br>
-                    <label for=\"address\">Adres:</label>
-                    $type
-                    <br><br>
-                    <label for=\"phone-number\">Telefoonnummer:</label>
-                    $email
-                    <br><br>
-                </form>
-            </div>
+            <table>
+  <tr>
+    <th>Werkenemer</th>
+    <th>Type</th>
+    <th>E-Mail</th>
+  </tr>
+  <tr>
+    <td>$username</td>
+    <td>$type</td>
+    <td>$email</td>
+  </tr>
             <br><br>
         </div>
+        <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
     </main>
     ";
+    
         include("Ifooter.php");
 	echo "</body>";
 echo "</html>";
