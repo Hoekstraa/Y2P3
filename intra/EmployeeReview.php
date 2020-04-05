@@ -8,9 +8,7 @@ include "../vendor/Project/Global_functions.php";
 $Username = "MCallagher";
 list ($userid, $type, $email) = GetEmployeeData($Username);
 $navigation = [
-	new NavbarItem("Ritsema Banken", "index.php", false),
-	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
-    new NavbarItem("Uitloggen", "logout.php", false)
+	new NavbarItem("Overzicht", "EmployeeReview.php", false),
 ];
 echo '<html lang="nl">';
 	include("Ihead.php");
@@ -100,7 +98,7 @@ function GetMorts($userid)
     echo "<table>"; // start a table tag in the HTML
     echo"<tr><th>hypotheekid</th><th>userid</th><th>adres</th><th>bedrag</th><th>rente</th><th>hypotheek_status</th></tr>";
     while($row = pg_fetch_row($morts)){   //Creates a loop to loop through results
-    echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>". $row[2] . "</td><td>". $row[3] . "</td><td>". $row[4] . "</td><td>". $row[4] . "</td></tr>";  //$row['index'] the index here is a field name
+    echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>". $row[2] . "</td><td>". $row[3] . "</td><td>". $row[4] . "</td><td>". $row[5] . "</td></tr>";  //$row['index'] the index here is a field name
     }
     echo "</table>"; //Close the table in HTML
     // Closes database connection
