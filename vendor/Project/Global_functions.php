@@ -440,4 +440,5 @@ function Create_all_databases($conn)
     DatabaseMortgage($conn);
     Afspraken();
     Werknemers();
+    // DOCUMENTATIE
 }
