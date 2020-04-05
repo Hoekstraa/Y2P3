@@ -85,46 +85,53 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
+	$hashed_password = password_hash($password1, PASSWORD_BCRYPT);
 	// Create perpared statement 
-	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1 AND password = $2");
+	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1");
 	// Execute the prepared statement with variables
-	$result = pg_execute($conn, "my_query", array($Username,$Passwd));
-	// Checks if login was succesfull 
+	$result = pg_execute($conn, "my_query", array($Username));
 	$login_check = pg_num_rows($result);
-	if($login_check > 0)
+	while($row = pg_fetch_row($result))
 	{
-		// Create prepared statement
-		$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
-		// Execute prepared statement with variable
-		$userid = pg_execute($conn, "userid", array($Username));
-		// Get data from sql result
-		while ($row = pg_fetch_row($userid)) 
+		$hash = $row[1];
+	}
+	if (password_verify($Passwd, $hash)) 
+	{
+		//Checks if login was succesfull 
+		if($login_check > 0)
 		{
-			// Get userid from sql query return
-			$user_id = $row[0];
+			// Create prepared statement
+			$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
+			// Execute prepared statement with variable
+			$userid = pg_execute($conn, "userid", array($Username));
+			// Get data from sql result
+			while ($row = pg_fetch_row($userid)) 
+			{
+				// Get userid from sql query return
+				$user_id = $row[0];
+			}
+			// Encrypt user id
+			$EncryptedUserid = base64_encode($user_id);
+			// Put encrypted user id in a session
+			$_SESSION[$Session_id_user] = $EncryptedUserid;
+			// Encrypt user name
+			$EncryptedUsername = base64_encode($Username);
+			// Create session Username and put the encrypted username in the session
+			$_SESSION[$Session_name_user] = $EncryptedUsername;
+			// Reset the failed log in counter
+			$Encrypt = base64_encode($FailedAttemps);
+			$_SESSION[$Session_name_counter] = $Encrypt;
+			// Redirect to dashboard.php
+			header("Location: dashboard.php");
 		}
-		// Encrypt user id
-		$EncryptedUserid = base64_encode($user_id);
-		// Put encrypted user id in a session
-		$_SESSION[$Session_id_user] = $EncryptedUserid;
-		// Encrypt user name
-		$EncryptedUsername = base64_encode($Username);
-		// Create session Username and put the encrypted username in the session
-		$_SESSION[$Session_name_user] = $EncryptedUsername;
-		// Reset the failed log in counter
-		$Encrypt = base64_encode($FailedAttemps);
-		$_SESSION[$Session_name_counter] = $Encrypt;
-		// Redirect to dashboard.php
-		header("Location: dashboard.php");
-
+		else 
+		{
+			// Call failedlogin function
+			FailedLogIn($IP,$MAC,$Session_name_counter);
+		}
+		//This function closes database connection
+		DatabaseClose($conn);
 	}
-	else 
-	{
-		// Call failedlogin function
-		FailedLogIn($IP,$MAC,$Session_name_counter);
-	}
-	// This function closes database connection
-	DatabaseClose($conn);
 }
 // This function checks if the failed session session is set and not tampered with
 function Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps) 

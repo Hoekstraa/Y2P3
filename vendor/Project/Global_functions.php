@@ -150,7 +150,7 @@ function DatabaseCreation($conn)
 		UserId serial PRIMARY KEY,
 		Username VARCHAR (50) NOT NULL,
 		EMail VARCHAR (50) NOT NULL,
-		Password VARCHAR (50) NOT NULL)");
+		Password VARCHAR (900) NOT NULL)");
     // Show if query was succesfull
     echo var_dump($result);
 }
