@@ -40,12 +40,5 @@ echo '<html lang="nl">';
 	echo "</body>";
 echo "</html>";
 
-function MGallagher()
-{
-	// This function connects to the database
-	$conn = DatabaseConnect();
-	$result = pg_prepare($conn, "my_query", "INSERT INTO Werknemers  (userid, uidM,TypeM, email) VALUES ($1,$2,$3)");
-	$result = pg_execute($conn, "my_query", array("1","MGallagher","Hypotheek adviseur","MGallagher@ritsema.frl"));
-	echo var_dump($result);
-}
+
 ?>

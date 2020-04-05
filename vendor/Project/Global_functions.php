@@ -364,7 +364,6 @@ function GetUserID($Session_id_user)
     // Return variable
     return $userid;
 }
-
 // This fubction compares the token fomr hidden field with session token
 function CompareToken_Consultant($token_session, $userid)
 {
@@ -397,7 +396,6 @@ function CompareToken_Consultant($token_session, $userid)
         header("Location: index.php");
     }
 }
-
 // This function gets the right tilte
 function GetTitle($page)
 {
@@ -433,6 +431,16 @@ function GetTitle($page)
 // Return the title variable
     return $title;
 }
+// This function adds mcallagher to the database
+function MCallagher()
+{
+	// This function connects to the database
+	$conn = DatabaseConnect();
+	echo var_dump($conn);
+	$result = pg_prepare($conn, "my_query", "INSERT INTO Werknemers  (userid, uidm,typem, email) VALUES ($1,$2,$3,$4)");
+	$result = pg_execute($conn, "my_query", array("1","MCallagher","Hypotheek adviseur","MCallagher@ritsema.frl"));
+	echo var_dump($result);
+}
 // This function creates all the databases
 function Create_all_databases($conn)
 {
@@ -440,5 +448,6 @@ function Create_all_databases($conn)
     DatabaseMortgage($conn);
     Afspraken();
     Werknemers();
+    MCallagher();
     // DOCUMENTATIE
 }

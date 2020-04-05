@@ -85,7 +85,6 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 {	
 	// This function connects to the database
 	$conn = DatabaseConnect();
-	$hashed_password = password_hash($password1, PASSWORD_BCRYPT);
 	// Create perpared statement 
 	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1");
 	// Execute the prepared statement with variables
