@@ -4,8 +4,7 @@ require "../classes/NavbarItem.php";
 // Include php files
 include "../vendor/Project/Global_functions.php";
 // Get employee data
-//$Username = base64_decode($_SESSION[$Session_name_employee]);
-$Username = "MCallagher";
+$Username = base64_decode($_SESSION[$Session_name_employee]);
 list ($userid, $type, $email) = GetEmployeeData($Username);
 $navigation = [
 	new NavbarItem("Overzicht", "EmployeeReview.php", false),
@@ -18,7 +17,7 @@ echo '<html lang="nl">';
         echo "
         <main>
         <div align='center' class=\"request-review\">
-            <h1>Overzicht van aangevraagde hypotheek </h1>
+            <h1>Overzicht van: $Username</h1>
             <table>
   <tr>
     <th>Werkenemer</th>
