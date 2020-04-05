@@ -39,5 +39,4 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
-}
 ?>
