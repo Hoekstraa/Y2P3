@@ -126,6 +126,7 @@ function GetEmail($Username)
 			$E_Mail = $row[0];
         }
     // return email variable
+    DatabaseClose($conn);
     return $E_Mail;
 }
 ?>

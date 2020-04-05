@@ -10,6 +10,7 @@ $Session_name_counter = "E9Dnz4zRqqdrhPZ3hTGY4Kry0OfcNi2NeuXZGpQdZhqe1Plas8emEp3
 $Session_name_user = "zRIQdtKLvAUWhmc46CpusfQrnpWR2vLHMAnzsgLhlyF7lW6KToPD0A674JWokJ7DxxuKnnGls28nH5jn0WGMCDgpcbnzxoCYGR6h";
 $Session_id_user = "AiS7M5emJjrZw3YlWvPwzKsxwMI6wt07kBgjnMwxenaFI9U0Oc15E9dl1DCEL0CNnmwsM6bxpnVUFWQ3gna5TAEAelMwFTN2oXpI";
 $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+$Session_name_employee = "zIkUm3aLz7y4UJi84NpNpfjsfsU66BEjDyrKqkS7K3mQGvtQFKfj60Dmf2Kekleqr7fGZssDN4PDU4VQUCgWny6Y8ux5g13mxSc5"; 
 //if (isset($_SERVER['REQUEST_URI']))
 //{
 
@@ -174,7 +175,7 @@ function DatabaseMortgage($conn)
     echo var_dump($result);
 }
 
-function Afspraken($conn)
+function Afspraken()
 {
     // calls data baseconnect function
     $conn = DatabaseConnect();
@@ -189,6 +190,19 @@ function Afspraken($conn)
     echo var_dump($result);
 }
 
+function Werknemers()
+{
+    // calls data baseconnect function
+    $conn = DatabaseConnect();
+    //query for database creation
+    $result = pg_query($conn, "CREATE TABLE Werknemers (
+		userid VARCHAR (50) NOT NULL,
+		uidM VARCHAR (100) NOT NULL,
+		TypeM VARCHAR (900) NOT NULL,
+		email VARCHAR (900) NOT NULL)");
+    // Show if query was succesfull
+    echo var_dump($result);
+}
 // This function closes a connection to the datababase
 function DatabaseClose($conn)
 {
@@ -200,7 +214,7 @@ function DatabaseClose($conn)
 function DatabaseConnect()
 {
     // Declare connection variables
-    $conn_string = "host=localhost port=5432 dbname=bank user=postgres password=123";
+    $conn_string = "host=localhost port=5432 dbname=test user=postgres password=Xyppyp99";
     // Execute connection string
     $conn = pg_connect($conn_string);
     // Return $conn variable
@@ -239,7 +253,7 @@ Function CheckIfAdmin()
     // Loop through the file line by line
     foreach ($contents as $admin) {
         // If the current line is the same as the users ip or mac set the found variable then break out of the loop
-        if ($admin == $MAC Or $admin == $IP) {
+        if ($admin == $MAC And $admin == $IP) {
             // set the found variable to true
             $found = true;
             // Break out of the loop
@@ -249,13 +263,18 @@ Function CheckIfAdmin()
     // Check if the found variable is true
     if ($found == true) {
         // if found is true then pop up window with the text welkom
-        echo '<script type="text/javascript">alert("Welkom");</script>';
+        echo '<script type="text/javascript">
+		alert("Welkom!");
+		window.location.href = "EmplyeeReview.php";
+		</script>';
+
     } else {
         // if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
         echo '<script type="text/javascript">
 		alert("U bent geen admin vraag dit aan bij een van onze beheerders.");
 		window.location.href = "index.php";
-		</script>';
+        </script>';
+        header("Location: index.php");
     }
 }
 
@@ -415,4 +434,3 @@ function GetTitle($page)
 // Return the title variable
     return $title;
 }
-

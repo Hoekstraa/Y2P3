@@ -1,25 +1,15 @@
 <?php
 // Require navbar.php
-require "classes/NavbarItem.php";
+require "../classes/NavbarItem.php";
 // Include php files
-include "vendor/Project/Global_functions.php";
-
-$title = "Review the mortgage";
-$Username = "Piet hendriks rederaar";
-$Emailaddress = "Piet@pieterson.com";
-$Address = "pieterstraat 15";
-$Postalcode = "6969XX";
-$Phonenumber = "06123456789";
-$Rekeningnummer = "NL77 0123456789";
-$bedrag = "69 420";
-$E_Mail = "Piet@pieterson.com";
-$timeStamp = "12-12-2020 om 19:16";
-$employeeId = "69";
+include "../vendor/Project/Global_functions.php";
+// Get employee data
+$username = base64_decode($_SESSION[$Session_name_employee]);
+GetEmployeeData($Username);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
 	new NavbarItem("Hypotheek aanvragen", "request_mortgage.php", true),
     new NavbarItem("Uitloggen", "logout.php", false)
-
 ];
 echo '<html lang="nl">';
 	include("modular/head.php");
@@ -32,37 +22,16 @@ echo '<html lang="nl">';
             <h1>Overzicht van aangevraagde hypotheek </h1>
             <div class=\"login-box\">
                 <form method=\"post\">
-                    <label for=\"Naam\">Naam: </label>$Username
+                    <label for=\"Naam\">Naam: </label>
+                    $Username
                     <br><br>
                     <label for=\"address\">Adres:</label>
-                    $Address
-                    <br><br>
-                    <label for=\"postalcode\">Postcode:</label>
-                    $Postalcode
+                    $type
                     <br><br>
                     <label for=\"phone-number\">Telefoonnummer:</label>
-                    $Phonenumber
+                    $email
                     <br><br>
-                    <label for=\"email\">Emailadres:</label>
-                    $E_Mail
-                    <br><br>
-                    <label for=\"Rekeningnummer\">Rekeningnummer:</label>
-                    $Rekeningnummer
-                    <br><br>
-                    <label for=\"Bedrag\">Bedrag</label>
-                     € $bedrag
-                    <br><br>
-                    <label for=\"EmlpoyeeID\">Werknemers Id:</label>
-                     $employeeId
-                    <br><br>
-                    <label for=\"TimeStamp\">datum van bevesteging:</label>
-                     $timeStamp
-                    <br><br>
-                    <input class=\"submit\" type=\"submit\" name=\"back\" value=\"afkeuren\"></input>
-                    <input class=\"submit\" type=\"submit\" name=\"submit\" value=\"goedkeuren\"></input>
-                    
                 </form>
-                
             </div>
             <br><br>
         </div>
@@ -72,5 +41,51 @@ echo '<html lang="nl">';
 	echo "</body>";
 echo "</html>";
 
-
+function GetEmployeeData($Username)
+{
+    // This function connects to the database
+    $conn = DatabaseConnect();
+    // Create prepared statement
+    $UserMail = pg_prepare($conn, "info", "SELECT userid,typeM,email FROM Werknemers WHERE uidm = $1");
+    // Execute prepared statement
+    $UserMail = pg_execute($conn, "info", array($Username));
+        // Get data from sql return
+		while ($row = pg_fetch_row($UserMail)) 
+		{
+			// Get userid from sql query return
+            $userid = $row[0];
+            $type = $row[1];
+            $email = $row[2];
+        }
+        $GLOBALS[$userid];
+        $GLOBALS[$type];
+        $GLOBALS[$email];
+    // return email variable
+    DatabaseClose($conn);
+}
+// Get mortgages with employee id 
+function GetMortages($userid)
+{
+    $emails = array();
+    // This function connects to the database
+    $conn = DatabaseConnect();
+    // Create prepared statement
+    $Mort_info = pg_prepare($conn, "mort", "SELECT HypotheekID,userid,Adres,Bedrag,Rente,Rekeningnummer,Hypotheek_status FROM Hypotheken WHERE Werknemer = $1");
+    // Execute prepared statement
+    $Mort_info = pg_execute($conn, "mort", array($userid));
+    while ($row = pg_fetch_row($Mort_info)) 
+		{
+            while ($row = pg_fetch_row($UserMail)) 
+		{
+			// Get userid from sql query return
+            echo($row[0]);
+            echo($row[1]);
+            echo($row[2]);
+            echo($row[3]);
+            echo($row[4]);
+            echo($row[6]);
+            echo($row[7]);
+        }
+        }
+}
 ?>
