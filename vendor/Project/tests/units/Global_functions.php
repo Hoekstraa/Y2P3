@@ -51,5 +51,18 @@ class Global_functions extends atoum
                     ->isTrue()
         ;
     }
+    public function testGetTitle(){
+        $this
+            ->given($this->newTestedInstance())
+            ->then
+                ->string($this->testedInstance->GetTitle("/Project2.3/login.php"))
+                    ->isEqualTo("Login")
+
+            ->given($this->newTestedInstance())
+            ->then
+                ->string($this->testedInstance->GetTitle("/Project2.3/register.php"))
+                    ->isEqualTo("Registreren")
+        ;
+    }
 
 }
