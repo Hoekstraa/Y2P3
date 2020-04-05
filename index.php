@@ -29,7 +29,7 @@ else
 	new NavbarItem("Register", "register.php"),
 	];
 
-
+}
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body>";

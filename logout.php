@@ -11,6 +11,6 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 else
 {
     // Redirect to dashboard.php
-	header("Location: Index.php");
+	header("Location: index.php");
 }
 ?>
