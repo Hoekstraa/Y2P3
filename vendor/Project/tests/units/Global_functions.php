@@ -12,7 +12,6 @@ use Faker\Generator;
 class Global_functions extends atoum
 {
 
-
     public function testban(){
         $faker = Factory::create();
         $IP = $faker->ipv4;
@@ -50,8 +49,6 @@ class Global_functions extends atoum
             ->then
                 ->boolean($this->testedInstance->CheckIfAdmin($IP,$MAC))
                     ->isTrue()
-
-
         ;
     }
 

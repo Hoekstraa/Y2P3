@@ -150,7 +150,7 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
 function DatabaseCreation($conn)
 {
     // calls data baseconnect function
-    $conn = DatabaseConnect();
+    $conn = $this->DatabaseConnect();
     //query for database creation
     $result = pg_query($conn, "CREATE TABLE Bank (
 		UserId serial PRIMARY KEY,
