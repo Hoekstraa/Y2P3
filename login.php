@@ -62,23 +62,13 @@ echo "</html>";
 
 // This function validates the users input.
 function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user)
-{		
+{
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
-		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
-		{
-			// Call the banned function
-			Ban($IP,$MAC,$Session_banned);
-		}
-		elseif (strpos($Passwd, "<script>") || strpos($Passwd, "1=1") || strpos($Passwd, "1 =1") || strpos($Passwd, "1= 1") || strpos($Passwd, "1 = 1") !== false) 
-		{
-			// Call the banned function
-			Ban($IP,$MAC,$Session_banned);
-		}
-		else
-		{
-				// Calls Userlogin function with the userame and password as variables
-				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user);
-		}
+		checkForHarmFullInput($Username);
+		checkForHarmFullInput($Passwd);
+
+		// Calls Userlogin function with the userame and password as variables
+		UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user);
 }
 // This functions logs user in.
 function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user)

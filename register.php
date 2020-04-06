@@ -23,7 +23,7 @@ if ( isset( $_POST['submit'] ) )
 	// Get password 2 variable from post
 	$password2 = htmlspecialchars($_POST['repeat-password']);
 	// Call login validation function
-	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned);
+	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2);
 }
 
 $navigation = [
@@ -73,8 +73,12 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned)
+function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
 {
+	checkForHarmFullInput($mail);
+	checkForHarmFullInput($username);
+	checkForHarmFullInput($password1);
+	checkForHarmFullInput($password2);
 	// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
 	if (strpos($mail, "@") == false) 
 	{
@@ -85,30 +89,7 @@ function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session
 			</script>';
 	}
 	// Check if string contains any wrong characters
-	elseif(strpos($mail, "<script>") || strpos($mail, "1=1") || strpos($mail, "1 =1") || strpos($mail, "1= 1") || strpos($mail, "1 = 1") !== false) 
-	{
-		// Call the ban function
-		Ban($IP,$MAC,$Session_banned);
-	}
-	// Check if string contains any wrong characters
-	elseif(strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
-	{
-		// Call the ban function
-		Ban($IP,$MAC,$Session_banned);
-	}
-	// Check if string contains any wrong characters
-	elseif(strpos($password1, "<script>") || strpos($password1, "1=1") || strpos($password1, "1 =1") || strpos($password1, "1= 1") || strpos($password1, "1 = 1") !== false) 
-	{
-		// Call the ban function
-		Ban($IP,$MAC,$Session_banned);
-	}
-	// Check if string contains any wrong characters
-	elseif(strpos($password2, "<script>") || strpos($password2, "1=1") || strpos($password2, "1 =1") || strpos($password2, "1= 1") || strpos($password2, "1 = 1") !== false) 
-	{
-		// Call the ban function
-		Ban($IP,$MAC,$Session_banned);
-		
-	}
+
 	// Check if password 1 is the same as password 2
 	elseif($password1 != $password2)
 	{
