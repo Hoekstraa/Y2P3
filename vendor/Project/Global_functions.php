@@ -70,11 +70,9 @@ function Ban($IP, $MAC, $Session_banned)
     // Open banned.txt and write IP to it and new line
     file_put_contents("Banned.txt", PHP_EOL . $IP, FILE_APPEND);
     // Open banned.txt and write MAC to it and new line
-    file_put_contents("Banned.txt", PHP_EOL . $MAC, FILE_APPEND);
+    //file_put_contents("Banned.txt", PHP_EOL . $MAC, FILE_APPEND);
     // Redirect to banned.php
-    echo $IP;
-    echo $MAC;
-    //CheckIfBanned($IP, $MAC, $Session_banned);
+    CheckIfBanned($IP, $MAC, $Session_banned);
     // SLEEP FIX
 }
 // This function returns the mac adres from the user.
@@ -112,7 +110,7 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
         // Check if data = true if so then redirect to banned.php
         if ($Decrypted_status == "True") {
             // Redirect to banned.php
-            header("Location: Banned.php");
+            header("Location: banned.php");
         }
     }
     // Declare file
@@ -123,12 +121,12 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
         if ($line == $IP){
 
             // Redirect to banned.php
-            header("Location: Banned.php");
+            header("Location: banned.php");
         }
         elseif($line == $MAC)
         {
             // Redirect to banned.php
-            header("Location: Banned.php");
+            header("Location: banned.php");
         }
     }
 }

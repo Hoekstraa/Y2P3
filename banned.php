@@ -1,8 +1,11 @@
 <?php
 // Recuire php files 
+include "vendor/Project/Global_functions.php";
 
 // Check if the user is banned
-BannedCheckForBannedPage($IP,$MAC,$Session_banned);
+//BannedCheckForBannedPage($IP,$MAC,$Session_banned);
+
+$navigation = [];
 
 echo '<html lang="nl">';
 	include("modular/head.php");
@@ -11,8 +14,8 @@ echo '<html lang="nl">';
 		include("modular/header.php");
 		echo "
 			<main>
-				<h1>Error 404</h1>
-				<p>De opgevraagde pagina is niet beschikbaar.</p>
+				<h1>Toegang geweigerd</h1>
+				<p>U heeft geen toegang tot de opgevraagde pagina.</p>
 			</main>
 		";
 		include("modular/footer.php");

@@ -112,6 +112,7 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 			// Redirect to dashboard.php
 			header("Location: dashboard.php");
 		}
+}
 		else 
 		{
 			// Call failedlogin function
@@ -119,7 +120,6 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 		}
 		//This function closes database connection
 		DatabaseClose($conn);
-	}
 }
 // This function checks if the failed session session is set and not tampered with
 function Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps) 
@@ -162,7 +162,7 @@ function FailedLogIn($IP,$MAC,$Session_name_counter)
 		if($counter <= 0)
 		{
 			// Call the banned function
-			Ban($IP,$MAC);
+			Ban($IP,$MAC, $Session_banned);
 		}
 		else
 		{
