@@ -456,7 +456,7 @@ function Create_all_databases($conn)
     // DOCUMENTATIE
 }
 // This function deletes all the user info
-function DeleteAllUserInfo($userid,$Session_id_user)
+function DeleteAllUserInfo($userid,$Session_id_use,$Session_name_user)
 {
     // Delete the session username
     unset($_SESSION[$Session_name_user]);
@@ -476,5 +476,5 @@ function DeleteAllUserInfo($userid,$Session_id_user)
     $delete3 = pg_execute($conn, "delete3", array($userid));
 	//This function closes database connection
     DatabaseClose($conn);
-    header("Location: index.php");
+    
 }

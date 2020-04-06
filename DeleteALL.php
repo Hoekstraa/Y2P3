@@ -4,7 +4,7 @@ include "vendor/Project/Global_functions.php";
 
 if ( isset( $_POST['submit'] ) ) 
 { 
-    DeleteAllUserInfo($userid,$Session_id_user);
+    DeleteAllUserInfo($userid,$Session_id_user,$Session_name_user);
 }
 
 echo '<html lang="nl">';
