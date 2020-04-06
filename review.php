@@ -40,6 +40,14 @@ if ( isset( $_POST['submit']))
     CompareToken_mortgage($userid,$Address,$bedrag,$Rekeningnummer,$token_session);
 }
 
+$Username_display = htmlspecialchars($Username);
+$Address_display = htmlspecialchars($Address);
+$Postalcode_display = htmlspecialchars($Postalcode);
+$Phonenumber_display =htmlspecialchars($Phonenumber);
+$E_Mail_display = htmlspecialchars($E_Mail);
+$Rekeningnummer_display = htmlspecialchars($Rekeningnummer);
+$bedrag_display = htmlspecialchars($bedrag);
+
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
     new NavbarItem(htmlspecialchars($DecryptedUsername), "dashboard.php", false),
@@ -59,25 +67,25 @@ echo '<html lang="nl">';
             <div class=\"login-box\">
                 <form method=\"post\">
                     <label for=\"Naam\">Naam</label><br>
-                    $Username
+                    $Username_display
                     <br><br>
                     <label for=\"address\">Adres</label><br>
-                    $Address
+                    $Address_display
                     <br><br>
                     <label for=\"postalcode\">Postcode</label><br>
-                    $Postalcode
+                    $Postalcode_display
                     <br><br>
                     <label for=\"phone-number\">Telefoonnummer</label><br>
-                    $Phonenumber
+                    $Phonenumber_display
                     <br><br>
                     <label for=\"email\">Emailadres</label><br>
-                    $E_Mail
+                    $E_Mail_display
                     <br><br>
                     <label for=\"Rekeningnummer\">Rekeningnummer</label><br>
-                    $Rekeningnummer
+                    $Rekeningnummer_display
                     <br><br>
                     <label for=\"Bedrag\">Bedrag</label><br>
-                    $bedrag
+                    $bedrag_display
                     <br><br>
                     <input type=\"hidden\" name=\"token\" value=\" $_SESSION[$token_session] \"\>
                     <input class=\"submit\" type=\"submit\" name=\"back\" value=\"Terug gaan\"></input>
