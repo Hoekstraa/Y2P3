@@ -23,7 +23,7 @@ if ( isset( $_POST['submit'] ) )
 	// Get password 2 variable from post
 	$password2 = htmlspecialchars($_POST['repeat-password']);
 	// Call login validation function
-	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2);
+	LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned);
 }
 
 $navigation = [
