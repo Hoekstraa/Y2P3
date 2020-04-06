@@ -475,5 +475,6 @@ function DeleteAllUserInfo($userid,$Session_id_user)
 	$delete2 = pg_execute($conn, "delete2", array($userid));
     $delete3 = pg_execute($conn, "delete3", array($userid));
 	//This function closes database connection
-	DatabaseClose($conn);
+    DatabaseClose($conn);
+    header("Location: index.php");
 }
