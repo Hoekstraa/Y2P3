@@ -192,7 +192,7 @@ function DatabaseClose($conn)
 function DatabaseConnect()
 {
     // Declare connection variables
-    $conn_string = "host=localhost port=5432 dbname=bank user=postgres password=123";
+    $conn_string = "host=localhost port=5432 dbname=bank user=postgres password=GoedeTaartenEtenMensen";
     // Execute connection string
     $conn = pg_connect($conn_string);
     // Return $conn variable
@@ -410,13 +410,13 @@ function MCallagher()
 {
 	// This function connects to the database
 	$conn = DatabaseConnect();
-	echo var_dump($conn);
 	$result = pg_prepare($conn, "my_query", "INSERT INTO Werknemers  (userid, uidm,typem, email) VALUES ($1,$2,$3,$4)");
 	$result = pg_execute($conn, "my_query", array("1","MCallagher","Hypotheek adviseur","MCallagher@ritsema.frl"));
 }
 // This function creates all the databases
 function Create_all_databases($conn)
 {
+	echo var_dump($conn);
     DatabaseCreation($conn);
     DatabaseMortgage($conn);
     Afspraken();
