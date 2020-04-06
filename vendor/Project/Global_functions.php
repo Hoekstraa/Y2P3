@@ -427,5 +427,25 @@ function GetTitle($page)
 // Return the title variable
     return $title;
 }
+
+function RequestValidation($Address,$Postalcode,$Phonenumber)
+{
+	if (!preg_match("/(?=.{1,}$)(?:\d+[a-z]*)$/", $Address)) {
+		$errorMsg= 'error : You did not enter a valid address.';
+	}
+	elseif (!preg_match("/^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i", $Postalcode)) {
+		$errorMsg= 'error : You did not enter a valid postalcode.';
+	}
+	elseif (!preg_match("/^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$/", $Phonenumber)) {
+		$errorMsg= 'error : You did not enter a valid phone number.';
+	}
+	else
+	{
+		//final code will execute here.
+        header('Location: review.php');
+        return true;
+	}
+    return false;
+}
 }
 ?>

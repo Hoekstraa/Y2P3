@@ -77,5 +77,31 @@ class Global_functions extends atoum
                     ->isEqualTo("Registreren")
         ;
     }
+    //Test the request validation
+    public function testrequestValidation(){
+        $faker = Factory::create();
+    
+        //Test the wrong data
+        $WrongAddress = $faker->address;
+        $WrongPostalcode = $faker->postcode;
+        $WrongPhonenumber = $faker->phoneNumber;
 
+        //Test the good data
+        $GoodAdress = "Het leger 28";
+        $GoodPostalcode = "9202VW";
+        $GoodPhonenumber = "0612345678";
+
+        $this
+            ->given($this->newTestedInstance())
+            ->then
+                ->boolean($this->testedInstance->RequestValidation($WrongAddress,$WrongPostalcode,$WrongPhonenumber))
+                    ->isFalse()
+
+            ->given($this->newTestedInstance())
+            ->then
+                ->boolean($this->testedInstance->RequestValidation($GoodAdress,$GoodPostalcode,$GoodPhonenumber))   
+                ->isTrue()
+            
+        ;
+    }
 }
