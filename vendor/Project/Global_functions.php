@@ -74,7 +74,8 @@ function Ban($IP, $MAC, $Session_banned)
     // Redirect to banned.php
     echo $IP;
     echo $MAC;
-    CheckIfBanned($IP, $MAC, $Session_banned);
+    //CheckIfBanned($IP, $MAC, $Session_banned);
+    // SLEEP FIX
 }
 // This function returns the mac adres from the user.
 function GetMAC()
