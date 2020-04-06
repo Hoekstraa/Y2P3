@@ -68,9 +68,9 @@ function Ban($IP, $MAC, $Session_banned)
     // Set Banned session to true
     $_SESSION[$Session_banned] = $Encrypted_true;
     // Open banned.txt and write IP to it and new line
-    file_put_contents("Banned.txt", PHP_EOL . $IP, FILE_APPEND);
+    file_put_contents("../../Banned.txt", PHP_EOL . $IP, FILE_APPEND);
     // Open banned.txt and write MAC to it and new line
-    file_put_contents("Banned.txt", PHP_EOL . $MAC, FILE_APPEND);
+    file_put_contents("../../Banned.txt", PHP_EOL . $MAC, FILE_APPEND);
     // Redirect to banned.php
     header("Location: Banned.php");
 }
