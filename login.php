@@ -64,8 +64,8 @@ echo "</html>";
 function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user)
 {
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
-		checkForHarmFullInput($Username);
-		checkForHarmFullInput($Passwd);
+		checkForHarmFullInput($Username,$Session_banned);
+		checkForHarmFullInput($Passwd,$Session_banned);
 
 		// Calls Userlogin function with the userame and password as variables
 		UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user);

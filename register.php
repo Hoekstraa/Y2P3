@@ -73,12 +73,12 @@ echo '<html lang="nl">';
 echo "</html>";
 
 // This function validates the users input.
-function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2)
+function LogInValidation($IP,$MAC,$mail,$username,$password1,$password2,$Session_banned)
 {
-	checkForHarmFullInput($mail);
-	checkForHarmFullInput($username);
-	checkForHarmFullInput($password1);
-	checkForHarmFullInput($password2);
+	checkForHarmFullInput($mail,$Session_banned);
+	checkForHarmFullInput($username,$Session_banned);
+	checkForHarmFullInput($password1,$Session_banned);
+	checkForHarmFullInput($password2,$Session_banned);
 	// Checks if the variable contains ' or <script> if yes the call the ban function if no then call userlogin function
 	if (strpos($mail, "@") == false) 
 	{

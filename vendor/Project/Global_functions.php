@@ -465,9 +465,7 @@ function checkForHarmFullInput($input){
     {
         $IP = GetIP();
         $MAC = GetMAC();
-        $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
         // Call the ban function
         Ban($IP,$MAC,$Session_banned);
     }
-
 }
