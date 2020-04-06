@@ -458,6 +458,8 @@ function Create_all_databases($conn)
 // This function deletes all the user info
 function DeleteAllUserInfo($userid,$Session_id_user)
 {
+    // Delete the session username
+    unset($_SESSION[$Session_name_user]);
     // Get encrypted user id from sssion
     $encrypted_userid = $_SESSION[$Session_id_user];
 	// Decrypt the encrypted username
@@ -472,9 +474,6 @@ function DeleteAllUserInfo($userid,$Session_id_user)
 	$delete1 = pg_execute($conn, "delete1", array($userid));
 	$delete2 = pg_execute($conn, "delete2", array($userid));
     $delete3 = pg_execute($conn, "delete3", array($userid));
-    echo var_dump($delete1);
-    echo var_dump($delete2);
-    echo var_dump($delete3);
 	//This function closes database connection
 	DatabaseClose($conn);
 }
