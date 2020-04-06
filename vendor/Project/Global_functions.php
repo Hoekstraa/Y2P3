@@ -26,6 +26,35 @@ $MAC = GetMAC();
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user, $page)
 {
+    switch($page){
+        case "/Project2.3/login.php";
+            if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
+                // Redirect to dashboard.php
+                header("Location: Dashboard.php");
+            }
+        case "/Project2.3/register.php";
+            if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
+                // Redirect to dashboard.php
+                header("Location: Dashboard.php");
+            }
+        case "/Project2.3/dashboard.php";
+            if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
+                // Redirect to dashboard.php
+                header("Location: login.php");
+            }
+        case "/Project2.3/request_morgage.php";
+            if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
+                // Redirect to dashboard.php
+                header("Location: login.php");
+            }
+        case "/Project2.3/review.php";
+            if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
+                // Redirect to dashboard.php
+                header("Location: login.php");
+            }
+        default: header("Location: index.php");
+    }
+
     // Checks the users current page
     if ($page == "/Project2.3/login.php") {
         // Checks if the session exists and is not empty
@@ -120,13 +149,9 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
 
     // Loop through the file line by line
     foreach ($contents as $line) {
-        // Check if line is the same as the ip of the user if yes then redirect
-        if ($line == $IP) {
+        // Check if line is the same as the ip or MAC of the user if yes then redirect
+        if ($line == $IP || $line == $MAC) {
 
-            // Redirect to banned.php
-            header("Location: Banned.php");
-        } // Check if line is the same as the mac of the user if yes then redirect
-        elseif ($line == $MAC) {
             // Redirect to banned.php
             header("Location: Banned.php");
         }
@@ -176,7 +201,6 @@ function Afspraken()
 		Vraag VARCHAR (900) NOT NULL,
 		Datum VARCHAR (100) NOT NULL)");
     // Show if query was succesfull
-    echo var_dump($result);
 }
 function Werknemers()
 {
@@ -189,7 +213,6 @@ function Werknemers()
 		TypeM VARCHAR (900) NOT NULL,
 		email VARCHAR (900) NOT NULL)");
     // Show if query was succesfull
-    echo var_dump($result);
 }
 // This function closes a connection to the datababase
 function DatabaseClose($conn)
@@ -422,7 +445,6 @@ function MCallagher()
 	echo var_dump($conn);
 	$result = pg_prepare($conn, "my_query", "INSERT INTO Werknemers  (userid, uidm,typem, email) VALUES ($1,$2,$3,$4)");
 	$result = pg_execute($conn, "my_query", array("1","MCallagher","Hypotheek adviseur","MCallagher@ritsema.frl"));
-	echo var_dump($result);
 }
 // This function creates all the databases
 function Create_all_databases($conn)
