@@ -1,6 +1,6 @@
 <head>
 	<meta charset="utf-8">
-	<title>Ritsema Banken - <?php echo $title ?></title>
+	<title>Ritsema Banken - <?php echo htmlspecialchars($title) ?></title>
 	<meta name="description" content="$Description">
 	<meta name="author" content="Ritsema Banken">
 	

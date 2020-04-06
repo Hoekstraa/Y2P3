@@ -18,7 +18,7 @@ echo '<html lang="nl">';
         echo "
         <main>
         <div align='center' class=\"request-review\">
-            <h1>Overzicht van: $Username</h1>
+            <h1>Overzicht van: htmlspecialchars($Username)</h1>
             <table>
   <tr>
     <th>Werkenemer</th>
@@ -26,9 +26,9 @@ echo '<html lang="nl">';
     <th>E-Mail</th>
   </tr>
   <tr>
-    <td>$Username</td>
-    <td>$type</td>
-    <td>$email</td>
+    <td>htmlspecialchars($Username)</td>
+    <td>htmlspecialchars($type)</td>
+    <td>htmlspecialchars($email)</td>
   </tr>
             <br><br>
         </div>

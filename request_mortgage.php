@@ -35,7 +35,7 @@ if(isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])
 {
 	$navigation = [
 		new NavbarItem("Ritsema Banken", "index.php", false),
-		new NavbarItem("$DecryptedUsername", "dashboard.php", false),
+		new NavbarItem(htmlspecialchars($DecryptedUsername), "dashboard.php", false),
 		new NavbarItem("Uitloggen", "logout.php", false)
 	];
 }

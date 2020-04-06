@@ -42,7 +42,7 @@ if ( isset( $_POST['submit']))
 
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php", false),
-    new NavbarItem("$DecryptedUsername", "dashboard.php", false),
+    new NavbarItem(htmlspecialchars($DecryptedUsername), "dashboard.php", false),
     new NavbarItem("Uitloggen", "logout.php", false)
 
 ];
@@ -59,25 +59,25 @@ echo '<html lang="nl">';
             <div class=\"login-box\">
                 <form method=\"post\">
                     <label for=\"Naam\">Naam</label><br>
-                    $Username
+                    htmlspecialchars($Username)
                     <br><br>
                     <label for=\"address\">Adres</label><br>
-                    $Address
+                    htmlspecialchars($Address)
                     <br><br>
                     <label for=\"postalcode\">Postcode</label><br>
-                    $Postalcode
+                    htmlspecialchars($Postalcode)
                     <br><br>
                     <label for=\"phone-number\">Telefoonnummer</label><br>
-                    $Phonenumber
+                    htmlspecialchars($Phonenumber)
                     <br><br>
                     <label for=\"email\">Emailadres</label><br>
-                    $E_Mail
+                    htmlspecialchars($E_Mail)
                     <br><br>
                     <label for=\"Rekeningnummer\">Rekeningnummer</label><br>
-                    $Rekeningnummer
+                    htmlspecialchars($Rekeningnummer)
                     <br><br>
                     <label for=\"Bedrag\">Bedrag</label><br>
-                    $bedrag
+                    htmlspecialchars($bedrag)
                     <br><br>
                     <input type=\"hidden\" name=\"token\" value=\" $_SESSION[$token_session] \"\>
                     <input class=\"submit\" type=\"submit\" name=\"back\" value=\"Terug gaan\"></input>

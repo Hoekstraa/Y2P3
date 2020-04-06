@@ -17,7 +17,7 @@ CheckIfBanned($IP,$MAC,$Session_banned);
 $title = GetTitle($page);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem($DecryptedUsername, "Account.php"),
+	new NavbarItem(htmlspecialchars($DecryptedUsername) "Account.php"),
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
 echo '<html lang="nl">';
@@ -33,14 +33,14 @@ echo '<html lang="nl">';
 				<div class=\"pure-u-1-2\">
 					<article class=\"textpadding-thick\">
 					<h4>Mijn gegevens</h4>
-					<div class =\"username\">Username: " .$DecryptedUsername. "<div>
-					<div class =\"email\">Emailadres: " .$email. "<div>
+					<div class =\"username\">Username: " .htmlspecialchars($DecryptedUsername). "<div>
+					<div class =\"email\">Emailadres: " .htmlspecialchars($email). "<div>
 					</article>
 				</div>
 				
 				</div>
 				
-				<div class=\"status\">" . $status . "</div>
+				<div class=\"status\">" . htmlspecialchars($status) . "</div>
 				<div class=\"dashboard\">
 					<a href=\"request_mortgage.php\" class=\"item\" id=\"hypotheek\">
 					<b>
