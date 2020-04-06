@@ -459,3 +459,15 @@ function DeleteAllUserInfo($userid,$Session_id_user,$Session_name_user)
     DatabaseClose($conn);
     header("Location: index.php");
 }
+function checkForHarmFullInput($input){
+
+    if(strpos($input, "<script>") || strpos($input, "1=1") || strpos($input, "1 =1") || strpos($input, "1= 1") || strpos($input, "1 = 1") !== false)
+    {
+        $IP = GetIP();
+        $MAC = GetMAC();
+        $Session_banned = "GE9Rr1eyAz3HyyYrUPhZHwMXZenSU78Wobgu2b4kIWwMpFRGASIfEOBAmVVV7cE0ayZ0JafbDaOzlsRSBRHP4XmCTPCMaEyHSUj7";
+        // Call the ban function
+        Ban($IP,$MAC,$Session_banned);
+    }
+
+}
