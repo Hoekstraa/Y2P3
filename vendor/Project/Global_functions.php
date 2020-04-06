@@ -114,12 +114,16 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
     }
     // Declare file
     $contents = file("Banned.txt");
-
     // Loop through the file line by line
     foreach ($contents as $line) {
         // Check if line is the same as the ip or MAC of the user if yes then redirect
-        if ($line == $IP || $line == $MAC) {
+        if ($line == $IP){
 
+            // Redirect to banned.php
+            header("Location: Banned.php");
+        }
+        elseif($line == $MAC)
+        {
             // Redirect to banned.php
             header("Location: Banned.php");
         }
