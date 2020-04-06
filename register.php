@@ -130,16 +130,14 @@ function SignUp($mail,$username,$password1)
 {
 	// This function connects to the database
 	$conn = DatabaseConnect();
-	echo var_dump($conn);
 	$hashed_password = password_hash($password1, PASSWORD_BCRYPT);
 	// Create perpared statement 
 	$result = pg_prepare($conn, "my_query", "INSERT INTO bank  (username, email, password) VALUES ($1,$2,$3)");
 	// Executes the prepared statement with the variables
 	$result = pg_execute($conn, "my_query", array($username,$mail,$hashed_password));
-	echo var_dump($result);
 	//This function closes database connection
 	DatabaseClose($conn);
-	// Redirect to Dashboard.php
-	//header("Location: login.php");
+	// Redirect to login.php
+	header("Location: login.php");
 }
 ?>

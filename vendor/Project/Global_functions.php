@@ -428,6 +428,10 @@ function GetTitle($page)
         // Change title variable to Hypotheekaanvragen
         $title = "Hypotheekaanvragen";
     }
+    elseif ($page == "DeleteAll.php") {
+        // Change title variable to Hypotheekaanvragen
+        $title = "Verwijderen";
+    }
 // Return the title variable
     return $title;
 }
@@ -450,4 +454,27 @@ function Create_all_databases($conn)
     Werknemers();
     MCallagher();
     // DOCUMENTATIE
+}
+// This function deletes all the user info
+function DeleteAllUserInfo($userid,$Session_id_user)
+{
+    // Get encrypted user id from sssion
+    $encrypted_userid = $_SESSION[$Session_id_user];
+	// Decrypt the encrypted username
+	$userid = base64_decode($encrypted_userid);
+    // This function connects to the database
+    $conn = DatabaseConnect();
+    // Create perpared statement 
+	$delete1 = pg_prepare($conn, "delete1", "DELETE from bank WHERE userid =$1");
+	$delete2 = pg_prepare($conn, "delete2", "DELETE from afspraken WHERE userid =$1");
+	$delete3 = pg_prepare($conn, "delete3", "DELETE from hypotheken WHERE userid =$1");
+	// Executes the prepared statement with the variables
+	$delete1 = pg_execute($conn, "delete1", array($userid));
+	$delete2 = pg_execute($conn, "delete2", array($userid));
+    $delete3 = pg_execute($conn, "delete3", array($userid));
+    echo var_dump($delete1);
+    echo var_dump($delete2);
+    echo var_dump($delete3);
+	//This function closes database connection
+	DatabaseClose($conn);
 }

@@ -20,7 +20,6 @@ $navigation = [
 	new NavbarItem($DecryptedUsername, "Account.php"),
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
-
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body>";
@@ -57,10 +56,10 @@ echo '<html lang="nl">';
 						Contact opnemen
 					</b>
 					</a>
-					<a href=\"logout.php\" class=\"item\" id=\"logout\">
+					<a href=\"DeleteALL.php\" class=\"item\" id=\"logout\">
 					<b>
 						<i class=\"fas fa-sign-out-alt\"></i><br>
-						Uitloggen
+						User gegevens verwijderen
 					</b></div>
 					</a>
 				</div>
