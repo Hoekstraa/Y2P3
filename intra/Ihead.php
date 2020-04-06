@@ -5,7 +5,7 @@
 	<meta name="author" content="Ritsema Banken">
 	
 	<?php
-	$css_dir='./css/';
+	$css_dir='../css/';
 		if (is_dir($css_dir)){
 			if ($dh = opendir($css_dir)){
 				while (($file = readdir($dh)) !== false){

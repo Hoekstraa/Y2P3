@@ -239,13 +239,19 @@ Function CheckIfAdmin()
     // Check if the found variable is true
     if ($found == true) {
         // if found is true then pop up window with the text welkom
+<<<<<<< HEAD
         echo '<script type="text/javascript">alert("U bent ingelogd als administrator.");</script>';
     } else {
         // if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
         echo '<script type="text/javascript">
+		alert("Toegang geweigerd. U heeft geen administratortoegang tot de website.");
+		</script>';
+		header("Location: index.php");
+		
+=======
         echo '<script type="text/javascript">
 		alert("Welkom!");
-		window.location.href = "EmployeeReview.php";
+		window.location.href = "EmplyeeReview.php";
 		</script>';
 
     } else {
@@ -255,6 +261,7 @@ Function CheckIfAdmin()
 		window.location.href = "index.php";
         </script>';
         header("Location: index.php");
+>>>>>>> server
     }
 }
 // This function Logs user out
@@ -343,6 +350,9 @@ function GetUserID($Session_id_user)
 <<<<<<< HEAD
 
 // This function compares the token fomr hidden field with session token
+=======
+// This fubction compares the token fomr hidden field with session token
+>>>>>>> server
 function CompareToken_Consultant($token_session, $userid)
 {
     // Get token 1 from post
@@ -453,7 +463,8 @@ function DeleteAllUserInfo($userid,$Session_id_user,$Session_name_user)
     DatabaseClose($conn);
     header("Location: index.php");
 }
-function checkForHarmFullInput($input) {
+function checkForHarmFullInput($input){
+
     if(strpos($input, "<script>") || strpos($input, "1=1") || strpos($input, "1 =1") || strpos($input, "1= 1") || strpos($input, "1 = 1") !== false)
     {
         $IP = GetIP();
@@ -462,4 +473,7 @@ function checkForHarmFullInput($input) {
         Ban($IP,$MAC,$Session_banned);
     }
 }
+<<<<<<< HEAD
 ?>
+=======
+>>>>>>> server

@@ -5,6 +5,8 @@ require "classes/NavbarItem.php";
 include "vendor/Project/Global_functions.php";
 // Get username
 $DecryptedUsername = GetUsername($Session_name_user);
+// Get email
+$email = GetInfo($DecryptedUsername);
 // Get status
 $status = GetStatus($Session_id_user);
 // Check if the user is logged in
@@ -15,10 +17,9 @@ CheckIfBanned($IP,$MAC,$Session_banned);
 $title = GetTitle($page);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem($DecryptedUsername, "Account.php"),
+	new NavbarItem(htmlspecialchars($DecryptedUsername), "Account.php"),
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
-
 echo '<html lang="nl">';
 	include("modular/head.php");
 	echo "<body>";
@@ -32,21 +33,14 @@ echo '<html lang="nl">';
 				<div class=\"pure-u-1-2\">
 					<article class=\"textpadding-thick\">
 					<h4>Mijn gegevens</h4>
-					<div class =\"username\">Username: " .$DecryptedUsername. "<div>
-					<div class =\"email\">Emailadres: " .$email. "<div>
-					<div class =\"postalcode\">Postcode: " .$postalcode. "<div>
-					<div class =\"phone-number\">Telefoonnummer: " .$phonenumber. "<div>
+					<div class =\"username\">Username: " .htmlspecialchars($DecryptedUsername). "<div>
+					<div class =\"email\">Emailadres: " .htmlspecialchars($email). "<div>
 					</article>
 				</div>
-				<div class=\"pure-u-1-2\">
-					<article class=\"textpadding-thick\">
-					<h4>Mijn producten of offertes</h4>
-					<div class =\"products\">Producten:" .$product. "<div>
-					</article>
+				
 				</div>
-				</div>
-				<p>Voer uw gegevens in om toegang te verkrijgen tot uw account.</p>
-				<div class=\"status\">" . $status . "</div>
+				
+				<div class=\"status\">" . htmlspecialchars($status) . "</div>
 				<div class=\"dashboard\">
 					<a href=\"request_mortgage.php\" class=\"item\" id=\"hypotheek\">
 					<b>
@@ -62,10 +56,10 @@ echo '<html lang="nl">';
 						Contact opnemen
 					</b>
 					</a>
-					<a href=\"logout.php\" class=\"item\" id=\"logout\">
+					<a href=\"DeleteALL.php\" class=\"item\" id=\"logout\">
 					<b>
 						<i class=\"fas fa-sign-out-alt\"></i><br>
-						Uitloggen
+						User gegevens verwijderen
 					</b></div>
 					</a>
 				</div>
@@ -98,5 +92,22 @@ function GetStatus($Session_id_user)
 	}
 	// return status variable
 	return $status;
+}
+// Get userinfo
+function GetInfo($Username)
+{
+	// Connect to the database
+	$conn = DatabaseConnect();
+	// Create prepared statement
+	$UserMail = pg_prepare($conn, "email", "SELECT email FROM bank WHERE username = $1");
+	$UserMail = pg_execute($conn, "email", array($Username));
+        // Get data from sql return
+		while ($row = pg_fetch_row($UserMail)) 
+		{
+			// Get userid from sql query return
+			$E_Mail = $row[0];
+        }
+    // return email variable
+    return $E_Mail;
 }
 ?>

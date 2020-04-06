@@ -1,26 +1,8 @@
 <?php
 // Recuire php files 
-require "classes/NavbarItem.php";
+
 // Check if the user is banned
-//BannedCheckForBannedPage($IP,$MAC,$Session_banned);
-
-$title = "Home";
-if($DecryptedUsername) {
-$navigation = [
-	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Bye", "bye.php"),
-	new NavbarItem($DecryptedUsername, "Account.php"),
-	new NavbarItem("Uitloggen", "logout.php"),
-];
-}
-else {
-$navigation = [
-	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem("Bye", "bye.php"),
-	new NavbarItem("Uitloggen", "logout.php"),
-];
-}
-
+BannedCheckForBannedPage($IP,$MAC,$Session_banned);
 
 echo '<html lang="nl">';
 	include("modular/head.php");

@@ -96,12 +96,12 @@ function validateInformation($subject,$question,$date){
         $validinfo = false;
     }
     // Check if sneaky input function returns true
-    if(checkforsneakyinput($subject)){
+    if(checkForHarmfulInput($subject)){
         // Change valid info variable to false
         $validinfo = false;
     }
     // Check if sneaky input function returns true
-    if(checkforsneakyinput($question)){
+    if(checkForHarmfulInput($question)){
         // Change valid info variable to false 
         $validinfo = false;
     }
@@ -110,7 +110,7 @@ function validateInformation($subject,$question,$date){
 
 }
 // This function checks for input that can create vulnerabilities
-function checkForSneakyInput($input){
+function checkForHarmfulInput($input){
     // Check if string contains <script>
     if(strpos($input,"<script>") !==false){
         // Call ban function

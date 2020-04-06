@@ -53,7 +53,7 @@ echo '<html lang="nl">';
 				</div>
 			</div>
 			<p><a href=\"./register.php\">Klik hier als u nog geen account heeft.</a></p>
-			<p><a href=\"./Employee_login.php\">Klik hier als u in wilt loggen als een werknemer bij Ritsema Banken.</a></p>
+			<p><a href=\"./intra/Employee_login.php\">Klik hier als u in wilt loggen als een werknemer bij Ritsema Banken.</a></p>
 		</main>
 		";
 		include("modular/footer.php");
@@ -62,23 +62,13 @@ echo "</html>";
 
 // This function validates the users input.
 function LogInValidation($IP,$MAC,$Username,$Passwd,$Characters,$Session_name_user,$Session_name_counter,$Session_banned,$FailedAttemps,$Session_id_user)
-{		
+{
 		// Checks if the variable contains 1=1 or <script> if yes the call the ban function if no then call userlogin function
-		if (strpos($Username, "<script>") || strpos($Username, "1=1") || strpos($Username, "1 =1") || strpos($Username, "1= 1") || strpos($Username, "1 = 1") !== false) 
-		{
-			// Call the banned function
-			Ban($IP,$MAC,$Session_banned);
-		}
-		elseif (strpos($Passwd, "<script>") || strpos($Passwd, "1=1") || strpos($Passwd, "1 =1") || strpos($Passwd, "1= 1") || strpos($Passwd, "1 = 1") !== false) 
-		{
-			// Call the banned function
-			Ban($IP,$MAC,$Session_banned);
-		}
-		else
-		{
-				// Calls Userlogin function with the userame and password as variables
-				UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user);
-		}
+		checkForHarmFullInput($Username,$Session_banned);
+		checkForHarmFullInput($Passwd,$Session_banned);
+
+		// Calls Userlogin function with the userame and password as variables
+		UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user);
 }
 // This functions logs user in.
 function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_counter,$FailedAttemps,$Session_id_user)
@@ -86,45 +76,51 @@ function UserLogIn($Username,$Passwd,$IP,$MAC,$Session_name_user,$Session_name_c
 	// This function connects to the database
 	$conn = DatabaseConnect();
 	// Create perpared statement 
-	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1 AND password = $2");
+	$result = pg_prepare($conn, "my_query", "SELECT username,password FROM bank WHERE username = $1");
 	// Execute the prepared statement with variables
-	$result = pg_execute($conn, "my_query", array($Username,$Passwd));
-	// Checks if login was succesfull 
+	$result = pg_execute($conn, "my_query", array($Username));
 	$login_check = pg_num_rows($result);
-	if($login_check > 0)
+	while($row = pg_fetch_row($result))
 	{
-		// Create prepared statement
-		$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
-		// Execute prepared statement with variable
-		$userid = pg_execute($conn, "userid", array($Username));
-		// Get data from sql result
-		while ($row = pg_fetch_row($userid)) 
+		$hash = $row[1];
+	}
+	if (password_verify($Passwd, $hash)) 
+	{
+		//Checks if login was succesfull 
+		if($login_check > 0)
 		{
-			// Get userid from sql query return
-			$user_id = $row[0];
+			// Create prepared statement
+			$userid = pg_prepare($conn, "userid", "SELECT userid FROM bank WHERE username = $1");
+			// Execute prepared statement with variable
+			$userid = pg_execute($conn, "userid", array($Username));
+			// Get data from sql result
+			while ($row = pg_fetch_row($userid)) 
+			{
+				// Get userid from sql query return
+				$user_id = $row[0];
+			}
+			// Encrypt user id
+			$EncryptedUserid = base64_encode($user_id);
+			// Put encrypted user id in a session
+			$_SESSION[$Session_id_user] = $EncryptedUserid;
+			// Encrypt user name
+			$EncryptedUsername = base64_encode($Username);
+			// Create session Username and put the encrypted username in the session
+			$_SESSION[$Session_name_user] = $EncryptedUsername;
+			// Reset the failed log in counter
+			$Encrypt = base64_encode($FailedAttemps);
+			$_SESSION[$Session_name_counter] = $Encrypt;
+			// Redirect to dashboard.php
+			header("Location: dashboard.php");
 		}
-		// Encrypt user id
-		$EncryptedUserid = base64_encode($user_id);
-		// Put encrypted user id in a session
-		$_SESSION[$Session_id_user] = $EncryptedUserid;
-		// Encrypt user name
-		$EncryptedUsername = base64_encode($Username);
-		// Create session Username and put the encrypted username in the session
-		$_SESSION[$Session_name_user] = $EncryptedUsername;
-		// Reset the failed log in counter
-		$Encrypt = base64_encode($FailedAttemps);
-		$_SESSION[$Session_name_counter] = $Encrypt;
-		// Redirect to dashboard.php
-		header("Location: dashboard.php");
-
+		else 
+		{
+			// Call failedlogin function
+			FailedLogIn($IP,$MAC,$Session_name_counter);
+		}
+		//This function closes database connection
+		DatabaseClose($conn);
 	}
-	else 
-	{
-		// Call failedlogin function
-		FailedLogIn($IP,$MAC,$Session_name_counter);
-	}
-	// This function closes database connection
-	DatabaseClose($conn);
 }
 // This function checks if the failed session session is set and not tampered with
 function Set_session($IP,$MAC,$Session_name_counter,$FailedAttemps) 
