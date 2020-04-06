@@ -2,7 +2,6 @@
 // start the sessions
 //namespace Vendor\Project;
 
-
 session_start();
 
 //Global Variables
@@ -23,8 +22,6 @@ $FailedAttemps = 10;
 $IP = GetIP();
 // Set global mac variable
 $MAC = GetMAC();
-//}
-
 
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user, $page)
@@ -66,7 +63,6 @@ function CheckIfLoggedIn($Session_name_user, $page)
         }
     }
 }
-
 // This function bannes the user when called.
 function Ban($IP, $MAC, $Session_banned)
 {
@@ -81,7 +77,6 @@ function Ban($IP, $MAC, $Session_banned)
     // Redirect to banned.php
     header("Location: Banned.php");
 }
-
 // This function returns the mac adres from the user.
 function GetMAC()
 {
@@ -91,7 +86,6 @@ function GetMAC()
     // Return mac variable
     return $MAC;
 }
-
 // This function returns ip adres form the user.
 function GetIP()
 {
@@ -106,7 +100,6 @@ function GetIP()
     // Return ip variable
     return $IP;
 }
-
 // This checks if ip or mac addres from the user are in the banned.txt file if so then redirect the user to banned.php.
 function CheckIfBanned($IP, $MAC, $Session_banned)
 {
@@ -139,7 +132,6 @@ function CheckIfBanned($IP, $MAC, $Session_banned)
         }
     }
 }
-
 // This function creates the database
 function DatabaseCreation($conn)
 {
@@ -154,7 +146,6 @@ function DatabaseCreation($conn)
     // Show if query was succesfull
     echo var_dump($result);
 }
-
 // This function creates the morgage database 
 function DatabaseMortgage($conn)
 {
@@ -173,7 +164,6 @@ function DatabaseMortgage($conn)
     // Show if query was succesfull
     echo var_dump($result);
 }
-
 function Afspraken()
 {
     // calls data baseconnect function
@@ -188,7 +178,6 @@ function Afspraken()
     // Show if query was succesfull
     echo var_dump($result);
 }
-
 function Werknemers()
 {
     // calls data baseconnect function
@@ -208,7 +197,6 @@ function DatabaseClose($conn)
     // Close database connection
     pg_close($conn);
 }
-
 // This function opens a connection to the datababase
 function DatabaseConnect()
 {
@@ -219,7 +207,6 @@ function DatabaseConnect()
     // Return $conn variable
     return $conn;
 }
-
 // This function pulls the users username form the session
 function GetUsername($Session_name_user)
 {
@@ -236,7 +223,6 @@ function GetUsername($Session_name_user)
         header("Location: login.php");
     }
 }
-
 // This function checks if the users a admin
 Function CheckIfAdmin()
 {
@@ -276,7 +262,6 @@ Function CheckIfAdmin()
         header("Location: index.php");
     }
 }
-
 // This function Logs user out
 function LogOut($Session_name_user)
 {
@@ -285,7 +270,6 @@ function LogOut($Session_name_user)
     // Redirect to index.php
     header("Location: index.php");
 }
-
 // This function checks if the user is banned or not
 function BannedCheckForBannedPage($IP, $MAC, $Session_banned)
 {
@@ -316,7 +300,6 @@ function BannedCheckForBannedPage($IP, $MAC, $Session_banned)
         header("Location: index.php");
     }
 }
-
 // This function generates
 function generate_token($token_session)
 {
@@ -326,7 +309,6 @@ function generate_token($token_session)
         $_SESSION[$token_session] = md5(uniqid(mt_rand(), true));
     }
 }
-
 // This fubction compares the token fomr hidden field with session token
 function CompareToken_mortgage($userid, $Address, $bedrag, $Rekeningnummer, $token_session)
 {
@@ -353,7 +335,6 @@ function CompareToken_mortgage($userid, $Address, $bedrag, $Rekeningnummer, $tok
         header("Location: index.php");
     }
 }
-
 // This function gets the user id from the session and decrypts it 
 function GetUserID($Session_id_user)
 {

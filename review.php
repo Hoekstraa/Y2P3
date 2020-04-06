@@ -80,7 +80,7 @@ echo '<html lang="nl">';
                     <br><br>
                     <label for=\"email\">Emailadres</label><br>
                     $E_Mail_display
-                    <br><br>
+                    
                     <label for=\"Rekeningnummer\">Rekeningnummer</label><br>
                     $Rekeningnummer_display
                     <br><br>
@@ -88,8 +88,11 @@ echo '<html lang="nl">';
                     $bedrag_display
                     <br><br>
                     <input type=\"hidden\" name=\"token\" value=\" $_SESSION[$token_session] \"\>
+                    <br><br>
                     <input class=\"submit\" type=\"submit\" name=\"back\" value=\"Terug gaan\"></input>
+                    <br><br>
                     <input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Bevestigen\"></input>
+                    <br><br>
                 </form>
             </div>
         </div>

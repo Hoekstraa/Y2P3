@@ -27,7 +27,7 @@ echo '<html lang="nl">';
             <h1>Overzicht van: $Username</h1>
             <table>
   <tr>
-    <th>Werkenemer</th>
+    <th>Werknemer</th>
     <th>Type</th>
     <th>E-Mail</th>
   </tr>
