@@ -33,26 +33,31 @@ function CheckIfLoggedIn($Session_name_user, $page)
                 // Redirect to dashboard.php
                 header("Location: Dashboard.php");
             }
+        break;
         case "/Project2.3/register.php";
             if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
                 // Redirect to dashboard.php
                 header("Location: Dashboard.php");
             }
+        break;
         case "/Project2.3/dashboard.php";
             if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
                 // Redirect to dashboard.php
                 header("Location: login.php");
             }
+        break;
         case "/Project2.3/request_morgage.php";
             if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
                 // Redirect to dashboard.php
                 header("Location: login.php");
             }
+        break;
         case "/Project2.3/review.php";
             if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
                 // Redirect to dashboard.php
                 header("Location: login.php");
             }
+        break;
         default: header("Location: index.php");
     }
 }
