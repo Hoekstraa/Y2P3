@@ -380,38 +380,36 @@ function CompareToken_Consultant($token_session, $userid)
 // This function gets the right tilte
 function GetTitle($page)
 {
-    // Checks the users current page is login.php
-    if ($page == "login.php") {
-        // Change title variable to login
-        $title = "Login";
-    } // Checks the users current page is register.php
-    elseif ($page == "register.php") {
-        // Change title variable to Registreren
-        $title = "Registreren";
-    } // Checks the users current page is dashboard.php
-    elseif ($page == "dashboard.php") {
-        // Change title variable to Dashboard
-        $title = "Dashboard";
-    } // Checks the users current page is request_mortgage.php
-    elseif ($page == "request_mortgage.php") {
-        // Change title variable to Hypotheekaanvragen
-        $title = "Hypotheekaanvragen";
-    } // Checks the users current page is advisorConsultant.php
-    elseif ($page == "advisorConsultant.php") {
-        // Change title variable to Gesprek aanvragen
-        $title = "Gesprek aanvragen";
-    } // Checks the users current page is index.php
-    elseif ($page == "index.php") {
-        // Change title variable to Index
-        $title = "Index";
-    } // Checks the users current page is review.php
-    elseif ($page == "review.php") {
-        // Change title variable to Hypotheekaanvragen
-        $title = "Hypotheekaanvragen";
-    }
-    elseif ($page == "DeleteAll.php") {
-        // Change title variable to Hypotheekaanvragen
-        $title = "Verwijderen";
+    // Changes to right title
+    switch($page)
+    {
+        case "login.php":
+            $title = "Login";
+            break;
+        case  "register.php";
+            $title = "Registreren";
+            break;
+        case "dashboard.php";
+            $title = "Dashboard";
+            break;
+        case "request_mortgage.php";
+            $title = "Hypotheekaanvragen";
+            break;
+        case "index.php";
+            $title = "index";
+            break;
+        case "advisorConsultant.php";
+            $title = "Gesprek aanvragen";
+            break;
+        case "review.php";
+            $title = "Hypotheek aanvragen";
+            break;
+        case "DeleteAll.php";
+            $title = "Verwijderen";
+            break;
+        default:
+            $title = "Ritsema";
+            break;
     }
 // Return the title variable
     return $title;
