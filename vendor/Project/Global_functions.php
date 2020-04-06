@@ -237,26 +237,17 @@ Function CheckIfAdmin()
         }
     }
     // Check if the found variable is true
-    if ($found == true) {
+    if ($found) {
         // if found is true then pop up window with the text welkom
         echo '<script type="text/javascript">alert("U bent ingelogd als administrator.");</script>';
-    } else {
-        // if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
-        echo '<script type="text/javascript">
-        echo '<script type="text/javascript">
-		alert("Welkom!");
-		window.location.href = "EmployeeReview.php";
-		</script>';
-
-    } else {
-        // if found isnt true then pop up window with the text U bent geen admin vraag dit aan bij een van onze beheerders and then redirect to index.php
-        echo '<script type="text/javascript">
-		alert("U bent geen admin vraag dit aan bij een van onze beheerders.");
-		window.location.href = "index.php";
-        </script>';
+	}
+	else {
+        // If found is false then pop up window and redirect to home
+        echo '<script type="text/javascript"> alert("U beschikt niet over administratorrechten. Om toegang te krijgen kunt u contact opnemen met de beheerders van Ritsema Bank.")</script>';
         header("Location: index.php");
     }
 }
+
 // This function Logs user out
 function LogOut($Session_name_user)
 {
@@ -295,7 +286,7 @@ function BannedCheckForBannedPage($IP, $MAC, $Session_banned)
         header("Location: index.php");
     }
 }
-// This function generates
+// This function generates a token
 function generate_token($token_session)
 {
     // Checks if the session is set
@@ -304,7 +295,7 @@ function generate_token($token_session)
         $_SESSION[$token_session] = md5(uniqid(mt_rand(), true));
     }
 }
-// This fubction compares the token fomr hidden field with session token
+// This function compares the token fomr hidden field with session token
 function CompareToken_mortgage($userid, $Address, $bedrag, $Rekeningnummer, $token_session)
 {
     // Get token 1 from post
@@ -340,7 +331,6 @@ function GetUserID($Session_id_user)
     // Return variable
     return $userid;
 }
-<<<<<<< HEAD
 
 // This function compares the token fomr hidden field with session token
 function CompareToken_Consultant($token_session, $userid)
