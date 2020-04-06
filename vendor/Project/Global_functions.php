@@ -456,7 +456,7 @@ function Create_all_databases($conn)
     // DOCUMENTATIE
 }
 // This function deletes all the user info
-function DeleteAllUserInfo($userid,$Session_id_use,$Session_name_user)
+function DeleteAllUserInfo($userid,$Session_id_user,$Session_name_user)
 {
     // Delete the session username
     unset($_SESSION[$Session_name_user]);
