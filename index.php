@@ -4,8 +4,6 @@ require "classes/NavbarItem.php";
 	// Include php files
 	include "vendor/Project/Global_functions.php"; 
 error_reporting(E_ERROR | E_PARSE);
-MGallagher();
-//Get variables
 // Check if the user is banned
 CheckIfBanned($IP,$MAC,$Session_banned);
 // Get the right title and put it in the title variable
@@ -39,6 +37,4 @@ echo '<html lang="nl">';
 		include("modular/footer.php");
 	echo "</body>";
 echo "</html>";
-
-
 ?>
