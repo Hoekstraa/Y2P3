@@ -17,7 +17,7 @@ CheckIfBanned($IP,$MAC,$Session_banned);
 $title = GetTitle($page);
 $navigation = [
 	new NavbarItem("Ritsema Banken", "index.php"),
-	new NavbarItem(htmlspecialchars($DecryptedUsername) "Account.php"),
+	new NavbarItem(htmlspecialchars($DecryptedUsername), "Account.php"),
 	new NavbarItem("Uitloggen", "logout.php"),
 ];
 echo '<html lang="nl">';
