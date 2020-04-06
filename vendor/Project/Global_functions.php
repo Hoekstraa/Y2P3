@@ -58,7 +58,6 @@ function CheckIfLoggedIn($Session_name_user, $page)
                 header("Location: login.php");
             }
         break;
-        default: header("Location: index.php");
     }
 }
 // This function bannes the user when called.
