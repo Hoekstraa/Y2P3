@@ -26,7 +26,8 @@ $MAC = GetMAC();
 // This function checks if the user is logged in and ifnot redirect to login.php
 function CheckIfLoggedIn($Session_name_user, $page)
 {
-    switch($page){
+    switch($page)
+    {
         case "/Project2.3/login.php";
             if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
                 // Redirect to dashboard.php
@@ -53,43 +54,6 @@ function CheckIfLoggedIn($Session_name_user, $page)
                 header("Location: login.php");
             }
         default: header("Location: index.php");
-    }
-
-    // Checks the users current page
-    if ($page == "/Project2.3/login.php") {
-        // Checks if the session exists and is not empty
-        if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
-            // Redirect to dashboard.php
-            header("Location: Dashboard.php");
-        }
-    } // Checks the users current page
-    elseif ($page == "/Project2.3/register.php") {
-        // Checks if the session exists and is not empty
-        if (isset($_SESSION[$Session_name_user]) && !empty($_SESSION[$Session_name_user])) {
-            // Redirect to dashboard.php
-            header("Location: dashboard.php");
-        }
-    } // Checks the users current page
-    elseif ($page == "/Project2.3/dashboard.php") {
-        // Checks if the session exists and is not empty
-        if (!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) {
-            // Redirect to dashboard.php
-            header("Location: login.php");
-        }
-    } // Checks the users current page
-    elseif ($page == "/Project2.3/request_morgage.php") {
-        // Checks if the session exists and is not empty
-        if (!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) {
-            // Redirect to dashboard.php
-            header("Location: login.php");
-        }
-    } // Checks the users current page
-    elseif ($page == "/Project2.3/review.php") {
-        // Checks if the session exists and is not empty
-        if (!isset($_SESSION[$Session_name_user]) && empty($_SESSION[$Session_name_user])) {
-            // Redirect to dashboard.php
-            header("Location: login.php");
-        }
     }
 }
 // This function bannes the user when called.
