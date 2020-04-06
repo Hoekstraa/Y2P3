@@ -447,7 +447,7 @@ function DeleteAllUserInfo($userid,$Session_id_user,$Session_name_user)
     DatabaseClose($conn);
     header("Location: index.php");
 }
-function checkForHarmFullInput($input) {
+function checkForHarmFullInput($input,$Session_banned) {
     if(strpos($input, "<script>") || strpos($input, "1=1") || strpos($input, "1 =1") || strpos($input, "1= 1") || strpos($input, "1 = 1") !== false)
     {
         $IP = GetIP();
