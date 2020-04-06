@@ -10,6 +10,12 @@ $navigation = [
 	new NavbarItem("Overzicht", "EmployeeReview.php", false),
 	new NavbarItem("Uitloggen", "Employee_logout.php", false),
 ];
+
+$Username_display = htmlspecialchars($Username);
+$type_display = htmlspecialchars($type);
+$email_display = htmlspecialchars($email);
+
+
 echo '<html lang="nl">';
 	include("Ihead.php");
 	echo "<body>";
@@ -26,9 +32,9 @@ echo '<html lang="nl">';
     <th>E-Mail</th>
   </tr>
   <tr>
-    <td>$Username</td>
-    <td>$type</td>
-    <td>$email</td>
+    <td>$Username_display</td>
+    <td>$type_display</td>
+    <td>$email_display</td>
   </tr>
             <br><br>
         </div>
