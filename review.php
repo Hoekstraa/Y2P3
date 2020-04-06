@@ -59,25 +59,25 @@ echo '<html lang="nl">';
             <div class=\"login-box\">
                 <form method=\"post\">
                     <label for=\"Naam\">Naam</label><br>
-                    htmlspecialchars($Username)
+                    $Username
                     <br><br>
                     <label for=\"address\">Adres</label><br>
-                    htmlspecialchars($Address)
+                    $Address
                     <br><br>
                     <label for=\"postalcode\">Postcode</label><br>
-                    htmlspecialchars($Postalcode)
+                    $Postalcode
                     <br><br>
                     <label for=\"phone-number\">Telefoonnummer</label><br>
-                    htmlspecialchars($Phonenumber)
+                    $Phonenumber
                     <br><br>
                     <label for=\"email\">Emailadres</label><br>
-                    htmlspecialchars($E_Mail)
+                    $E_Mail
                     <br><br>
                     <label for=\"Rekeningnummer\">Rekeningnummer</label><br>
-                    htmlspecialchars($Rekeningnummer)
+                    $Rekeningnummer
                     <br><br>
                     <label for=\"Bedrag\">Bedrag</label><br>
-                    htmlspecialchars($bedrag)
+                    $bedrag
                     <br><br>
                     <input type=\"hidden\" name=\"token\" value=\" $_SESSION[$token_session] \"\>
                     <input class=\"submit\" type=\"submit\" name=\"back\" value=\"Terug gaan\"></input>
